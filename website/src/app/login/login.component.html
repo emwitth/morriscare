@@ -1,0 +1,26 @@
+<div class="center-div">
+    <form [formGroup]="form">
+        <mat-card>
+            <div class="centered-full-width-rows-container">
+                <!-- Username -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Username</mat-label>
+                    <input matInput placeholder="Enter your username" formControlName="Username">
+                    <mat-error *ngIf="this.form.get('Username')?.invalid">{{getUsernameErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <!-- Password -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'" formControlName="Password">
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-error *ngIf="this.form.get('Password')?.invalid">{{getPasswordErrorMessage()}}</mat-error>
+                </mat-form-field>
+            </div>
+            <!-- Actions -->
+            <mat-card-actions>
+                <button mat-raised-button [routerLink]="''">Cancel</button>
+                <button mat-raised-button color="primary" style="float:right" [disabled]="form.pristine || form.invalid" (click)="login()">Login</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>

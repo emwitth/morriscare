@@ -1,0 +1,12 @@
+<div class="center-div">
+    <mat-card>
+        <div class="centered-full-width-rows-container">
+            Confirm logout?
+        </div>
+        <!-- Actions -->
+        <mat-card-actions>
+            <button mat-raised-button [routerLink]="'/home'">Cancel</button>
+            <button mat-raised-button color="primary" style="float:right" (click)="logout()">Logout</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
