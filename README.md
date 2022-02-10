@@ -7,6 +7,6 @@ To Run:
 - Run 'npm run start' to compile and serve the website
 - Alternatively, run 'npm run compile' to compile the website without serving
 
-The back end uses _____ and is in the folder labeled 'back-end'.
+The back end uses _____ and is in the folder labeled 'server'.
 To Run:
 - lorem ipsum drequelum veldbloom
