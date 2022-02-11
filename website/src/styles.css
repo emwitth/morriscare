@@ -14,9 +14,3 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     flex-direction: column;
     width: 100%;
 }
-
-.navbar-fixed{
-    position: fixed;
-    z-index:10;
-    top:-10px;
-  }
