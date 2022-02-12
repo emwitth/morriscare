@@ -1,5 +1,5 @@
 .picture {
-    max-width: 60%;
+    max-width: 60vw;
     min-width: 500px;
 }
 
@@ -9,6 +9,10 @@
 
 .width-cap-text {
     max-width: 80%;
+}
+
+.width-bottom-spacers {
+    min-width: 5%;
 }
 
 .button-spacer {
