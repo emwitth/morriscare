@@ -3,10 +3,16 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.center-div{
+.flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.absolute-center{
+    display: absolute;
+    top: 50%;
+    right: 50%;
 }
 
 .centered-full-width-rows-container {
