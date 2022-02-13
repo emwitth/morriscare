@@ -1,33 +1,35 @@
-<!-- Carousel -->
-<div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
-    <!-- Indicators/dots -->
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active"></button>
-      <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2"></button>
+<div class="carousel-wrapper">
+    <!-- Carousel -->
+    <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <!-- The Pictures -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="assets/pictures/nurses.jpg" alt="nurses smiling" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="assets/pictures/nurseHelping.jpg" alt="nurse helping" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="assets/pictures/shot.jpg" alt="nurse helping" class="d-block w-100">
+            </div>
+        </div>
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
     </div>
-    <!-- The slideshow/carousel -->
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="assets/pictures/nurses.jpg" alt="nurses smiling" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-            <img src="assets/pictures/nurseHelping.jpg" alt="nurse helping" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-            <img src="assets/pictures/shot.jpg" alt="nurse helping" class="d-block w-100">
-        </div>
+    <!-- Message to be displayed over the carousel -->
+    <div class="carousel-content">
+        <h1 style="font-size: 5vw;">We Care Because You Care</h1>
     </div>
-    <!-- Left and right controls/icons -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-</div>
-
-<div class="carousel-content">
-    <h1 style="font-size: 5vw;">We Care Because You Care</h1>
 </div>
 <!-- <mat-divider></mat-divider> -->
