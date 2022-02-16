@@ -1,0 +1,24 @@
+.picture {
+    max-width: 60%;
+    min-width: 500px;
+}
+
+.width-cap-area {
+    max-width: 400px;
+}
+
+.width-bottom-spacers {
+    min-width: 8%;
+}
+
+.button-spacer {
+    margin-bottom: 5%;
+}
+
+.title-button-justify-left {
+    text-align: left;
+}
+
+.title-button-justify-right {
+    text-align: right;
+}

@@ -1,8 +1,13 @@
 .carousel-content {
     position: absolute;
-    bottom: 10%;
+    bottom: 30%;
     left: 5%;
     z-index: 20;
     color: rgb(255, 255, 255);
     text-shadow: 0 3px 5px rgba(0,0,0,.8);
+}
+
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
 }

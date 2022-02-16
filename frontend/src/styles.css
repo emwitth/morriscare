@@ -3,14 +3,28 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.center-div{
+.flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.center-vertical-horizontal{
+    height: 93vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #7983b9
+  }
+
 .centered-full-width-rows-container {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.centered-partial-width-rows-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
 }

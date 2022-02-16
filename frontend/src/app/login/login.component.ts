@@ -27,20 +27,26 @@ export class LoginComponent implements OnInit {
       password: this.form.get('Password')?.value
     }
 
-    this.http.post<any>("/user/login", body, { observe: "response" }).subscribe(result => {
-      console.log(result);
-      if (result.status != 200) {
-        window.alert(result.body.message);
-      } else {
-        sessionStorage.setItem("name", result.body.data?.first_name);
-        sessionStorage.setItem("username", result.body.data?.user_name);
-        sessionStorage.setItem("login", 'true');
-        window.alert("Login successful.");
-        this.router.navigate(['/home']);
-      }
-    }, err => {
-      window.alert(err.error.message);
-    });
+    // this.http.post<any>("/api/user/login", body, { observe: "response" }).subscribe(result => {
+    //   console.log(result);
+    //   if (result.status != 200) {
+    //     window.alert(result.body.message);
+    //   } else {
+    //     sessionStorage.setItem("name", result.body.data?.first_name);
+    //     sessionStorage.setItem("username", result.body.data?.user_name);
+    //     sessionStorage.setItem("login", 'true');
+    //     window.alert("Login successful.");
+    //     this.router.navigate(['/home']);
+    //   }
+    // }, err => {
+    //   window.alert(err.error.message);
+    // });
+
+    sessionStorage.setItem("name", "evan");
+    sessionStorage.setItem("username", "evan01");
+    sessionStorage.setItem("login", 'true');
+    window.alert("Login successful.");
+    this.router.navigate(['/home']);
   }
 
   getUsernameErrorMessage() {

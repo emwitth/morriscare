@@ -1,0 +1,84 @@
+<nav class="navbar sticky-top navbar-dark navbar-expand-sm" style="background-color: #3f51b5;">
+
+  <div class="container-fluid">
+    <!-- Home Screen Links -->
+    <ul *ngIf="!checkLoggedIn()" class="navbar-nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" href="">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="services">Services</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="careers">Careers</a>
+      </li>
+    </ul>
+    <!-- Login Button -->
+    <button *ngIf="!checkLoggedIn()" mat-flat-button color="primary" [routerLink]="'login'">
+      Login
+    </button>
+    <!-- User Menu -->
+    <div *ngIf="checkLoggedIn()">
+      <button mat-flat-button color="primary" [matMenuTriggerFor]="usermenu">
+        WELCOME, {{getName()}}!
+      </button>
+      <mat-menu #usermenu="matMenu">
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item [routerLink]="'logout'">Logout</button>
+      </mat-menu>
+    </div>
+  </div>
+
+</nav>
+
+<!-- <p>
+  <mat-toolbar color="primary" class="toolbar-fixed"> -->
+    <!-- Menu Button -->
+    <!-- <div *ngIf="checkLoggedIn()">
+      <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>function 1</button>
+        <button mat-menu-item>function 2</button>
+        <button mat-menu-item>function 3</button>
+        <button mat-menu-item>...</button>
+        <button mat-menu-item>function n</button>
+      </mat-menu> -->
+    <!-- </div> -->
+    <!-- Home Menu -->
+    <!-- <div *ngIf="!checkLoggedIn()">
+      <div>
+        <button mat-button [routerLink]="''">Home</button>
+        <button mat-button [routerLink]="'about'">About</button>
+        <button mat-button [routerLink]="'services'">Services</button>
+        <button mat-button [routerLink]="'careers'">Careers</button>
+      </div>
+    </div> -->
+    <!-- Middle Spacer -->
+    <!-- <span class="toolbar-spacer"></span> -->
+    <!-- Login Button -->
+    <!-- <div *ngIf="!checkLoggedIn()">
+      <button mat-button [routerLink]="'login'">
+        Login
+      </button>
+    </div> -->
+    <!-- User Menu -->
+    <!-- <div *ngIf="checkLoggedIn()">
+      <button mat-button [matMenuTriggerFor]="usermenu">
+        WELCOME, {{getName()}}!
+      </button>
+      <mat-menu #usermenu="matMenu">
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item [routerLink]="'logout'">Logout</button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+</p> -->
+
+<!-- This is important, DO NOT DELETE -->
+<!-- It is why the other pages are shown when you route to them -->
+<router-outlet></router-outlet>
