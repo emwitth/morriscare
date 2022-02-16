@@ -9,14 +9,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     align-items: center;
 }
 
-.absolute-center{
-    display: absolute;
-    top: 50%;
-    right: 50%;
-}
+.center-vertical-horizontal{
+    height: 93vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #7983b9
+  }
 
 .centered-full-width-rows-container {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.centered-partial-width-rows-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
 }
