@@ -10,6 +10,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   { 
@@ -29,6 +30,10 @@ const routes: Routes = [
     component: LogoutComponent
   },
   { 
+    path: 'settings', 
+    component: SettingsComponent
+  },
+  {
     path: 'about', 
     component: AboutComponent
   },

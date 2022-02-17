@@ -32,6 +32,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { CareersComponent } from './careers/careers.component';
     LogoutComponent,
     AboutComponent,
     ServicesComponent,
-    CareersComponent
+    CareersComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

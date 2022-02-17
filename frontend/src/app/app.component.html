@@ -30,7 +30,7 @@
         WELCOME, {{getName()}}!
       </button>
       <mat-menu #usermenu="matMenu">
-        <button mat-menu-item>Settings</button>
+        <button mat-menu-item [routerLink]="'settings'">Settings</button>
         <button mat-menu-item [routerLink]="'logout'">Logout</button>
       </mat-menu>
     </div>
@@ -43,10 +43,10 @@
     Sidenav content
   </mat-sidenav>
 
-  <mat-sidenav-content *ngIf="checkLoggedIn()">
+  <mat-sidenav-content>
     <!-- This is important, DO NOT DELETE -->
     <!-- It is why the other pages are shown when you route to them -->
-    <router-outlet></router-outlet>
+    <router-outlet *ngIf="checkLoggedIn()"></router-outlet>
     <!---------------------------------------------------------------->
   </mat-sidenav-content>
 </mat-sidenav-container>
