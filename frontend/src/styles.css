@@ -10,7 +10,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .center-vertical-horizontal{
-    height: 93vh;
+    height: calc(100% - 52px);
     display: flex;
     justify-content: center;
     align-items: center;

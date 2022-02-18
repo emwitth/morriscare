@@ -33,6 +33,7 @@ import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
 import { SettingsComponent } from './settings/settings.component';
+import { StaffManageComponent } from './staff-manage/staff-manage.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { SettingsComponent } from './settings/settings.component';
     AboutComponent,
     ServicesComponent,
     CareersComponent,
-    SettingsComponent
+    SettingsComponent,
+    StaffManageComponent
   ],
   imports: [
     BrowserModule,

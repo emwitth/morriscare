@@ -11,6 +11,7 @@ import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
 import { SettingsComponent } from './settings/settings.component';
+import { StaffManageComponent } from './staff-manage/staff-manage.component';
 
 const routes: Routes = [
   { 
@@ -44,6 +45,10 @@ const routes: Routes = [
   { 
     path: 'careers', 
     component: CareersComponent
+  },
+  { 
+    path: 'admin/manage-staff', 
+    component: StaffManageComponent
   },
   {
     path: '**',
