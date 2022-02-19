@@ -2,9 +2,13 @@
     color: white;
 }
 
+.navbar-custom {
+  height: var(--navbarHeight);
+}
+
 .example-container {
     width: 100%;
-    height: calc(100% - 52px);
+    height: calc(100% - var(--navbarHeight));
   }
   
   mat-drawer-content {
