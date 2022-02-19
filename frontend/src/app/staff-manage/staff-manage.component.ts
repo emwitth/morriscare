@@ -11,8 +11,6 @@ import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/r
 export class StaffManageComponent implements OnInit {
   staffMembers: Array<StaffMember> = new Array<StaffMember>();
 
-  title = 'angular-material-dialog-app';
-
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
