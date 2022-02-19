@@ -1,0 +1,5 @@
+<h5>Hi I am Component Dialog following Foo list:</h5>
+<ul *ngIf="mydata">
+  <li *ngFor="let item of mydata">{{item}}</li>
+</ul>
+<button mat-button (click)="closeDialog()">Close</button>

@@ -3,6 +3,9 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+:root{
+    --navbarHeight: 50px;
+}
 .flex-center {
     display: flex;
     justify-content: center;
@@ -10,7 +13,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .center-vertical-horizontal{
-    height: 93vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

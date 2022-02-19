@@ -1,4 +1,4 @@
-<nav class="navbar sticky-top navbar-dark navbar-expand-sm" style="background-color: #3f51b5;">
+<nav class="navbar sticky-top navbar-dark navbar-expand-sm navbar-custom" style="background-color: #3f51b5;">
 
   <div class="container-fluid">
     <!-- Home Screen Links -->
@@ -16,6 +16,10 @@
         <a class="nav-link" href="careers">Careers</a>
       </li>
     </ul>
+    <!-- Menu Button -->
+    <button *ngIf="checkLoggedIn()" mat-icon-button class="example-icon white-icon" (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
     <!-- Login Button -->
     <button *ngIf="!checkLoggedIn()" mat-flat-button color="primary" [routerLink]="'login'">
       Login
@@ -26,7 +30,7 @@
         WELCOME, {{getName()}}!
       </button>
       <mat-menu #usermenu="matMenu">
-        <button mat-menu-item>Settings</button>
+        <button mat-menu-item [routerLink]="'settings'">Settings</button>
         <button mat-menu-item [routerLink]="'logout'">Logout</button>
       </mat-menu>
     </div>
@@ -34,51 +38,25 @@
 
 </nav>
 
-<!-- <p>
-  <mat-toolbar color="primary" class="toolbar-fixed"> -->
-    <!-- Menu Button -->
-    <!-- <div *ngIf="checkLoggedIn()">
-      <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>function 1</button>
-        <button mat-menu-item>function 2</button>
-        <button mat-menu-item>function 3</button>
-        <button mat-menu-item>...</button>
-        <button mat-menu-item>function n</button>
-      </mat-menu> -->
-    <!-- </div> -->
-    <!-- Home Menu -->
-    <!-- <div *ngIf="!checkLoggedIn()">
-      <div>
-        <button mat-button [routerLink]="''">Home</button>
-        <button mat-button [routerLink]="'about'">About</button>
-        <button mat-button [routerLink]="'services'">Services</button>
-        <button mat-button [routerLink]="'careers'">Careers</button>
-      </div>
-    </div> -->
-    <!-- Middle Spacer -->
-    <!-- <span class="toolbar-spacer"></span> -->
-    <!-- Login Button -->
-    <!-- <div *ngIf="!checkLoggedIn()">
-      <button mat-button [routerLink]="'login'">
-        Login
-      </button>
-    </div> -->
-    <!-- User Menu -->
-    <!-- <div *ngIf="checkLoggedIn()">
-      <button mat-button [matMenuTriggerFor]="usermenu">
-        WELCOME, {{getName()}}!
-      </button>
-      <mat-menu #usermenu="matMenu">
-        <button mat-menu-item>Settings</button>
-        <button mat-menu-item [routerLink]="'logout'">Logout</button>
-      </mat-menu>
-    </div>
-  </mat-toolbar>
-</p> -->
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side">
+    <!-- Sidebar Options Admin -->
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" href="admin/manage-staff">Manage Staff</a>
+      </li>
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- This is important, DO NOT DELETE -->
+    <!-- It is why the other pages are shown when you route to them -->
+    <router-outlet></router-outlet>
+    <!---------------------------------------------------------------->
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
 <!-- This is important, DO NOT DELETE -->
 <!-- It is why the other pages are shown when you route to them -->
-<router-outlet></router-outlet>
+<!-- <router-outlet *ngIf="!checkLoggedIn()"></router-outlet> -->
+<!---------------------------------------------------------------->

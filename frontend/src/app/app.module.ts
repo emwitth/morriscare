@@ -1,4 +1,4 @@
-// Imported Modules
+// Angular 'Core' Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -6,11 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+// Misc. Modules
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
 // APP Modules
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Angular Materials Modules
+import {MatCommonModule} from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule  } from '@angular/material/button';
@@ -22,6 +26,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Components
 import { HomeComponent } from './home/home.component';
@@ -32,6 +37,11 @@ import { LogoutComponent } from './logout/logout.component';
 import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
+import { SettingsComponent } from './settings/settings.component';
+import { StaffManageComponent } from './staff-manage/staff-manage.component';
+import { MyDialogComponent } from './dialog-components/my-dialog/my-dialog.component';
+import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-dialog.component';
+import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,13 +53,19 @@ import { CareersComponent } from './careers/careers.component';
     LogoutComponent,
     AboutComponent,
     ServicesComponent,
-    CareersComponent
+    CareersComponent,
+    SettingsComponent,
+    StaffManageComponent,
+    MyDialogComponent,
+    AddSmDialogComponent,
+    RemoveSmDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
+    MatCommonModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -63,7 +79,9 @@ import { CareersComponent } from './careers/careers.component';
     MatMenuModule,
     MatSidenavModule,
     MatButtonToggleModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
