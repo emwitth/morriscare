@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Angular Materials Modules
+import {MatCommonModule} from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule  } from '@angular/material/button';
@@ -22,6 +23,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Components
 import { HomeComponent } from './home/home.component';
@@ -34,6 +36,8 @@ import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
 import { SettingsComponent } from './settings/settings.component';
 import { StaffManageComponent } from './staff-manage/staff-manage.component';
+import { MyDialogComponent } from './dialog-components/my-dialog/my-dialog.component';
+import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -47,13 +51,16 @@ import { StaffManageComponent } from './staff-manage/staff-manage.component';
     ServicesComponent,
     CareersComponent,
     SettingsComponent,
-    StaffManageComponent
+    StaffManageComponent,
+    MyDialogComponent,
+    AddSmDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
+    MatCommonModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -67,7 +74,8 @@ import { StaffManageComponent } from './staff-manage/staff-manage.component';
     MatMenuModule,
     MatSidenavModule,
     MatButtonToggleModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

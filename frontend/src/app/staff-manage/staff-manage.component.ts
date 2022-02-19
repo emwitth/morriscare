@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {MatDialog,} from '@angular/material/dialog';
 import { StaffMember } from '../interfaces/StaffMember';
-
+import { AddSmDialogComponent } from '../dialog-components/add-sm-dialog/add-sm-dialog.component';
 @Component({
   selector: 'app-staff-manage',
   templateUrl: './staff-manage.component.html',
@@ -9,7 +10,30 @@ import { StaffMember } from '../interfaces/StaffMember';
 export class StaffManageComponent implements OnInit {
   staffMembers: Array<StaffMember> = new Array<StaffMember>();
 
-  constructor() { }
+  title = 'angular-material-dialog-app';
+
+  @ViewChild('dialogRef')
+  dialogRef!: TemplateRef<any>;
+
+  myFooList = ['Some Item', 'Item Second', 'Other In Row', 'What to write', 'Blah To Do']
+
+  constructor(public dialog: MatDialog) { }
+
+  openCompDialog() {
+    const myCompDialog = this.dialog.open(AddSmDialogComponent, { data: this.myFooList });
+    myCompDialog.afterOpened().subscribe((res) => {
+      // Trigger After Dialog Opened 
+      console.log('After Opened', { res });
+    });
+    myCompDialog.beforeClosed().subscribe((res) => {
+      // Trigger Before Dialog Closed 
+      console.log('Before Closed', { res });
+    });
+    myCompDialog.afterClosed().subscribe((res) => {
+      // Trigger After Dialog Closed 
+      console.log('After Closed', { res });
+    });
+  }
 
   ngOnInit(): void {
     //get staff member from back end
