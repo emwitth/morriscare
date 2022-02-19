@@ -27,11 +27,9 @@ export class AddSmDialogComponent implements OnInit {
     }, {});
    }
 
-  ngOnInit(): void {
-    this.fromDialog = "I am from dialog land...";
-  }
+  ngOnInit(): void {}
 
-  closeDialog() { this.dialogRef.close({ event: 'close', data: this.fromDialog }); }
+  closeDialog() { this.dialogRef.close({ event: 'close', data: false }); }
 
   addStaffMember() { 
     console.log(this.form.get('firstName')?.value);
@@ -40,7 +38,7 @@ export class AddSmDialogComponent implements OnInit {
     console.log(this.form.get('address')?.value);
     console.log(this.form.get('phone')?.value);
     console.log(this.formatPhone(this.form.get('phone')?.value));
-    this.dialogRef.close({ event: 'close', data: this.fromDialog }); 
+    this.dialogRef.close({ event: 'close', data: true }); 
   }
 
   formatPhone(phoneNum: string): string {

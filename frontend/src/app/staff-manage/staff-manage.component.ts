@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {MatDialog,} from '@angular/material/dialog';
 import { StaffMember } from '../interfaces/StaffMember';
 import { AddSmDialogComponent } from '../dialog-components/add-sm-dialog/add-sm-dialog.component';
+import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 @Component({
   selector: 'app-staff-manage',
   templateUrl: './staff-manage.component.html',
@@ -17,8 +18,24 @@ export class StaffManageComponent implements OnInit {
 
   constructor(public dialog: MatDialog) { }
 
-  openCompDialog() {
+  openAddDialog() {
     const myCompDialog = this.dialog.open(AddSmDialogComponent, { data: '' });
+    myCompDialog.afterOpened().subscribe((res) => {
+      // Trigger After Dialog Opened 
+      console.log('After Opened', { res });
+    });
+    myCompDialog.beforeClosed().subscribe((res) => {
+      // Trigger Before Dialog Closed 
+      console.log('Before Closed', { res });
+    });
+    myCompDialog.afterClosed().subscribe((res) => {
+      // Trigger After Dialog Closed 
+      console.log('After Closed', { res });
+    });
+  }
+
+  openRemoveDialog(first: string, last: string) {
+    const myCompDialog = this.dialog.open(RemoveSmDialogComponent, { data: {firstName: first, lastName:last} });
     myCompDialog.afterOpened().subscribe((res) => {
       // Trigger After Dialog Opened 
       console.log('After Opened', { res });

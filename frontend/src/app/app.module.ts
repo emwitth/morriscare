@@ -41,6 +41,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { StaffManageComponent } from './staff-manage/staff-manage.component';
 import { MyDialogComponent } from './dialog-components/my-dialog/my-dialog.component';
 import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-dialog.component';
+import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-d
     SettingsComponent,
     StaffManageComponent,
     MyDialogComponent,
-    AddSmDialogComponent
+    AddSmDialogComponent,
+    RemoveSmDialogComponent
   ],
   imports: [
     BrowserModule,
