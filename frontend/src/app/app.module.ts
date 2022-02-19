@@ -1,10 +1,13 @@
-// Imported Modules
+// Angular 'Core' Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+
+// Misc. Modules
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 // APP Modules
 import { AppRoutingModule } from './app-routing.module';
@@ -75,7 +78,8 @@ import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-d
     MatSidenavModule,
     MatButtonToggleModule,
     MatGridListModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

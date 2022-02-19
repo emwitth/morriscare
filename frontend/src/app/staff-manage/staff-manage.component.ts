@@ -15,12 +15,10 @@ export class StaffManageComponent implements OnInit {
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
-  myFooList = ['Some Item', 'Item Second', 'Other In Row', 'What to write', 'Blah To Do']
-
   constructor(public dialog: MatDialog) { }
 
   openCompDialog() {
-    const myCompDialog = this.dialog.open(AddSmDialogComponent, { data: this.myFooList });
+    const myCompDialog = this.dialog.open(AddSmDialogComponent, { data: '' });
     myCompDialog.afterOpened().subscribe((res) => {
       // Trigger After Dialog Opened 
       console.log('After Opened', { res });
@@ -39,29 +37,29 @@ export class StaffManageComponent implements OnInit {
     //get staff member from back end
 
     var sm1  = {
-      firstName: "jim",
-      lastName: "davis",
+      firstName: "Jim",
+      lastName: "Davis",
       postalAddress: "123 456 ave",
       email: "jim@davis.net",
       phoneNumber: "(123) 456-7890"
     };
     var sm2  = {
-      firstName: "ethan",
-      lastName: "manhart",
+      firstName: "Ethan",
+      lastName: "Manhart",
       postalAddress: "123 456 ave",
       email: "ethan@manhart.net",
       phoneNumber: "(123) 456-7890"
     };
     var sm3  = {
-      firstName: "evan",
-      lastName: "witthun",
+      firstName: "Evan",
+      lastName: "Witthun",
       postalAddress: "123 456 ave",
       email: "evan@witthun.net",
       phoneNumber: "(123) 456-7890"
     };
     var sm4  = {
-      firstName: "carlie",
-      lastName: "close",
+      firstName: "Carlie",
+      lastName: "Close",
       postalAddress: "123 456 ave",
       email: "carlie@close.net",
       phoneNumber: "(123) 456-7890"

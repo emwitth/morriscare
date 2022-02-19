@@ -30,7 +30,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Phone Number</mat-label>
-            <input matInput placeholder="555-555-1234" formControlName="phone">
+            <input type="tel" matInput mask="(000) 000-0000" placeholder="(555) 555-1234" formControlName="phone">
             <mat-error *ngIf="this.form.get('phone')?.hasError('required')">You must enter a value</mat-error>
             <mat-error *ngIf="this.form.get('phone')?.hasError('pattern')">You must enter valid phone number</mat-error>
         </mat-form-field>

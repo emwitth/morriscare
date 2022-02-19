@@ -23,7 +23,7 @@ export class AddSmDialogComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z]*')]],
       email: ['', [Validators.required, Validators.email]],
       address: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
-      phone: ['', [Validators.required, Validators.pattern('[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]')]]
+      phone: ['', [Validators.required, Validators.pattern('[0-9]{10}')]]
     }, {});
    }
 
@@ -39,6 +39,11 @@ export class AddSmDialogComponent implements OnInit {
     console.log(this.form.get('email')?.value);
     console.log(this.form.get('address')?.value);
     console.log(this.form.get('phone')?.value);
+    console.log(this.formatPhone(this.form.get('phone')?.value));
     this.dialogRef.close({ event: 'close', data: this.fromDialog }); 
+  }
+
+  formatPhone(phoneNum: string): string {
+    return '(' + phoneNum.substring(0,3) + ') ' + phoneNum.substring(3,6) + '-' + phoneNum.substring(6,10);
   }
 }
