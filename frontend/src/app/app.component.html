@@ -21,7 +21,7 @@
       <mat-icon>menu</mat-icon>
     </button>
     <!-- Login Button -->
-    <button *ngIf="!checkLoggedIn()" mat-flat-button color="primary" [routerLink]="'login'">
+    <button *ngIf="!checkLoggedIn()" mat-flat-button color="primary" (click)="openLoginDialog()">
       Login
     </button>
     <!-- User Menu -->
