@@ -1,5 +1,5 @@
 /**
- * Interface describing a single staff member.
+ * Interface describing a single staff member for display.
  */
 
 export interface StaffMember {
