@@ -33,7 +33,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 // Components
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { LogoutComponent } from './logout/logout.component';
@@ -51,7 +50,6 @@ import { LoginDialogComponent } from './dialog-components/login-dialog/login-dia
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
     PagenotfoundComponent,
     UserHomeComponent,
     LogoutComponent,
