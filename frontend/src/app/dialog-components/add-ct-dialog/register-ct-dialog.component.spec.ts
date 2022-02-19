@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MyDialogComponent } from './my-dialog.component';
+import { RegisterCtDialogComponent } from './register-ct-dialog.component';
 
-describe('MyDialogComponent', () => {
-  let component: MyDialogComponent;
-  let fixture: ComponentFixture<MyDialogComponent>;
+describe('AddCtDialogComponent', () => {
+  let component: RegisterCtDialogComponent;
+  let fixture: ComponentFixture<RegisterCtDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MyDialogComponent ]
+      declarations: [ RegisterCtDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MyDialogComponent);
+    fixture = TestBed.createComponent(RegisterCtDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

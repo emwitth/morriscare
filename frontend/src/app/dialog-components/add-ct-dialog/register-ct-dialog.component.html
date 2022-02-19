@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>Care Taker Request Form</h1>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="centered-full-width-rows-container">
+        <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="Enter First Name" formControlName="firstName">
+            <mat-error *ngIf="this.form.get('firstName')?.hasError('required')">You must enter a value</mat-error>
+            <mat-error *ngIf="this.form.get('firstName')?.hasError('pattern')">You must use only letters</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Enter Last Name" formControlName="lastName">
+            <mat-error *ngIf="this.form.get('lastName')?.hasError('required')">You must enter a value</mat-error>
+            <mat-error *ngIf="this.form.get('lastName')?.hasError('pattern')">You must use only letters</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Email Address</mat-label>
+            <input matInput placeholder="Enter Email Address" formControlName="email">
+            <mat-error *ngIf="this.form.get('email')?.hasError('required')">You must enter a value</mat-error>
+            <mat-error *ngIf="this.form.get('email')?.hasError('email')">
+                Please enter a valid email address
+              </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Postal Address</mat-label>
+            <input matInput placeholder="Enter Postal Address" formControlName="address">
+            <mat-error *ngIf="this.form.get('address')?.hasError('required')">You must enter a value</mat-error>
+            <mat-error *ngIf="this.form.get('address')?.hasError('pattern')">You must use only letters or numbers</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Phone Number</mat-label>
+            <input type="tel" matInput mask="(000) 000-0000" placeholder="(555) 555-1234" formControlName="phone">
+            <mat-error *ngIf="this.form.get('phone')?.hasError('required')">You must enter a value</mat-error>
+            <mat-error *ngIf="this.form.get('phone')?.hasError('pattern')">You must enter valid phone number</mat-error>
+        </mat-form-field>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="closeDialog()">Cancel</button>
+<button mat-raised-button color="primary" [disabled]="form.pristine || form.invalid" (click)="register()">Submit</button>
+</div>

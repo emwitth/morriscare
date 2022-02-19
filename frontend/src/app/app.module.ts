@@ -9,6 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 // Misc. Modules
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 
+// Custom Modules
+import { FormattingModule } from './modules/formatting/formatting.module';
+
 // APP Modules
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,9 +42,9 @@ import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
 import { SettingsComponent } from './settings/settings.component';
 import { StaffManageComponent } from './staff-manage/staff-manage.component';
-import { MyDialogComponent } from './dialog-components/my-dialog/my-dialog.component';
 import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-dialog.component';
 import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/remove-sm-dialog.component';
+import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/register-ct-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,9 +59,9 @@ import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/re
     CareersComponent,
     SettingsComponent,
     StaffManageComponent,
-    MyDialogComponent,
     AddSmDialogComponent,
-    RemoveSmDialogComponent
+    RemoveSmDialogComponent,
+    RegisterCtDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/re
     MatButtonToggleModule,
     MatGridListModule,
     MatDialogModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    FormattingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

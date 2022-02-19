@@ -4,19 +4,20 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormattingModule } from 'src/app/modules/formatting/formatting.module';
 
 @Component({
-  selector: 'app-add-sm-dialog',
-  templateUrl: './add-sm-dialog.component.html',
-  styleUrls: ['./add-sm-dialog.component.css']
+  selector: 'app-register-ct-dialog',
+  templateUrl: './register-ct-dialog.component.html',
+  styleUrls: ['./register-ct-dialog.component.css']
 })
-export class AddSmDialogComponent implements OnInit {
+export class RegisterCtDialogComponent implements OnInit {
   fromPage!: string;
   fromDialog!: string;
   form: FormGroup;
 
+
   constructor(
     private fb: FormBuilder,
     private format: FormattingModule,
-    public dialogRef: MatDialogRef<AddSmDialogComponent>,
+    public dialogRef: MatDialogRef<RegisterCtDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public mydata: any
   ) {
     this.form = this.fb.group({
@@ -28,11 +29,12 @@ export class AddSmDialogComponent implements OnInit {
     }, {});
    }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   closeDialog() { this.dialogRef.close({ event: 'close', data: false }); }
 
-  addStaffMember() { 
+  register() { 
     console.log(this.form.get('firstName')?.value);
     console.log(this.form.get('lastName')?.value);
     console.log(this.form.get('email')?.value);
