@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { FormattingModule } from 'src/app/modules/formatting/formatting.module';
 
 @Component({
   selector: 'app-add-sm-dialog',
@@ -15,6 +15,7 @@ export class AddSmDialogComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private format: FormattingModule,
     public dialogRef: MatDialogRef<AddSmDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public mydata: any
   ) {
@@ -37,11 +38,7 @@ export class AddSmDialogComponent implements OnInit {
     console.log(this.form.get('email')?.value);
     console.log(this.form.get('address')?.value);
     console.log(this.form.get('phone')?.value);
-    console.log(this.formatPhone(this.form.get('phone')?.value));
+    console.log(this.format.formatPhone(this.form.get('phone')?.value));
     this.dialogRef.close({ event: 'close', data: true }); 
-  }
-
-  formatPhone(phoneNum: string): string {
-    return '(' + phoneNum.substring(0,3) + ') ' + phoneNum.substring(3,6) + '-' + phoneNum.substring(6,10);
   }
 }

@@ -9,6 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 // Misc. Modules
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 
+// Custom Modules
+import { FormattingModule } from './modules/formatting/formatting.module';
+
 // APP Modules
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -81,7 +84,8 @@ import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/reg
     MatButtonToggleModule,
     MatGridListModule,
     MatDialogModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    FormattingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
