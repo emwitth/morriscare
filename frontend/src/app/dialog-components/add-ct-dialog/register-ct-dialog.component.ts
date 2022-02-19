@@ -34,7 +34,7 @@ export class RegisterCtDialogComponent implements OnInit {
 
   closeDialog() { this.dialogRef.close({ event: 'close', data: false }); }
 
-  addStaffMember() { 
+  register() { 
     console.log(this.form.get('firstName')?.value);
     console.log(this.form.get('lastName')?.value);
     console.log(this.form.get('email')?.value);
