@@ -17,7 +17,8 @@ export class AppComponent {
   openLoginDialog() {
     const myCompDialog = this.dialog.open(LoginDialogComponent, { data: '' });
     myCompDialog.afterClosed().subscribe((res) => {
-      if(res) {
+      // console.log('res', {res});
+      if(res.data == true) {
         this.router.navigate(['/home']);
         console.log('Logged In!');
       }
