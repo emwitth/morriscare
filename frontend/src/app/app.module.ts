@@ -33,7 +33,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 // Components
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { LogoutComponent } from './logout/logout.component';
@@ -45,12 +44,12 @@ import { StaffManageComponent } from './staff-manage/staff-manage.component';
 import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-dialog.component';
 import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/register-ct-dialog.component';
+import { LoginDialogComponent } from './dialog-components/login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
     PagenotfoundComponent,
     UserHomeComponent,
     LogoutComponent,
@@ -61,7 +60,8 @@ import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/reg
     StaffManageComponent,
     AddSmDialogComponent,
     RemoveSmDialogComponent,
-    RegisterCtDialogComponent
+    RegisterCtDialogComponent,
+    LoginDialogComponent
   ],
   imports: [
     BrowserModule,

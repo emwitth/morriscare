@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>Login</h1>
+<div mat-dialog-content>
+
+    <!-- Initial Login 'Screen' -->
+    <form *ngIf="!isLoginPassed" [formGroup]="loginForm">
+        <div class="centered-full-width-rows-container">
+            <!-- Username -->
+            <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Enter your username" formControlName="Username">
+                <mat-error *ngIf="this.loginForm.get('username')?.hasError('required')">You must enter a value</mat-error>
+            </mat-form-field>
+            <!-- Password -->
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="Enter your password" [type]="'password'" formControlName="Password">
+                <mat-error *ngIf="this.loginForm.get('password')?.hasError('required')">You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+
+    <!-- Security Questions 'Screen' -->
+    <form *ngIf="isLoginPassed" [formGroup]="questionsForm">
+        <div class="centered-full-width-rows-container">
+            <!-- Prompt Message -->
+            <p *ngIf="!isQuestionFailed"><small>Now, answer the question below:</small></p>
+            <!-- Incorrect Message -->
+            <p *ngIf="isQuestionFailed" style="color:red"><small>Incorrect! Please try a new question:</small></p>
+            <!-- Question -->
+            <p>{{question}}</p>
+            <!-- Answer -->
+            <mat-form-field appearance="fill">
+                <mat-label>Answer</mat-label>
+                <input matInput placeholder="Enter your answer" formControlName="Answer">
+                <mat-error *ngIf="this.questionsForm.get('Answer')?.hasError('required')">You must enter a value</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<!-- Actions -->
+<mat-dialog-actions>
+    <!-- Cancel -->
+    <button mat-raised-button (click)="closeDialog()">Cancel</button>
+    <!-- Initial Login -->
+    <button *ngIf="!isLoginPassed" mat-raised-button color="primary" style="float:right" 
+        [disabled]="loginForm.pristine || loginForm.invalid" (click)="login()">Login
+    </button>
+    <!-- Submit Security Question Answer -->
+    <button *ngIf="isLoginPassed" mat-raised-button color="primary" style="float:right" 
+        [disabled]="loginForm.pristine || loginForm.invalid" (click)="answerQuestion()">Submit
+    </button>
+</mat-dialog-actions>
