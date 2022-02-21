@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors, MinLengthValidator } from '@angular/forms';
 
 interface Question {
   value: string,
@@ -32,7 +32,8 @@ export class SettingsComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.passwordForm = this.fb.group({
       OldPassword: ['', Validators.required],
-      NewPassword: ['', [Validators.required, Validators.minLength(6), passwordContainsSpecialValidator(), 
+      NewPassword: ['', [Validators.required, Validators.minLength(6), 
+        passwordContainsSpecialValidator(), 
         Validators.pattern("[~!@#%&\^\$\*\+a-zA-Z0-9]*")]],
       ConfPassword: ['', [Validators.required, passwordsMatchValidator]]
     }, {validators: passwordMatchValidator});
@@ -40,9 +41,9 @@ export class SettingsComponent implements OnInit {
       Q1: ['', Validators.required],
       Q2: ['', Validators.required],
       Q3: ['', Validators.required],
-      A1: ['', Validators.required],
-      A2: ['', Validators.required],
-      A3: ['', Validators.required]
+      A1: ['', [Validators.required, Validators.minLength(4), Validators.pattern("[A-Za-z0-9]*")]],
+      A2: ['', [Validators.required, Validators.minLength(4), Validators.pattern("[A-Za-z0-9]*")]],
+      A3: ['', [Validators.required, Validators.minLength(4), Validators.pattern("[A-Za-z0-9]*")]]
     }, {});
    }
 

@@ -23,7 +23,10 @@
                         <mat-error *ngIf="this.passwordForm.get('NewPassword')?.hasError('pattern')">
                             Password can only contain alphanumeric values or one of the following: ~ ! @ # $ % ^ & * +
                         </mat-error>
-                        <mat-error *ngIf="this.passwordForm.get('NewPassword')?.errors?.lacksSpecialCharacter && !this.passwordForm.get('NewPassword')?.hasError('minlength') && !this.passwordForm.get('NewPassword')?.hasError('pattern')">
+                        <mat-error *ngIf="this.passwordForm.get('NewPassword')?.errors?.lacksSpecialCharacter && 
+                                        !this.passwordForm.get('NewPassword')?.hasError('minlength') && 
+                                        !this.passwordForm.get('NewPassword')?.hasError('pattern') && 
+                                        !this.passwordForm.get('NewPassword')?.hasError('required')">
                             Password must have one of the following: ~ ! @ # $ % ^ & * +
                         </mat-error>
                     </mat-form-field>
@@ -58,6 +61,12 @@
                         <mat-label>Answer</mat-label>
                         <input matInput placeholder="Enter your answer" formControlName="A1">
                         <mat-error *ngIf="this.questionsForm.get('A1')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A1')?.hasError('minlength')">
+                            Answer must have at least 4 characters
+                        </mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A1')?.hasError('pattern') && !this.questionsForm.get('A1')?.hasError('minlength')">
+                            Answer must only use alphanumeric characters
+                        </mat-error>
                     </mat-form-field>
                     <!-- Second Question -->
                     <mat-form-field appearance="fill">
@@ -72,6 +81,12 @@
                         <mat-label>Answer</mat-label>
                         <input matInput placeholder="Enter your answer" formControlName="A2">
                         <mat-error *ngIf="this.questionsForm.get('A2')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A2')?.hasError('minlength')">
+                            Answer must have only
+                        </mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A2')?.hasError('pattern') && !this.questionsForm.get('A2')?.hasError('minlength')">
+                            Answer must only use alphanumeric characters
+                        </mat-error>
                     </mat-form-field>
                     <!-- Third Question -->
                     <mat-form-field appearance="fill">
@@ -86,6 +101,12 @@
                         <mat-label>Answer</mat-label>
                         <input matInput placeholder="Enter your answer" formControlName="A3">
                         <mat-error *ngIf="this.questionsForm.get('A3')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A3')?.hasError('minlength')">
+                            Answer must have at least 4 characters
+                        </mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A3')?.hasError('pattern') && !this.questionsForm.get('A3')?.hasError('minlength')">
+                            Answer must only use alphanumeric characters
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </form>
