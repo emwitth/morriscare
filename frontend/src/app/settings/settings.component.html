@@ -4,7 +4,7 @@
     <div class="d-flex flex-row">
 
         <!-- Change Password Form -->
-        <div class="p-2 flex-fill">
+        <div class="p-2 flex-fill border-end">
             <form [formGroup]="passwordForm">
                 <p>Change Password</p>
                 <div class="centered-full-width-rows-container">
@@ -41,13 +41,13 @@
                     </mat-error>
                 </div>
             </form>
-            <button mat-raised-button color="primary" style="float:right" 
+            <button mat-raised-button color="primary"
                 [disabled]="passwordForm.pristine || passwordForm.invalid" (click)="submitPassword()">Change
             </button>
         </div>
 
         <!-- Change Security Question Form -->
-        <div class="p-2 flex-fill">
+        <div class="p-2 flex-fill border-start">
             <form [formGroup]="questionsForm">
                 <p>Change Security Questions</p>
                 <div class="centered-full-width-rows-container">
@@ -113,7 +113,7 @@
                     </mat-form-field>
                 </div>
             </form>
-            <button mat-raised-button color="primary" style="float:right" 
+            <button mat-raised-button color="primary" 
                 [disabled]="questionsForm.pristine || questionsForm.invalid" (click)="submitSecurityQuestions()">Change
             </button>
         </div>
