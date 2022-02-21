@@ -1,1 +1,123 @@
-<p>settings works!</p>
+<div class="container p-2 my-5 border">
+    <h1 class="blockquote">Authentication</h1>
+    
+    <div class="d-flex flex-row">
+
+        <!-- Change Password Form -->
+        <div class="p-2 flex-fill border-end">
+            <form [formGroup]="passwordForm">
+                <p>Change Password</p>
+                <div class="centered-full-width-rows-container">
+                    <!-- Old Password -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Old</mat-label>
+                        <input matInput placeholder="Enter your current password" formControlName="OldPassword">
+                        <mat-error *ngIf="this.passwordForm.get('OldPassword')?.hasError('required')">You must enter a value</mat-error>
+                    </mat-form-field>
+                    <!-- New Password -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>New</mat-label>
+                        <input matInput placeholder="Enter your new password" formControlName="NewPassword">
+                        <mat-error *ngIf="this.passwordForm.get('NewPassword')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.passwordForm.get('NewPassword')?.hasError('minlength')">Password must be at least 6 characters long</mat-error>
+                        <mat-error *ngIf="this.passwordForm.get('NewPassword')?.hasError('pattern')">
+                            Password can only contain alphanumeric values or one of the following: ~ ! @ # $ % ^ & * +
+                        </mat-error>
+                        <mat-error *ngIf="this.passwordForm.get('NewPassword')?.errors?.lacksSpecialCharacter && 
+                                        !this.passwordForm.get('NewPassword')?.hasError('minlength') && 
+                                        !this.passwordForm.get('NewPassword')?.hasError('pattern') && 
+                                        !this.passwordForm.get('NewPassword')?.hasError('required')">
+                            Password must have one of the following: ~ ! @ # $ % ^ & * +
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- Confirmation Password -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Confirm</mat-label>
+                        <input matInput placeholder="Enter your new password again" formControlName="ConfPassword">
+                        <mat-error *ngIf="this.passwordForm.get('ConfPassword')?.hasError('required')">You must enter a value</mat-error>
+                    </mat-form-field>
+                    <mat-error *ngIf="this.passwordForm.errors?.mismatch && this.passwordForm.get('ConfPassword')?.dirty">
+                        Passwords must match
+                    </mat-error>
+                </div>
+            </form>
+            <button mat-raised-button color="primary"
+                [disabled]="passwordForm.pristine || passwordForm.invalid" (click)="submitPassword()">Change
+            </button>
+        </div>
+
+        <!-- Change Security Question Form -->
+        <div class="p-2 flex-fill border-start">
+            <form [formGroup]="questionsForm">
+                <p>Change Security Questions</p>
+                <div class="centered-full-width-rows-container">
+                    <!-- First Question -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Question 1</mat-label>
+                        <mat-select placeholder="Choose one" formControlName="Q1">
+                            <mat-option *ngFor="let question of questions" value="question.index">{{question.value}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="this.questionsForm.get('Q1')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                    <!-- First Answer -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Answer</mat-label>
+                        <input matInput placeholder="Enter your answer" formControlName="A1">
+                        <mat-error *ngIf="this.questionsForm.get('A1')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A1')?.hasError('minlength')">
+                            Answer must have at least 4 characters
+                        </mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A1')?.hasError('pattern') && !this.questionsForm.get('A1')?.hasError('minlength')">
+                            Answer must only use alphanumeric characters
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- Second Question -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Question 2</mat-label>
+                        <mat-select placeholder="Choose one" formControlName="Q2">
+                            <mat-option *ngFor="let question of questions" value="question.index">{{question.value}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="this.questionsForm.get('Q2')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                    <!-- Second Answer -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Answer</mat-label>
+                        <input matInput placeholder="Enter your answer" formControlName="A2">
+                        <mat-error *ngIf="this.questionsForm.get('A2')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A2')?.hasError('minlength')">
+                            Answer must have only
+                        </mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A2')?.hasError('pattern') && !this.questionsForm.get('A2')?.hasError('minlength')">
+                            Answer must only use alphanumeric characters
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- Third Question -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Question 3</mat-label>
+                        <mat-select placeholder="Choose one" formControlName="Q3">
+                            <mat-option *ngFor="let question of questions" value="question.index">{{question.value}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="this.questionsForm.get('Q3')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                    <!-- Third Answer -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Answer</mat-label>
+                        <input matInput placeholder="Enter your answer" formControlName="A3">
+                        <mat-error *ngIf="this.questionsForm.get('A3')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A3')?.hasError('minlength')">
+                            Answer must have at least 4 characters
+                        </mat-error>
+                        <mat-error *ngIf="this.questionsForm.get('A3')?.hasError('pattern') && !this.questionsForm.get('A3')?.hasError('minlength')">
+                            Answer must only use alphanumeric characters
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+            <button mat-raised-button color="primary" 
+                [disabled]="questionsForm.pristine || questionsForm.invalid" (click)="submitSecurityQuestions()">Change
+            </button>
+        </div>
+
+    </div>
+    
+</div>
