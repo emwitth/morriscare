@@ -25,7 +25,7 @@
             <!-- Prompt Message -->
             <p *ngIf="!isQuestionFailed"><small>Now, answer the question below:</small></p>
             <!-- Incorrect Message -->
-            <p *ngIf="isQuestionFailed" style="color:red"><small>Incorrect! Please try a new question:</small></p>
+            <mat-error *ngIf="isQuestionFailed"><small>Incorrect! Please try a new question:</small></mat-error>
             <!-- Question -->
             <p>{{question}}</p>
             <!-- Answer -->

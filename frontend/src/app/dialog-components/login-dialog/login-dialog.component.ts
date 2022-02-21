@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Roles } from 'src/app/global-variables';
 
 @Component({
   selector: 'app-login-dialog',
@@ -92,6 +93,7 @@ export class LoginDialogComponent implements OnInit {
       sessionStorage.setItem("name", "evan");
       sessionStorage.setItem("username", "evan01");
       sessionStorage.setItem("login", 'true');
+      sessionStorage.setItem("role", Roles.admin);
 
       // close dialogue with true (logged in) state
       this.dialogRef.close({ event: 'close', data: true });

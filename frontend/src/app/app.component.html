@@ -40,11 +40,37 @@
 
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side">
-    <!-- Sidebar Options Admin -->
     <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link" href="admin/manage-staff">Manage Staff</a>
-      </li>
+      <!-- Sidebar Options Admin -->
+      <div *ngIf="checkRole(getAdmin())">
+        <li *ngFor="let function of adminFunctions" class="nav-item">
+          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+        </li>
+      </div>
+      <!-- Sidebar Options Staff Member -->
+      <div *ngIf="checkRole(getSM())">
+        <li *ngFor="let function of smFunctions" class="nav-item">
+          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+        </li>
+      </div>
+      <!-- Sidebar Options Care Taker -->
+      <div *ngIf="checkRole(getCT())">
+        <li *ngFor="let function of ctFunctions" class="nav-item">
+          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+        </li>
+      </div>
+      <!-- Sidebar Options Health Care Professional -->
+      <div *ngIf="checkRole(getHCP())">
+        <li *ngFor="let function of hcpFunctions" class="nav-item">
+          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+        </li>
+      </div>
+      <!-- Sidebar Options Patient -->
+      <div *ngIf="checkRole(getPatient())">
+        <li *ngFor="let function of patientFunctions" class="nav-item">
+          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+        </li>
+      </div>
     </ul>
   </mat-sidenav>
 

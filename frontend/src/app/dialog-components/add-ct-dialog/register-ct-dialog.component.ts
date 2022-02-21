@@ -32,8 +32,15 @@ export class RegisterCtDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Returns false indicating the request has been canceled
+   */
   closeDialog() { this.dialogRef.close({ event: 'close', data: false }); }
 
+  /**
+   * Returns true from the dialogue if the care taker 
+   * account request goes through.
+   */
   register() { 
     console.log(this.form.get('firstName')?.value);
     console.log(this.form.get('lastName')?.value);
