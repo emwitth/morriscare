@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 interface Question {
   value: string,
@@ -29,13 +29,13 @@ export class SettingsComponent implements OnInit {
     { value: "How do you do that?", index: 6 }
   ];
 
-
   constructor(private fb: FormBuilder) {
     this.passwordForm = this.fb.group({
       OldPassword: ['', Validators.required],
-      NewPassword: ['', Validators.required],
-      ConfPassword: ['', Validators.required]
-    }, {});
+      NewPassword: ['', [Validators.required, Validators.minLength(6), passwordContainsSpecialValidator(), 
+        Validators.pattern("[~!@#%&\^\$\*\+a-zA-Z0-9]*")]],
+      ConfPassword: ['', [Validators.required, passwordsMatchValidator]]
+    }, {validators: passwordMatchValidator});
     this.questionsForm = this.fb.group({
       Q1: ['', Validators.required],
       Q2: ['', Validators.required],
@@ -46,7 +46,31 @@ export class SettingsComponent implements OnInit {
     }, {});
    }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
+}
+
+function passwordContainsSpecialValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+
+    const hasWantedValue = /[~!@#%&\^\$\*\+]/.test(value); //{~, !,@, #, $, %, ˆ, &, *, +}
+
+    return !hasWantedValue ? { lacksSpecialCharacter: true } : null;
+  };
+}
+
+function passwordsMatchValidator(fg: FormGroup): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    const other = fg.get('NewPassword')?.value
+    return !(value == other) ? { passwordsDontMatch: true } : null;
+  };
+}
+
+function passwordMatchValidator(g: AbstractControl) {
+  const c1 = g.get('NewPassword');
+  const c2 = g.get('ConfPassword');
+  
+  return c1?.value == c2?.value ? null : {'mismatch': true};
 }

@@ -17,15 +17,25 @@
                     <!-- New Password -->
                     <mat-form-field appearance="fill">
                         <mat-label>New</mat-label>
-                        <input matInput placeholder="Enter your new password" [type]="'password'" formControlName="NewPassword">
+                        <input matInput placeholder="Enter your new password" formControlName="NewPassword">
                         <mat-error *ngIf="this.passwordForm.get('NewPassword')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.passwordForm.get('NewPassword')?.hasError('minlength')">Password must be at least 6 characters long</mat-error>
+                        <mat-error *ngIf="this.passwordForm.get('NewPassword')?.hasError('pattern')">
+                            Password can only contain alphanumeric values or one of the following: ~ ! @ # $ % ^ & * +
+                        </mat-error>
+                        <mat-error *ngIf="this.passwordForm.get('NewPassword')?.errors?.lacksSpecialCharacter && !this.passwordForm.get('NewPassword')?.hasError('minlength') && !this.passwordForm.get('NewPassword')?.hasError('pattern')">
+                            Password must have one of the following: ~ ! @ # $ % ^ & * +
+                        </mat-error>
                     </mat-form-field>
                     <!-- Confirmation Password -->
                     <mat-form-field appearance="fill">
                         <mat-label>Confirm</mat-label>
-                        <input matInput placeholder="Enter your new password again" [type]="'password'" formControlName="ConfPassword">
+                        <input matInput placeholder="Enter your new password again" formControlName="ConfPassword">
                         <mat-error *ngIf="this.passwordForm.get('ConfPassword')?.hasError('required')">You must enter a value</mat-error>
                     </mat-form-field>
+                    <mat-error *ngIf="this.passwordForm.errors?.mismatch && this.passwordForm.get('ConfPassword')?.dirty">
+                        Passwords must match
+                    </mat-error>
                 </div>
             </form>
         </div>
