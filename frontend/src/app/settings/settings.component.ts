@@ -47,6 +47,9 @@ export class SettingsComponent implements OnInit {
     }, {});
    }
 
+   submitPassword(){}
+   submitSecurityQuestions(){}
+
   ngOnInit(): void { }
 
 }

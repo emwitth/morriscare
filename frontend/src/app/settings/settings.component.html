@@ -41,6 +41,9 @@
                     </mat-error>
                 </div>
             </form>
+            <button mat-raised-button color="primary" style="float:right" 
+                [disabled]="passwordForm.pristine || passwordForm.invalid" (click)="submitPassword()">Change
+            </button>
         </div>
 
         <!-- Change Security Question Form -->
@@ -110,6 +113,9 @@
                     </mat-form-field>
                 </div>
             </form>
+            <button mat-raised-button color="primary" style="float:right" 
+                [disabled]="questionsForm.pristine || questionsForm.invalid" (click)="submitSecurityQuestions()">Change
+            </button>
         </div>
 
     </div>
