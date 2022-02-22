@@ -16,10 +16,11 @@ export class AppComponent {
   // titles and links for the sidebar links
   adminFunctions = [
     {title: "Manage Staff", link:"admin/manage-staff"},
+    {title: "Manage Care Takers", link:"admin/manage-care-taker"},
   ];
 
   smFunctions = [
-    {title: "Home", link:"home"}
+    {title: "Manage Care Takers", link:"manage-care-taker"},
   ];
 
   ctFunctions = [

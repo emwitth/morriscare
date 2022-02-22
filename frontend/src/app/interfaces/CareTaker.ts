@@ -8,7 +8,7 @@
     postalAddress: string,
     email: string,
     phoneNumber: string,
-    userID: string,
-    username: string
+    takerID: string,
+    enroll: string
   }
   

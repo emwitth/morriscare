@@ -19,6 +19,35 @@ export class ApiModule {
 
   constructor(private router: Router, private http: HttpClient, private format: FormattingModule){}
 
+  getUnregisteredCTs(): Array<CareTaker> {
+    var toReturn: Array<CareTaker> = [];
+    this.http.get<any>("api/caretakers", { observe: "response" }).subscribe(result => {
+      // console.log(result.body);
+      if (result.status != 200) {
+        //
+      } else if(result.status == 200) {
+        // console.log(result.body);
+        result.body.forEach((element: any) => {
+          // console.log(element.roleID, type);
+          var temp: CareTaker = {
+            firstName: element.firstName,
+            lastName: element.lastName,
+            postalAddress: element.postalAddress,
+            email: element.email,
+            phoneNumber: this.format.formatPhone(element.phoneNumber),
+            takerID: element.takerID,
+            enroll: element.enroll
+          };
+
+          toReturn.push(temp); 
+        });
+      }
+    }, err => {
+      //
+    });
+    return toReturn;
+  }
+
   getListOfUsers(type: string): Array<any> {
     var toReturn: Array<any> = [];
     this.http.get<any>("api/users", { observe: "response" }).subscribe(result => {

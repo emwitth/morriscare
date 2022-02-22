@@ -1,1 +1,28 @@
-<p>ct-manage works!</p>
+<div class="container p-2 my-5 border">
+    <h1 class="blockquote">Care Takers</h1>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Approved</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let careTaker of careTakers;">
+                <td>{{careTaker.firstName}} {{careTaker.lastName}}</td>
+                <td>{{careTaker.email}}</td>
+                <td>{{careTaker.postalAddress}}</td>
+                <td>{{careTaker.phoneNumber}}</td>
+                <td>{{careTaker.enroll}}</td>
+                <td>
+                    <button mat-raised-button color="primary" style="float: right" 
+                    (click)="openApproveDialog(careTaker.firstName, careTaker.lastName, careTaker.takerID)">Approve</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,7 +1,7 @@
 import { StaffMember } from './../interfaces/StaffMember';
 import { Roles } from 'src/app/global-variables';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import {MatDialog,} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AddSmDialogComponent } from '../dialog-components/add-sm-dialog/add-sm-dialog.component';
 import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 import { ApiModule } from '../modules/api/api.module';
@@ -41,7 +41,7 @@ export class StaffManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //get staff member from back end
+    // get staff member from back end
     this.staffMembers = this.api.getListOfUsers(Roles.sm);
     console.log(this.staffMembers);
   }

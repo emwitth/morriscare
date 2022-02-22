@@ -14,12 +14,12 @@ import { StaffManageComponent } from './staff-manage/staff-manage.component';
 import { CtManageComponent } from './ct-manage/ct-manage.component';
 
 const routes: Routes = [
-  // default path
+  /* default path */
   { 
     path: '', 
     component: HomeComponent
   },
-  // UN-LOGGED-IN PATHS
+  /* UN-LOGGED-IN PATHS */
   { 
     path: 'settings', 
     component: SettingsComponent
@@ -36,17 +36,17 @@ const routes: Routes = [
     path: 'careers', 
     component: CareersComponent
   },
-  // LOGGED IN PATHS
+  /* LOGGED IN PATHS */
   { 
     path: 'logout', 
     component: LogoutComponent
   },
-  // staff member paths
+  /* staff member paths */
   { 
-    path: '/manage-care-taker', 
+    path: 'manage-care-taker', 
     component: CtManageComponent
   },
-  // admin paths
+  /* admin paths */
   { 
     path: 'admin/manage-staff', 
     component: StaffManageComponent
@@ -55,7 +55,7 @@ const routes: Routes = [
     path: 'admin/manage-care-taker', 
     component: CtManageComponent
   },
-  // catchall path
+  /* catchall path */
   {
     path: '**',
     component: PagenotfoundComponent
