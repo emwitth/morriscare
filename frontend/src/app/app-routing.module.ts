@@ -11,20 +11,15 @@ import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
 import { SettingsComponent } from './settings/settings.component';
 import { StaffManageComponent } from './staff-manage/staff-manage.component';
+import { CtManageComponent } from './ct-manage/ct-manage.component';
 
 const routes: Routes = [
+  // default path
   { 
     path: '', 
     component: HomeComponent
   },
-  { 
-    path: 'home', 
-    component: UserHomeComponent
-  },
-  { 
-    path: 'logout', 
-    component: LogoutComponent
-  },
+  // UN-LOGGED-IN PATHS
   { 
     path: 'settings', 
     component: SettingsComponent
@@ -41,10 +36,26 @@ const routes: Routes = [
     path: 'careers', 
     component: CareersComponent
   },
+  // LOGGED IN PATHS
+  { 
+    path: 'logout', 
+    component: LogoutComponent
+  },
+  // staff member paths
+  { 
+    path: '/manage-care-taker', 
+    component: CtManageComponent
+  },
+  // admin paths
   { 
     path: 'admin/manage-staff', 
     component: StaffManageComponent
   },
+  { 
+    path: 'admin/manage-care-taker', 
+    component: CtManageComponent
+  },
+  // catchall path
   {
     path: '**',
     component: PagenotfoundComponent

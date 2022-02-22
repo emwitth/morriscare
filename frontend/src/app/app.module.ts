@@ -48,6 +48,7 @@ import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-d
 import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/register-ct-dialog.component';
 import { LoginDialogComponent } from './dialog-components/login-dialog/login-dialog.component';
+import { CtManageComponent } from './ct-manage/ct-manage.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { LoginDialogComponent } from './dialog-components/login-dialog/login-dia
     AddSmDialogComponent,
     RemoveSmDialogComponent,
     RegisterCtDialogComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    CtManageComponent
   ],
   imports: [
     BrowserModule,
