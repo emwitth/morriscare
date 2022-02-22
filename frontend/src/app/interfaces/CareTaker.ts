@@ -8,6 +8,7 @@
     postalAddress: string,
     email: string,
     phoneNumber: string,
-    userID: string
+    userID: string,
+    username: string
   }
   

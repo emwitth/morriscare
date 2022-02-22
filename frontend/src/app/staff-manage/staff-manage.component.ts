@@ -1,7 +1,7 @@
+import { StaffMember } from './../interfaces/StaffMember';
 import { Roles } from 'src/app/global-variables';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {MatDialog,} from '@angular/material/dialog';
-import { StaffMember } from '../interfaces/StaffMember';
 import { AddSmDialogComponent } from '../dialog-components/add-sm-dialog/add-sm-dialog.component';
 import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 import { ApiModule } from '../modules/api/api.module';
@@ -23,7 +23,8 @@ export class StaffManageComponent implements OnInit {
     myCompDialog.afterClosed().subscribe((res) => {
       // Trigger After Dialog Closed 
       console.log('After Closed', { res });
-      this.api.getListOfUsers(Roles.admin);
+      var arr = this.api.getListOfUsers(Roles.sm);
+      console.log(arr);
     });
   }
 
@@ -45,43 +46,7 @@ export class StaffManageComponent implements OnInit {
 
   ngOnInit(): void {
     //get staff member from back end
-
-    var sm1  = {
-      firstName: "Jim",
-      lastName: "Davis",
-      postalAddress: "123 456 ave",
-      email: "jim@davis.net",
-      phoneNumber: "(123) 456-7890",
-      userID: "string"
-    };
-    var sm2  = {
-      firstName: "Ethan",
-      lastName: "Manhart",
-      postalAddress: "123 456 ave",
-      email: "ethan@manhart.net",
-      phoneNumber: "(123) 456-7890",
-      userID: "string"
-    };
-    var sm3  = {
-      firstName: "Evan",
-      lastName: "Witthun",
-      postalAddress: "123 456 ave",
-      email: "evan@witthun.net",
-      phoneNumber: "(123) 456-7890",
-      userID: "string"
-    };
-    var sm4  = {
-      firstName: "Carlie",
-      lastName: "Close",
-      postalAddress: "123 456 ave",
-      email: "carlie@close.net",
-      phoneNumber: "(123) 456-7890",
-      userID: "string"
-    };
-    this.staffMembers.push(sm1);
-    this.staffMembers.push(sm2);
-    this.staffMembers.push(sm3);
-    this.staffMembers.push(sm4);
+    this.staffMembers = this.api.getListOfUsers(Roles.sm);
   }
 
 }
