@@ -11,6 +11,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 // Custom Modules
 import { FormattingModule } from './modules/formatting/formatting.module';
+import { ApiModule } from './modules/api/api.module';
 
 // APP Modules
 import { AppRoutingModule } from './app-routing.module';
@@ -87,7 +88,8 @@ import { LoginDialogComponent } from './dialog-components/login-dialog/login-dia
     MatDialogModule,
     NgxMaskModule.forRoot(),
     FormattingModule,
-    MatSelectModule
+    MatSelectModule,
+    ApiModule
   ],
   providers: [],
   bootstrap: [AppComponent]

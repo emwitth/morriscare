@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Roles } from 'src/app/global-variables';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 

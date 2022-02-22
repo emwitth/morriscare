@@ -1,8 +1,8 @@
 /**
- * Interface describing a single staff member
+ * Interface describing a single care taker
  */
 
-export interface StaffMember {
+ export interface CareTaker {
     firstName: string,
     lastName: string,
     postalAddress: string,
