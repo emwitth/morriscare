@@ -106,7 +106,8 @@ export class LoginDialogComponent implements OnInit {
         this.info.push(result.body?.firstName);
         this.info.push(result.body?.lastName);
         this.info.push(result.body?.username);
-        this.info.push(result.body?.userID);
+        this.info.push(result.body?.userID.toString());
+        this.info.push(result.body?.roleID.toString());
         console.log(this.info);
 
         // setup security questions
@@ -134,10 +135,12 @@ export class LoginDialogComponent implements OnInit {
     // console.log(answer == this.answerArray[this.questionIndex]);
     if(answer == this.answerArray[this.questionIndex]) {
       // set session to logged in
-      sessionStorage.setItem("name", "evan");
-      sessionStorage.setItem("username", "evan01");
+      sessionStorage.setItem("name", this.info[0]);
+      sessionStorage.setItem("last", this.info[1]);
+      sessionStorage.setItem("username", this.info[2]);
+      sessionStorage.setItem("id", this.info[3]);
+      sessionStorage.setItem("role", this.info[4]);
       sessionStorage.setItem("login", 'true');
-      sessionStorage.setItem("role", Roles.admin);
 
       // close dialogue with true (logged in) state
       this.dialogRef.close({ event: 'close', data: true });

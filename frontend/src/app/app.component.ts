@@ -41,7 +41,14 @@ export class AppComponent {
     myCompDialog.afterClosed().subscribe((res) => {
       // console.log('res', {res});
       if(res.data == true) {
-        this.router.navigate(['/home']);
+        console.log(sessionStorage.getItem("role"));
+        console.log(Roles.admin);
+        if(this.checkRole(this.getAdmin())) {
+          this.router.navigate(['admin/manage-staff']);
+        }
+        else {
+          this.router.navigate(['home']);
+        }
         console.log('Logged In!');
       }
       else
