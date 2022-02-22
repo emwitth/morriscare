@@ -32,6 +32,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Components
 import { HomeComponent } from './home/home.component';
@@ -89,7 +90,8 @@ import { LoginDialogComponent } from './dialog-components/login-dialog/login-dia
     NgxMaskModule.forRoot(),
     FormattingModule,
     MatSelectModule,
-    ApiModule
+    ApiModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormattingModule } from 'src/app/modules/formatting/formatting.module';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register-ct-dialog',
@@ -20,6 +21,7 @@ export class RegisterCtDialogComponent implements OnInit {
     private format: FormattingModule,
     private http: HttpClient,
     public dialogRef: MatDialogRef<RegisterCtDialogComponent>,
+    private _snackBar: MatSnackBar,
     @Optional() @Inject(MAT_DIALOG_DATA) public mydata: any
   ) {
     this.form = this.fb.group({
@@ -64,16 +66,25 @@ export class RegisterCtDialogComponent implements OnInit {
     this.http.post<any>("api/caretakers/", body, { observe: "response" }).subscribe(result => {
       // console.log(result.body);
       if (result.status != 200) {
+        this.openSnackBar("An Error Occured, please try again", "Okay");
         // this.isIncorrectLogin = true;
       } else if(result.status == 200) {
         // console.log(result.body);
+        this.openSnackBar("Account Request Successfully Submitted", "Okay");
         this.dialogRef.close({ event: 'close', data: true }); 
       }
     }, err => {
       // this.isIncorrectLogin = true;
+      this.openSnackBar("An Error Occured, please try again", "Okay");
     });
 
     // this.dialogRef.close({ event: 'close', data: true }); 
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      panelClass: 'mat-snackbar-colors'
+    });
   }
 
 }
