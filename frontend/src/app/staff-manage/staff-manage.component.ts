@@ -5,6 +5,7 @@ import {MatDialog,} from '@angular/material/dialog';
 import { AddSmDialogComponent } from '../dialog-components/add-sm-dialog/add-sm-dialog.component';
 import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 import { ApiModule } from '../modules/api/api.module';
+
 @Component({
   selector: 'app-staff-manage',
   templateUrl: './staff-manage.component.html',
@@ -21,10 +22,11 @@ export class StaffManageComponent implements OnInit {
   openAddDialog() {
     const myCompDialog = this.dialog.open(AddSmDialogComponent, { data: '' });
     myCompDialog.afterClosed().subscribe((res) => {
-      // Trigger After Dialog Closed 
-      console.log('After Closed', { res });
-      var arr = this.api.getListOfUsers(Roles.sm);
-      console.log(arr);
+      // Trigger After Dialog Closed
+      console.log(res.data); 
+      if(res.data == true) {
+        window.location.reload();
+      }
     });
   }
 
