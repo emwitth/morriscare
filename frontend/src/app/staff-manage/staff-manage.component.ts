@@ -30,25 +30,20 @@ export class StaffManageComponent implements OnInit {
     });
   }
 
-  openRemoveDialog(first: string, last: string) {
-    const myCompDialog = this.dialog.open(RemoveSmDialogComponent, { data: {firstName: first, lastName:last} });
-    myCompDialog.afterOpened().subscribe((res) => {
-      // Trigger After Dialog Opened 
-      console.log('After Opened', { res });
-    });
-    myCompDialog.beforeClosed().subscribe((res) => {
-      // Trigger Before Dialog Closed 
-      console.log('Before Closed', { res });
-    });
+  openRemoveDialog(first: string, last: string, id: string) {
+    const myCompDialog = this.dialog.open(RemoveSmDialogComponent, { data: {firstName: first, lastName:last, id: id} });
     myCompDialog.afterClosed().subscribe((res) => {
       // Trigger After Dialog Closed 
-      console.log('After Closed', { res });
+      if(res.data == true) {
+        window.location.reload();
+      }
     });
   }
 
   ngOnInit(): void {
     //get staff member from back end
     this.staffMembers = this.api.getListOfUsers(Roles.sm);
+    console.log(this.staffMembers);
   }
 
 }
