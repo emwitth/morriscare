@@ -1,9 +1,17 @@
+import { HttpClient } from '@angular/common/http';
+import { ApiModule } from './../modules/api/api.module';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors, MinLengthValidator } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Question {
   value: string,
   index : number
+}
+
+export interface qIDpair {
+  securityQuestionID: number,
+  question: string
 }
 
 @Component({
@@ -20,16 +28,21 @@ export class SettingsComponent implements OnInit {
   questionTwo: number = 0;
   questionThree: number = 0;
 
+  isIncorrectLogin: boolean = false;
+
+  allQuestions: Array<string> = new Array<string>();
+
   questions: Question[] = [
-    { value:"How much wood could a wood chuck chuck if a wood chuck could chuck wood?", index: 1 },
-    { value:"What is the name of your first pet?", index: 2 },
-    { value: "What city did your parents meet in?", index: 3 },
-    { value: "Where did you go to college?", index: 4 } ,
-    { value: "What city were you born in?", index: 5 } ,
-    { value: "How do you do that?", index: 6 }
+    // { value:"How much wood could a wood chuck chuck if a wood chuck could chuck wood?", index: 1 },
+    // { value:"What is the name of your first pet?", index: 2 },
+    // { value: "What city did your parents meet in?", index: 3 },
+    // { value: "Where did you go to college?", index: 4 } ,
+    // { value: "What city were you born in?", index: 5 } ,
+    // { value: "How do you do that?", index: 6 }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private api: ApiModule,
+    private http: HttpClient, private _snackBar: MatSnackBar,) {
     this.passwordForm = this.fb.group({
       OldPassword: ['', Validators.required],
       NewPassword: ['', [Validators.required, Validators.minLength(6), 
@@ -47,10 +60,70 @@ export class SettingsComponent implements OnInit {
     }, {});
    }
 
-   submitPassword(){}
-   submitSecurityQuestions(){}
+   submitPassword() {
+    var isLoginPassed: boolean = false;
+    this.isIncorrectLogin = false;
+    var body = {
+      username: sessionStorage.getItem("username"),
+      pwd: this.passwordForm.get("OldPassword")?.value
+    }
 
-  ngOnInit(): void { }
+    // console.log(body);
+    this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
+      // console.log(result.body);
+      if (result.status != 200) {
+        this.isIncorrectLogin = true;
+      } else if(result.status == 200) {
+        this.api.updateUserInfo(sessionStorage.getItem("id"), {
+          pwd: this.passwordForm.get("NewPassword")?.value
+        })
+        isLoginPassed = true;
+      }
+    }, err => {
+      this.isIncorrectLogin = true;
+    });
+
+    if(isLoginPassed) {
+
+    }
+   }
+
+   submitSecurityQuestions() {
+    var result: boolean = this.api.updateUserInfo(sessionStorage.getItem("id"), {
+      securityQuestionOneID: this.questionsForm.get("Q1")?.value,
+      securityQuestionOneAnswer:this.questionsForm.get("A1")?.value,
+      securityQuestionTwoID:this.questionsForm.get("Q2")?.value,
+      securityQuestionTwoAnswer:this.questionsForm.get("A2")?.value,
+      securityQuestionThreeID:this.questionsForm.get("Q3")?.value,
+      securityQuestionThreeAnswer:this.questionsForm.get("A3")?.value
+    })
+    // console.log("Result", result);
+    // if(result) {
+    //   this.openSnackBar("Success!", "Okay");
+    // }
+    // else {
+    //   this.openSnackBar("An Error Occured, please try again", "Okay");
+    // }
+   }
+
+  ngOnInit(): void { 
+    this.http.get<any>("api/questions", { observe: "response" }).subscribe(result => {
+      // console.log(result.body);
+      if (result.status != 200) {
+        //
+      } else if(result.status == 200) {
+        // console.log(result.body);
+        result.body.forEach((element: qIDpair) => {
+          this.questions.push({
+            value: element.question, index: element.securityQuestionID
+          });
+        });
+        // console.log(this.allQuestions);
+      }
+    }, err => {
+      //
+    });
+  }
 
 }
 

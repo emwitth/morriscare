@@ -1,7 +1,10 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Roles } from 'src/app/global-variables';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ApiModule } from 'src/app/modules/api/api.module';
+
 
 @Component({
   selector: 'app-login-dialog',
@@ -14,7 +17,11 @@ export class LoginDialogComponent implements OnInit {
 
   // to control display with ngIf
   isLoginPassed: boolean = false; // true once user uses correct username/password
+  isIncorrectLogin: boolean = false; // true if user tries with a wrong password or username
   isQuestionFailed: boolean = false; // true once user fails to answer a security question correctly
+
+  // array of personal information once password and username is entered
+  info: Array<string> = [];
 
   // forms
   loginForm: FormGroup;
@@ -28,6 +35,9 @@ export class LoginDialogComponent implements OnInit {
   questionArray: Array<string> = new Array;
   answerArray: Array<string> = new Array;
 
+  // array containing all questions
+  allQuestions: Array<string> = [];
+
   questions = {
     question1: 'What was the name of your first pet?',
     question2: 'What is the name of your second pet?',
@@ -40,7 +50,8 @@ export class LoginDialogComponent implements OnInit {
     answer3: 'Bob'
   }
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: FormBuilder, private router: Router, 
+    private api: ApiModule, private http: HttpClient,
     public dialogRef: MatDialogRef<LoginDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public mydata: any
     ) {
@@ -53,47 +64,92 @@ export class LoginDialogComponent implements OnInit {
       }, {});
      }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // fetch all questions for use once user passes initial login
+    // done now so that it doesn't have to happen in the middle of another function
+    this.allQuestions = this.api.getAllQuestions();
+    console.log(this.allQuestions);
+  }
 
   // close dialogue with false state
   closeDialog() { this.dialogRef.close({ event: 'close', data: false }); }
 
   login() {
     var body = {
-      username: this.loginForm.get('Username')?.value,
-      password: this.loginForm.get('Password')?.value
+      username: this.loginForm.get("Username")?.value,
+      pwd: this.loginForm.get("Password")?.value
     }
 
-    // this.http.post<any>("/api/user/login", body, { observe: "response" }).subscribe(result => {
-    //   console.log(result);
-    //   if (result.status != 200) {
-    //     window.alert(result.body.message);
-    //   } else {
-    //     sessionStorage.setItem("name", result.body.data?.first_name);
-    //     sessionStorage.setItem("username", result.body.data?.user_name);
-    //     sessionStorage.setItem("login", 'true');
-    //     window.alert("Login successful.");
-    //     this.router.navigate(['/home']);
-    //   }
-    // }, err => {
-    //   window.alert(err.error.message);
-    // });
+    // console.log(body);
+    this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
+      // console.log(result.body);
+      if (result.status != 200) {
+        this.isIncorrectLogin = true;
+      } else if(result.status == 200) {
+        // console.log(result.body);
+        // if login passed, store some information
+        this.info.push(result.body?.firstName);
+        this.info.push(result.body?.lastName);
+        this.info.push(result.body?.username);
+        this.info.push(result.body?.userID.toString());
+        this.info.push(result.body?.roleID.toString());
+        console.log(this.info);
 
-    // if passed, setup security questions
-    this.initializeQuestionArray(this.createRandomArray());
-    // window.alert("Login successful.");
-    this.isLoginPassed = true;
+        // setup security questions
+        this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1];
+        this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1];
+        this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1];
+
+        // setup answers
+        this.answers.answer1 = result.body?.securityQuestionOneAnswer;
+        this.answers.answer2 = result.body?.securityQuestionTwoAnswer;
+        this.answers.answer3 = result.body?.securityQuestionThreeAnswer;
+
+        // console.log(this.questions);
+
+        this.initializeQuestionArray(this.createRandomArray());
+
+        // if first time logging in
+        if(this.answers.answer1 == null) {
+          sessionStorage.setItem("firstTime","true");
+          sessionStorage.setItem("name", this.info[0]);
+          sessionStorage.setItem("last", this.info[1]);
+          sessionStorage.setItem("username", this.info[2]);
+          sessionStorage.setItem("id", this.info[3]);
+          sessionStorage.setItem("role", this.info[4]);
+          sessionStorage.setItem("login", 'true');
+          this.router.navigate(['/settings']);
+        }
+        else {
+          this.isLoginPassed = true;
+        }
+      }
+    }, err => {
+      this.isIncorrectLogin = true;
+    });
+  }
+
+  checkFirstTime() {
+    if(sessionStorage?.getItem("firstTime") != null) {
+      if(sessionStorage?.getItem("firstTime")) {
+        return true;
+      } 
+      return false;
+    }
+    return false;
   }
 
   answerQuestion() {
     var answer = this.questionsForm.get('Answer')?.value;
-    console.log(answer == this.answerArray[this.questionIndex]);
+    // console.log(answer == this.answerArray[this.questionIndex]);
     if(answer == this.answerArray[this.questionIndex]) {
       // set session to logged in
-      sessionStorage.setItem("name", "evan");
-      sessionStorage.setItem("username", "evan01");
+      sessionStorage.setItem("name", this.info[0]);
+      sessionStorage.setItem("last", this.info[1]);
+      sessionStorage.setItem("username", this.info[2]);
+      sessionStorage.setItem("id", this.info[3]);
+      sessionStorage.setItem("role", this.info[4]);
       sessionStorage.setItem("login", 'true');
-      sessionStorage.setItem("role", Roles.admin);
 
       // close dialogue with true (logged in) state
       this.dialogRef.close({ event: 'close', data: true });
@@ -118,7 +174,7 @@ export class LoginDialogComponent implements OnInit {
   updateDisplayedQuestion() {
     this.question = this.questionArray[this.questionIndex+1];
     this.questionIndex++;
-    console.log(this.questionIndex + ' ' + this.question, this.questionArray);
+    // console.log(this.questionIndex + ' ' + this.question, this.questionArray);
   }
 
   /**
@@ -128,7 +184,7 @@ export class LoginDialogComponent implements OnInit {
    * @param orderArray an array with the values 1,2,3 in random order
    */
   initializeQuestionArray(orderArray: Array<number>) {
-    console.log(orderArray);
+    // console.log(orderArray);
     orderArray.forEach(element => {
       if( element == 1) {
         this.questionArray.push(this.questions.question1);
@@ -143,8 +199,8 @@ export class LoginDialogComponent implements OnInit {
         this.answerArray.push(this.answers.answer3);
       }
     });
-    console.log(this.questionArray);
-    console.log(this.answerArray);
+    // console.log(this.questionArray);
+    // console.log(this.answerArray);
     this.updateDisplayedQuestion();
   }
 

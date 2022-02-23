@@ -1,0 +1,38 @@
+<div class="container p-2 my-5 border">
+    <h1 class="blockquote">Care Takers</h1>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <h3 style="color: var(--mainColor);">Unregistered Care Takers</h3>
+            <tr *ngFor="let careTaker of unapprovedCareTakers;">
+                <td>{{careTaker.firstName}} {{careTaker.lastName}}</td>
+                <td>{{careTaker.email}}</td>
+                <td>{{careTaker.postalAddress}}</td>
+                <td>{{careTaker.phoneNumber}}</td>
+                <td>
+                    <button mat-raised-button color="primary" style="float: right" 
+                    (click)="openApproveDialog(careTaker.firstName, careTaker.lastName, careTaker.takerID)">Approve</button>
+                </td>
+            </tr>
+            <h3 style="color: var(--mainColor);">Registered Care Takers</h3>
+            <tr *ngFor="let careTaker of approvedCareTakers;">
+                <td>{{careTaker.firstName}} {{careTaker.lastName}}</td>
+                <td>{{careTaker.email}}</td>
+                <td>{{careTaker.postalAddress}}</td>
+                <td>{{careTaker.phoneNumber}}</td>
+                <td>
+                    <button mat-raised-button color="primary" style="float: right" 
+                    (click)="openRemoveDialog(careTaker.firstName, careTaker.lastName, careTaker.userID)">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

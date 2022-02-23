@@ -16,10 +16,11 @@ export class AppComponent {
   // titles and links for the sidebar links
   adminFunctions = [
     {title: "Manage Staff", link:"admin/manage-staff"},
+    {title: "Manage Care Takers", link:"admin/manage-care-taker"},
   ];
 
   smFunctions = [
-    {title: "Home", link:"home"}
+    {title: "Manage Care Takers", link:"manage-care-taker"},
   ];
 
   ctFunctions = [
@@ -41,7 +42,17 @@ export class AppComponent {
     myCompDialog.afterClosed().subscribe((res) => {
       // console.log('res', {res});
       if(res.data == true) {
-        this.router.navigate(['/home']);
+        console.log(sessionStorage.getItem("role"));
+        console.log(Roles.admin);
+        if(this.checkRole(this.getAdmin())) {
+          this.router.navigate(['admin/manage-staff']);
+        }
+        else if(this.checkRole(this.getSM())) {
+          this.router.navigate(['manage-care-taker']);
+        }
+        else {
+          this.router.navigate(['home']);
+        }
         console.log('Logged In!');
       }
       else
@@ -58,6 +69,16 @@ export class AppComponent {
   checkLoggedIn() {
     if(sessionStorage?.getItem("login") != null) {
       if(sessionStorage?.getItem("login")) {
+        return true;
+      } 
+      return false;
+    }
+    return false;
+  }
+
+  checkFirstTime() {
+    if(sessionStorage?.getItem("firstTime") != null) {
+      if(sessionStorage?.getItem("firstTime")) {
         return true;
       } 
       return false;

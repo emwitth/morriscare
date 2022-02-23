@@ -1,4 +1,4 @@
-<nav class="navbar sticky-top navbar-dark navbar-expand-sm navbar-custom" style="background-color: #3f51b5;">
+<nav class="navbar sticky-top navbar-dark navbar-expand-sm navbar-custom" style="background-color: var(--mainColor);">
 
   <div class="container-fluid">
     <!-- Home Screen Links -->
@@ -17,7 +17,7 @@
       </li>
     </ul>
     <!-- Menu Button -->
-    <button *ngIf="checkLoggedIn()" mat-icon-button class="example-icon white-icon" (click)="sidenav.toggle()">
+    <button *ngIf="checkLoggedIn()" [disabled]="checkFirstTime()" mat-icon-button class="example-icon white-icon" (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
     <!-- Login Button -->

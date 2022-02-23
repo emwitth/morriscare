@@ -11,6 +11,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 // Custom Modules
 import { FormattingModule } from './modules/formatting/formatting.module';
+import { ApiModule } from './modules/api/api.module';
 
 // APP Modules
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +32,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Components
 import { HomeComponent } from './home/home.component';
@@ -46,6 +48,8 @@ import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-d
 import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/register-ct-dialog.component';
 import { LoginDialogComponent } from './dialog-components/login-dialog/login-dialog.component';
+import { CtManageComponent } from './ct-manage/ct-manage.component';
+import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/approve-ct-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +66,9 @@ import { LoginDialogComponent } from './dialog-components/login-dialog/login-dia
     AddSmDialogComponent,
     RemoveSmDialogComponent,
     RegisterCtDialogComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    CtManageComponent,
+    ApproveCtDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +93,9 @@ import { LoginDialogComponent } from './dialog-components/login-dialog/login-dia
     MatDialogModule,
     NgxMaskModule.forRoot(),
     FormattingModule,
-    MatSelectModule
+    MatSelectModule,
+    ApiModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

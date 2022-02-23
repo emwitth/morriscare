@@ -5,6 +5,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root{
     --navbarHeight: 50px;
+    --mainColor: #3f51b5;
 }
 .flex-center {
     display: flex;
@@ -30,4 +31,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     display: flex;
     flex-direction: column;
     width: 50%;
+}
+
+.mat-snackbar-colors {
+    color: var(--mainColor) !important;
+    background-color: #f3f3f3 !important;
+    border-color: #6977f5 !important;
+}
+.mat-simple-snackbar-action {
+    color: var(--mainColor) !important;
 }

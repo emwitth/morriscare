@@ -1,5 +1,5 @@
 /**
- * Interface describing a single staff member for display.
+ * Interface describing a single staff member
  */
 
 export interface StaffMember {
@@ -7,6 +7,8 @@ export interface StaffMember {
     lastName: string,
     postalAddress: string,
     email: string,
-    phoneNumber: string
+    phoneNumber: string,
+    userID: string,
+    username: string
   }
   
