@@ -1,9 +1,16 @@
+import { HttpClient } from '@angular/common/http';
+import { ApiModule } from './../modules/api/api.module';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors, MinLengthValidator } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 interface Question {
   value: string,
   index : number
+}
+
+export interface qIDpair {
+  securityQuestionID: number,
+  question: string
 }
 
 @Component({
@@ -20,16 +27,18 @@ export class SettingsComponent implements OnInit {
   questionTwo: number = 0;
   questionThree: number = 0;
 
+  allQuestions: Array<string> = new Array<string>();
+
   questions: Question[] = [
-    { value:"How much wood could a wood chuck chuck if a wood chuck could chuck wood?", index: 1 },
-    { value:"What is the name of your first pet?", index: 2 },
-    { value: "What city did your parents meet in?", index: 3 },
-    { value: "Where did you go to college?", index: 4 } ,
-    { value: "What city were you born in?", index: 5 } ,
-    { value: "How do you do that?", index: 6 }
+    // { value:"How much wood could a wood chuck chuck if a wood chuck could chuck wood?", index: 1 },
+    // { value:"What is the name of your first pet?", index: 2 },
+    // { value: "What city did your parents meet in?", index: 3 },
+    // { value: "Where did you go to college?", index: 4 } ,
+    // { value: "What city were you born in?", index: 5 } ,
+    // { value: "How do you do that?", index: 6 }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private api: ApiModule, private http: HttpClient) {
     this.passwordForm = this.fb.group({
       OldPassword: ['', Validators.required],
       NewPassword: ['', [Validators.required, Validators.minLength(6), 
@@ -50,7 +59,40 @@ export class SettingsComponent implements OnInit {
    submitPassword(){}
    submitSecurityQuestions(){}
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    // this.allQuestions = this.api.getAllQuestions();
+    // console.log(this.allQuestions);
+    // console.log(this.allQuestions.length);
+    // console.log(this.allQuestions);
+    // for(var element in this.allQuestions)
+    // {
+    //   console.log(element);
+    // }
+    this.http.get<any>("api/questions", { observe: "response" }).subscribe(result => {
+      // console.log(result.body);
+      if (result.status != 200) {
+        //
+      } else if(result.status == 200) {
+        // console.log(result.body);
+        result.body.forEach((element: qIDpair) => {
+          this.questions.push({
+            value: element.question, index: element.securityQuestionID
+          });
+        });
+        // console.log(this.allQuestions);
+      }
+    }, err => {
+      //
+    });
+    // console.log(this.allQuestions.forEach);
+    // for(var i: number = 1; i <= 6; i++) {
+    //   console.log(this.allQuestions[i], i);
+    //   this.questions.push({
+    //     value: this.allQuestions[i-1], index: i
+    //   });
+    // }
+    // console.log(this.questions);
+  }
 
 }
 

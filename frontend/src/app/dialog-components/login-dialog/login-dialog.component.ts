@@ -67,6 +67,7 @@ export class LoginDialogComponent implements OnInit {
     // fetch all questions for use once user passes initial login
     // done now so that it doesn't have to happen in the middle of another function
     this.allQuestions = this.api.getAllQuestions();
+    console.log(this.allQuestions);
   }
 
   // close dialogue with false state
