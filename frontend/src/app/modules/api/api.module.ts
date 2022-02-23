@@ -8,6 +8,10 @@ import { UnappCareTaker } from 'src/app/interfaces/CareTaker';
 import { HCP } from 'src/app/interfaces/HCP';
 import { FormattingModule } from '../formatting/formatting.module';
 
+export interface qIDpair {
+  securityQuestionID: number,
+  question: string
+}
 
 @NgModule({
   declarations: [],
@@ -18,6 +22,26 @@ import { FormattingModule } from '../formatting/formatting.module';
 export class ApiModule { 
 
   constructor(private router: Router, private http: HttpClient, private format: FormattingModule){}
+
+  getAllQuestions(): Array<string> {
+    // fetch all questions for use once user passes initial login
+    var allQuestions: Array<string> = new Array<string>();
+    this.http.get<any>("api/questions", { observe: "response" }).subscribe(result => {
+      // console.log(result.body);
+      if (result.status != 200) {
+        //
+      } else if(result.status == 200) {
+        // console.log(result.body);
+        result.body.forEach((element: qIDpair) => {
+          allQuestions.push(element.question);
+        });
+        // console.log(this.allQuestions);
+      }
+    }, err => {
+      //
+    });
+    return allQuestions;
+  }
 
   approveCareTaker(id: string): any{
       this.http.post<any>("api/caretaker_enroll/" + id + "/", { observe: "response" }).subscribe(result => {

@@ -3,11 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
-export interface qIDpair {
-  securityQuestionID: number,
-  question: string
-}
+import { ApiModule } from 'src/app/modules/api/api.module';
 
 @Component({
   selector: 'app-login-dialog',
@@ -53,7 +49,8 @@ export class LoginDialogComponent implements OnInit {
     answer3: 'Bob'
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient,
+  constructor(private fb: FormBuilder, private router: Router, 
+    private api: ApiModule, private http: HttpClient,
     public dialogRef: MatDialogRef<LoginDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public mydata: any
     ) {
@@ -69,20 +66,7 @@ export class LoginDialogComponent implements OnInit {
   ngOnInit(): void {
     // fetch all questions for use once user passes initial login
     // done now so that it doesn't have to happen in the middle of another function
-    this.http.get<any>("api/questions", { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
-      if (result.status != 200) {
-        //
-      } else if(result.status == 200) {
-        // console.log(result.body);
-        result.body.forEach((element: qIDpair) => {
-          this.allQuestions.push(element.question);
-        });
-        // console.log(this.allQuestions);
-      }
-    }, err => {
-      //
-    });
+    this.allQuestions = this.api.getAllQuestions();
   }
 
   // close dialogue with false state
