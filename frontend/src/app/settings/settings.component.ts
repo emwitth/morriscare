@@ -28,6 +28,8 @@ export class SettingsComponent implements OnInit {
   questionTwo: number = 0;
   questionThree: number = 0;
 
+  isIncorrectLogin: boolean = false;
+
   allQuestions: Array<string> = new Array<string>();
 
   questions: Question[] = [
@@ -58,7 +60,33 @@ export class SettingsComponent implements OnInit {
     }, {});
    }
 
-   submitPassword() {}
+   submitPassword() {
+    var isLoginPassed: boolean = false;
+    this.isIncorrectLogin = false;
+    var body = {
+      username: sessionStorage.getItem("username"),
+      pwd: this.passwordForm.get("OldPassword")?.value
+    }
+
+    // console.log(body);
+    this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
+      // console.log(result.body);
+      if (result.status != 200) {
+        this.isIncorrectLogin = true;
+      } else if(result.status == 200) {
+        this.api.updateUserInfo(sessionStorage.getItem("id"), {
+          pwd: this.passwordForm.get("NewPassword")?.value
+        })
+        isLoginPassed = true;
+      }
+    }, err => {
+      this.isIncorrectLogin = true;
+    });
+
+    if(isLoginPassed) {
+
+    }
+   }
 
    submitSecurityQuestions() {
     var result: boolean = this.api.updateUserInfo(sessionStorage.getItem("id"), {
