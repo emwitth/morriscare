@@ -47,6 +47,9 @@ export class AppComponent {
         if(this.checkRole(this.getAdmin())) {
           this.router.navigate(['admin/manage-staff']);
         }
+        else if(this.checkRole(this.getSM())) {
+          this.router.navigate(['manage-care-taker']);
+        }
         else {
           this.router.navigate(['home']);
         }
@@ -66,6 +69,16 @@ export class AppComponent {
   checkLoggedIn() {
     if(sessionStorage?.getItem("login") != null) {
       if(sessionStorage?.getItem("login")) {
+        return true;
+      } 
+      return false;
+    }
+    return false;
+  }
+
+  checkFirstTime() {
+    if(sessionStorage?.getItem("firstTime") != null) {
+      if(sessionStorage?.getItem("firstTime")) {
         return true;
       } 
       return false;

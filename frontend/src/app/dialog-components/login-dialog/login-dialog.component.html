@@ -2,7 +2,7 @@
 <div mat-dialog-content>
 
     <!-- Initial Login 'Screen' -->
-    <form *ngIf="!isLoginPassed" [formGroup]="loginForm">
+    <form *ngIf="!isLoginPassed && !checkFirstTime()" [formGroup]="loginForm">
         <div class="centered-full-width-rows-container">
             <!-- Username -->
             <mat-form-field appearance="fill">
@@ -37,17 +37,30 @@
             </mat-form-field>
         </div>
     </form>
+
+    <!-- to show if first time logging in -->
+    <div *ngIf="checkFirstTime()">
+        <mat-error>ATTENTION</mat-error>
+        <p>
+            This is your first time logging in.<br>
+            Please change your password and set up your security questions.<br>
+            Then, log out and log back in order to gain full access.<br>
+        </p>
+    </div>
 </div>
 <!-- Actions -->
 <mat-dialog-actions>
     <!-- Cancel -->
-    <button mat-raised-button (click)="closeDialog()">Cancel</button>
+    <button mat-raised-button *ngIf="!checkFirstTime()" (click)="closeDialog()">Cancel</button>
     <!-- Initial Login -->
-    <button *ngIf="!isLoginPassed" mat-raised-button color="primary" style="float:right" 
+    <button *ngIf="!isLoginPassed && !checkFirstTime()" mat-raised-button color="primary" style="float:right" 
         [disabled]="loginForm.pristine || loginForm.invalid" (click)="login()">Login
     </button>
     <!-- Submit Security Question Answer -->
     <button *ngIf="isLoginPassed" mat-raised-button color="primary" style="float:right" 
         [disabled]="loginForm.pristine || loginForm.invalid" (click)="answerQuestion()">Submit
+    </button>
+    <button *ngIf="checkFirstTime()" mat-raised-button color="primary" style="float:right" 
+        [disabled]="loginForm.pristine || loginForm.invalid" (click)="closeDialog()">Okay
     </button>
 </mat-dialog-actions>

@@ -17,7 +17,7 @@
       </li>
     </ul>
     <!-- Menu Button -->
-    <button *ngIf="checkLoggedIn()" mat-icon-button class="example-icon white-icon" (click)="sidenav.toggle()">
+    <button *ngIf="checkLoggedIn()" [disabled]="checkFirstTime()" mat-icon-button class="example-icon white-icon" (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
     <!-- Login Button -->

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiModule } from 'src/app/modules/api/api.module';
 
+
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
@@ -107,11 +108,35 @@ export class LoginDialogComponent implements OnInit {
         // console.log(this.questions);
 
         this.initializeQuestionArray(this.createRandomArray());
-        this.isLoginPassed = true;
+
+        // if first time logging in
+        if(this.answers.answer1 == null) {
+          sessionStorage.setItem("firstTime","true");
+          sessionStorage.setItem("name", this.info[0]);
+          sessionStorage.setItem("last", this.info[1]);
+          sessionStorage.setItem("username", this.info[2]);
+          sessionStorage.setItem("id", this.info[3]);
+          sessionStorage.setItem("role", this.info[4]);
+          sessionStorage.setItem("login", 'true');
+          this.router.navigate(['/settings']);
+        }
+        else {
+          this.isLoginPassed = true;
+        }
       }
     }, err => {
       this.isIncorrectLogin = true;
     });
+  }
+
+  checkFirstTime() {
+    if(sessionStorage?.getItem("firstTime") != null) {
+      if(sessionStorage?.getItem("firstTime")) {
+        return true;
+      } 
+      return false;
+    }
+    return false;
   }
 
   answerQuestion() {
