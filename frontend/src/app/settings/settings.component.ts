@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiModule } from './../modules/api/api.module';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Question {
   value: string,
@@ -38,7 +39,8 @@ export class SettingsComponent implements OnInit {
     // { value: "How do you do that?", index: 6 }
   ];
 
-  constructor(private fb: FormBuilder, private api: ApiModule, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private api: ApiModule,
+    private http: HttpClient, private _snackBar: MatSnackBar,) {
     this.passwordForm = this.fb.group({
       OldPassword: ['', Validators.required],
       NewPassword: ['', [Validators.required, Validators.minLength(6), 
@@ -56,18 +58,27 @@ export class SettingsComponent implements OnInit {
     }, {});
    }
 
-   submitPassword(){}
-   submitSecurityQuestions(){}
+   submitPassword() {}
+
+   submitSecurityQuestions() {
+    var result: boolean = this.api.updateUserInfo(sessionStorage.getItem("id"), {
+      securityQuestionOneID: this.questionsForm.get("Q1")?.value,
+      securityQuestionOneAnswer:this.questionsForm.get("A1")?.value,
+      securityQuestionTwoID:this.questionsForm.get("Q2")?.value,
+      securityQuestionTwoAnswer:this.questionsForm.get("A2")?.value,
+      securityQuestionThreeID:this.questionsForm.get("Q3")?.value,
+      securityQuestionThreeAnswer:this.questionsForm.get("A3")?.value
+    })
+    // console.log("Result", result);
+    // if(result) {
+    //   this.openSnackBar("Success!", "Okay");
+    // }
+    // else {
+    //   this.openSnackBar("An Error Occured, please try again", "Okay");
+    // }
+   }
 
   ngOnInit(): void { 
-    // this.allQuestions = this.api.getAllQuestions();
-    // console.log(this.allQuestions);
-    // console.log(this.allQuestions.length);
-    // console.log(this.allQuestions);
-    // for(var element in this.allQuestions)
-    // {
-    //   console.log(element);
-    // }
     this.http.get<any>("api/questions", { observe: "response" }).subscribe(result => {
       // console.log(result.body);
       if (result.status != 200) {
@@ -84,14 +95,6 @@ export class SettingsComponent implements OnInit {
     }, err => {
       //
     });
-    // console.log(this.allQuestions.forEach);
-    // for(var i: number = 1; i <= 6; i++) {
-    //   console.log(this.allQuestions[i], i);
-    //   this.questions.push({
-    //     value: this.allQuestions[i-1], index: i
-    //   });
-    // }
-    // console.log(this.questions);
   }
 
 }

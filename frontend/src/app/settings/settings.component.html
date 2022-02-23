@@ -55,7 +55,7 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Question 1</mat-label>
                         <mat-select placeholder="Choose one" formControlName="Q1">
-                            <mat-option *ngFor="let question of questions" value="question.index">{{question.value}}</mat-option>
+                            <mat-option *ngFor="let question of questions" value="{{question.index}}">{{question.value}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="this.questionsForm.get('Q1')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
@@ -75,7 +75,7 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Question 2</mat-label>
                         <mat-select placeholder="Choose one" formControlName="Q2">
-                            <mat-option *ngFor="let question of questions" value="question.index">{{question.value}}</mat-option>
+                            <mat-option *ngFor="let question of questions" value="{{question.index}}">{{question.value}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="this.questionsForm.get('Q2')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
@@ -95,7 +95,7 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Question 3</mat-label>
                         <mat-select placeholder="Choose one" formControlName="Q3">
-                            <mat-option *ngFor="let question of questions" value="question.index">{{question.value}}</mat-option>
+                            <mat-option *ngFor="let question of questions" value="{{question.index}}">{{question.value}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="this.questionsForm.get('Q3')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>

@@ -7,6 +7,7 @@ import { StaffMember } from 'src/app/interfaces/StaffMember';
 import { UnappCareTaker } from 'src/app/interfaces/CareTaker';
 import { HCP } from 'src/app/interfaces/HCP';
 import { FormattingModule } from '../formatting/formatting.module';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface qIDpair {
   securityQuestionID: number,
@@ -21,7 +22,8 @@ export interface qIDpair {
 })
 export class ApiModule { 
 
-  constructor(private router: Router, private http: HttpClient, private format: FormattingModule){}
+  constructor(private router: Router, private http: HttpClient, 
+    private format: FormattingModule, private _snackBar: MatSnackBar){}
 
   getAllQuestions(): Array<string> {
     // fetch all questions for use once user passes initial login
@@ -41,6 +43,29 @@ export class ApiModule {
       //
     });
     return allQuestions;
+  }
+
+  updateUserInfo(id: string | null, body: any): boolean {
+    if(id == null) {
+      return false;
+    }
+    console.log(body);
+    this.http.put<any>("api/user/" + id + "/", body, { observe: "response" }).subscribe(result => {
+      console.log(result.status);
+      if (result.status != 200) {
+        this.openSnackBar("An Error Occured, please try again", "Okay");
+        return false;
+      } else {
+        this.openSnackBar("Success!", "Okay");
+        console.log("I WAS HIT");
+        return true;
+      }
+    }, err => {
+      this.openSnackBar("An Error Occured, please try again", "Okay");
+      return false;
+    });
+    this.openSnackBar("An Error Occured, please try again", "Okay");
+    return false;
   }
 
   approveCareTaker(id: string): any{
@@ -142,6 +167,12 @@ export class ApiModule {
     toReturn.phoneNumber = this.format.formatPhone(element.phoneNumber);
     toReturn.userID = element.userID;
     return toReturn;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      panelClass: 'mat-snackbar-colors'
+    });
   }
 
 }
