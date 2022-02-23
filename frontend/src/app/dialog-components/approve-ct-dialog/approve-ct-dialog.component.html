@@ -1,11 +1,18 @@
-<!-- <h1 mat-dialog-title>Approve a Care Taker</h1>
-<div mat-dialog-content>
+<h1 mat-dialog-title>Approve a Care Taker</h1>
+<div mat-dialog-content *ngIf="!isAdded">
     <h3 *ngIf="mydata">
-        Are you sure you would like to approve {{mydata?.firstName}} {{mydata?.lastName}}?
+        Are you sure you would like to approve {{mydata?.firstName}} {{mydata?.lastName}}?<br>
         This will create an account for them
     </h3>
 </div>
+<div mat-dialog-content *ngIf="isAdded">
+    <p>{{mydata?.firstName}} {{mydata?.lastName}} has been added with the following information:</p>
+    <p>Username: {{this.username}}</p>
+    <p>Password: {{this.password}}</p>
+    <mat-error><small>Make sure to note the password as this will not be able to be seen again</small></mat-error>
+</div>
 <div mat-dialog-actions>
-    <button mat-raised-button (click)="closeDialog()">Cancel</button>
-<button mat-raised-button color="primary" (click)="removeStaffMember()">Remove</button>
-</div> -->
+    <button *ngIf="!isAdded" mat-raised-button (click)="closeDialog(false)">Cancel</button>
+    <button *ngIf="!isAdded" mat-raised-button color="primary" (click)="approveCareTaker(mydata?.id)">Approve</button>
+    <button *ngIf="isAdded" mat-raised-button color="primary" (click)="closeDialog(true)">Okay</button>
+</div>

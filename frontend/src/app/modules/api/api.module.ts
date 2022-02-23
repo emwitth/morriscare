@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { StaffMember } from 'src/app/interfaces/StaffMember';
-import { CareTaker } from 'src/app/interfaces/CareTaker';
+import { UnappCareTaker } from 'src/app/interfaces/CareTaker';
 import { HCP } from 'src/app/interfaces/HCP';
 import { FormattingModule } from '../formatting/formatting.module';
 
@@ -19,8 +19,38 @@ export class ApiModule {
 
   constructor(private router: Router, private http: HttpClient, private format: FormattingModule){}
 
-  getUnregisteredCTs(): Array<CareTaker> {
-    var toReturn: Array<CareTaker> = [];
+  approveCareTaker(id: string): any{
+      this.http.post<any>("api/caretaker_enroll/" + id + "/", { observe: "response" }).subscribe(result => {
+      console.log(result.username);
+      console.log(result.pwd);
+      var temp = {
+        username: result.username, 
+        pwd: result.pwd
+      };
+
+      return temp;
+      // toReturn.username = result?.username;
+      // toReturn.pwd = result?.pwd;
+      if (result.status != 200) {
+        console.log("not 200")
+        // toReturn.username = result?.username;
+        // toReturn.pwd = result?.pwd;
+      } else if(result.status == 200) {
+        // toReturn.username = result?.username;
+        // toReturn.pwd = result?.pwd;
+        console.log(200);
+        // return result;
+        // var toReturn = {
+        //   username: result.body.
+        // }
+      }
+    }, err => {
+      //
+    });
+  }
+
+  getUnapprovedCTs(): Array<UnappCareTaker> {
+    var toReturn: Array<UnappCareTaker> = [];
     this.http.get<any>("api/caretakers", { observe: "response" }).subscribe(result => {
       // console.log(result.body);
       if (result.status != 200) {
@@ -29,7 +59,7 @@ export class ApiModule {
         // console.log(result.body);
         result.body.forEach((element: any) => {
           // console.log(element.roleID, type);
-          var temp: CareTaker = {
+          var temp: UnappCareTaker = {
             firstName: element.firstName,
             lastName: element.lastName,
             postalAddress: element.postalAddress,
@@ -39,7 +69,10 @@ export class ApiModule {
             enroll: element.enroll
           };
 
-          toReturn.push(temp); 
+          if(element.enroll == '0') {
+            toReturn.push(temp);
+          }
+ 
         });
       }
     }, err => {

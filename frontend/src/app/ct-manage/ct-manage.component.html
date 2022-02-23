@@ -7,20 +7,30 @@
                 <th>Email</th>
                 <th>Address</th>
                 <th>Phone</th>
-                <th>Approved</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let careTaker of careTakers;">
+            <h3 style="color: var(--mainColor);">Unregistered Care Takers</h3>
+            <tr *ngFor="let careTaker of unapprovedCareTakers;">
                 <td>{{careTaker.firstName}} {{careTaker.lastName}}</td>
                 <td>{{careTaker.email}}</td>
                 <td>{{careTaker.postalAddress}}</td>
                 <td>{{careTaker.phoneNumber}}</td>
-                <td>{{careTaker.enroll}}</td>
                 <td>
                     <button mat-raised-button color="primary" style="float: right" 
                     (click)="openApproveDialog(careTaker.firstName, careTaker.lastName, careTaker.takerID)">Approve</button>
+                </td>
+            </tr>
+            <h3 style="color: var(--mainColor);">Registered Care Takers</h3>
+            <tr *ngFor="let careTaker of approvedCareTakers;">
+                <td>{{careTaker.firstName}} {{careTaker.lastName}}</td>
+                <td>{{careTaker.email}}</td>
+                <td>{{careTaker.postalAddress}}</td>
+                <td>{{careTaker.phoneNumber}}</td>
+                <td>
+                    <button mat-raised-button color="primary" style="float: right" 
+                    (click)="openRemoveDialog(careTaker.firstName, careTaker.lastName, careTaker.userID)">Remove</button>
                 </td>
             </tr>
         </tbody>
