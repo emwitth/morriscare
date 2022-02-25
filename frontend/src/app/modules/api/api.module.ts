@@ -8,11 +8,7 @@ import { UnappCareTaker } from 'src/app/interfaces/CareTaker';
 import { HCP } from 'src/app/interfaces/HCP';
 import { FormattingModule } from '../formatting/formatting.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-export interface qIDpair {
-  securityQuestionID: number,
-  question: string
-}
+import { qIDpair } from 'src/app/interfaces/QIDPair';
 
 @NgModule({
   declarations: [],
@@ -25,22 +21,19 @@ export class ApiModule {
   constructor(private router: Router, private http: HttpClient, 
     private format: FormattingModule, private _snackBar: MatSnackBar){}
 
-  getAllQuestions(): Array<string> {
+  getAllQuestions() {
     // fetch all questions for use once user passes initial login
-    var allQuestions: Array<string> = new Array<string>();
+    var allQuestions: Array<qIDpair> = new Array<qIDpair>();
     this.http.get<any>("api/questions", { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
       if (result.status != 200) {
-        //
+        this.openSnackBar("Failed to fetch security questions", "Okay");
       } else if(result.status == 200) {
-        // console.log(result.body);
         result.body.forEach((element: qIDpair) => {
-          allQuestions.push(element.question);
+          allQuestions.push(element);
         });
-        // console.log(this.allQuestions);
       }
     }, err => {
-      //
+      this.openSnackBar("Failed to fetch security questions", "Okay");
     });
     return allQuestions;
   }

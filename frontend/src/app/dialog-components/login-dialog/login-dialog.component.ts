@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiModule } from 'src/app/modules/api/api.module';
-
+import { qIDpair } from 'src/app/interfaces/QIDPair';
 
 @Component({
   selector: 'app-login-dialog',
@@ -36,7 +36,7 @@ export class LoginDialogComponent implements OnInit {
   answerArray: Array<string> = new Array;
 
   // array containing all questions
-  allQuestions: Array<string> = [];
+  allQuestions: Array<qIDpair> = new Array<qIDpair>();
 
   questions = {
     question1: 'What was the name of your first pet?',
@@ -68,7 +68,6 @@ export class LoginDialogComponent implements OnInit {
     // fetch all questions for use once user passes initial login
     // done now so that it doesn't have to happen in the middle of another function
     this.allQuestions = this.api.getAllQuestions();
-    console.log(this.allQuestions);
   }
 
   // close dialogue with false state
@@ -80,7 +79,6 @@ export class LoginDialogComponent implements OnInit {
       pwd: this.loginForm.get("Password")?.value
     }
 
-    // console.log(body);
     this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
       // console.log(result.body);
       if (result.status != 200) {
@@ -96,9 +94,9 @@ export class LoginDialogComponent implements OnInit {
         console.log(this.info);
 
         // setup security questions
-        this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1];
-        this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1];
-        this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1];
+        this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1].question;
+        this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1].question;
+        this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1].question;
 
         // setup answers
         this.answers.answer1 = result.body?.securityQuestionOneAnswer;
@@ -141,7 +139,6 @@ export class LoginDialogComponent implements OnInit {
 
   answerQuestion() {
     var answer = this.questionsForm.get('Answer')?.value;
-    // console.log(answer == this.answerArray[this.questionIndex]);
     if(answer == this.answerArray[this.questionIndex]) {
       // set session to logged in
       sessionStorage.setItem("name", this.info[0]);
@@ -174,7 +171,6 @@ export class LoginDialogComponent implements OnInit {
   updateDisplayedQuestion() {
     this.question = this.questionArray[this.questionIndex+1];
     this.questionIndex++;
-    // console.log(this.questionIndex + ' ' + this.question, this.questionArray);
   }
 
   /**
@@ -184,7 +180,6 @@ export class LoginDialogComponent implements OnInit {
    * @param orderArray an array with the values 1,2,3 in random order
    */
   initializeQuestionArray(orderArray: Array<number>) {
-    // console.log(orderArray);
     orderArray.forEach(element => {
       if( element == 1) {
         this.questionArray.push(this.questions.question1);
@@ -199,8 +194,6 @@ export class LoginDialogComponent implements OnInit {
         this.answerArray.push(this.answers.answer3);
       }
     });
-    // console.log(this.questionArray);
-    // console.log(this.answerArray);
     this.updateDisplayedQuestion();
   }
 

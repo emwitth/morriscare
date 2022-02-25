@@ -3,16 +3,7 @@ import { ApiModule } from './../modules/api/api.module';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-interface Question {
-  value: string,
-  index : number
-}
-
-export interface qIDpair {
-  securityQuestionID: number,
-  question: string
-}
+import { qIDpair } from '../interfaces/QIDPair';
 
 @Component({
   selector: 'app-settings',
@@ -24,22 +15,11 @@ export class SettingsComponent implements OnInit {
   passwordForm: FormGroup;
   questionsForm: FormGroup;
 
-  questionOne: number = 0;
-  questionTwo: number = 0;
-  questionThree: number = 0;
-
+  // indicates old password is correct
   isIncorrectLogin: boolean = false;
 
-  allQuestions: Array<string> = new Array<string>();
-
-  questions: Question[] = [
-    // { value:"How much wood could a wood chuck chuck if a wood chuck could chuck wood?", index: 1 },
-    // { value:"What is the name of your first pet?", index: 2 },
-    // { value: "What city did your parents meet in?", index: 3 },
-    // { value: "Where did you go to college?", index: 4 } ,
-    // { value: "What city were you born in?", index: 5 } ,
-    // { value: "How do you do that?", index: 6 }
-  ];
+  // it's the list of questions
+  questions: Array<qIDpair> = new Array<qIDpair>();
 
   constructor(private fb: FormBuilder, private api: ApiModule,
     private http: HttpClient, private _snackBar: MatSnackBar,) {
@@ -48,7 +28,7 @@ export class SettingsComponent implements OnInit {
       NewPassword: ['', [Validators.required, Validators.minLength(6), 
         passwordContainsSpecialValidator(), 
         Validators.pattern("[~!@#%&\^\$\*\+a-zA-Z0-9]*")]],
-      ConfPassword: ['', [Validators.required, passwordsMatchValidator]]
+      ConfPassword: ['', [Validators.required]]
     }, {validators: passwordMatchValidator});
     this.questionsForm = this.fb.group({
       Q1: ['', Validators.required],
@@ -60,91 +40,75 @@ export class SettingsComponent implements OnInit {
     }, {});
    }
 
+   /**
+    * Submits the new password
+    */
    submitPassword() {
-    var isLoginPassed: boolean = false;
     this.isIncorrectLogin = false;
     var body = {
       username: sessionStorage.getItem("username"),
       pwd: this.passwordForm.get("OldPassword")?.value
     }
 
-    // console.log(body);
+    // check if old password is correct (uses same endpoint as login)
     this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
       if (result.status != 200) {
         this.isIncorrectLogin = true;
       } else if(result.status == 200) {
+        // if the old password was correct, change the password to the new password
         this.api.updateUserInfo(sessionStorage.getItem("id"), {
           pwd: this.passwordForm.get("NewPassword")?.value
         })
-        isLoginPassed = true;
       }
     }, err => {
       this.isIncorrectLogin = true;
     });
+  }
 
-    if(isLoginPassed) {
-
-    }
-   }
-
+   /**
+    * Submits the new set of security questions
+    */
    submitSecurityQuestions() {
-    var result: boolean = this.api.updateUserInfo(sessionStorage.getItem("id"), {
+    this.api.updateUserInfo(sessionStorage.getItem("id"), {
       securityQuestionOneID: this.questionsForm.get("Q1")?.value,
       securityQuestionOneAnswer:this.questionsForm.get("A1")?.value,
       securityQuestionTwoID:this.questionsForm.get("Q2")?.value,
       securityQuestionTwoAnswer:this.questionsForm.get("A2")?.value,
       securityQuestionThreeID:this.questionsForm.get("Q3")?.value,
       securityQuestionThreeAnswer:this.questionsForm.get("A3")?.value
-    })
-    // console.log("Result", result);
-    // if(result) {
-    //   this.openSnackBar("Success!", "Okay");
-    // }
-    // else {
-    //   this.openSnackBar("An Error Occured, please try again", "Okay");
-    // }
+    });
    }
 
   ngOnInit(): void { 
-    this.http.get<any>("api/questions", { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
-      if (result.status != 200) {
-        //
-      } else if(result.status == 200) {
-        // console.log(result.body);
-        result.body.forEach((element: qIDpair) => {
-          this.questions.push({
-            value: element.question, index: element.securityQuestionID
-          });
-        });
-        // console.log(this.allQuestions);
-      }
-    }, err => {
-      //
-    });
+    // get questions for use in the dropdowns
+    console.log("HAHA", this.api.getAllQuestions());
+    this.questions = this.api.getAllQuestions();
   }
 
 }
 
+/**
+ * Validator to ensure a password contains a special character
+ * The characters are {~, !, @, #, $, %, ˆ, &, *, +}
+ * 
+ * @returns a validator funtion
+ */
 function passwordContainsSpecialValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
 
-    const hasWantedValue = /[~!@#%&\^\$\*\+]/.test(value); //{~, !,@, #, $, %, ˆ, &, *, +}
+    const hasWantedValue = /[~!@#%&\^\$\*\+]/.test(value);
 
     return !hasWantedValue ? { lacksSpecialCharacter: true } : null;
   };
 }
 
-function passwordsMatchValidator(fg: FormGroup): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
-    const other = fg.get('NewPassword')?.value
-    return !(value == other) ? { passwordsDontMatch: true } : null;
-  };
-}
-
+/**
+ * Validator to ensure a new password and the confirmation password match
+ * 
+ * @param g the form group
+ * @returns a group-scoped validator function
+ */
 function passwordMatchValidator(g: AbstractControl) {
   const c1 = g.get('NewPassword');
   const c2 = g.get('ConfPassword');
