@@ -81,7 +81,6 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void { 
     // get questions for use in the dropdowns
-    console.log("HAHA", this.api.getAllQuestions());
     this.questions = this.api.getAllQuestions();
   }
 
