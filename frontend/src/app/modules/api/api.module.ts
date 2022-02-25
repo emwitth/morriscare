@@ -61,36 +61,6 @@ export class ApiModule {
     return false;
   }
 
-  approveCareTaker(id: string): any{
-      this.http.post<any>("api/caretaker_enroll/" + id + "/", { observe: "response" }).subscribe(result => {
-      console.log(result.username);
-      console.log(result.pwd);
-      var temp = {
-        username: result.username, 
-        pwd: result.pwd
-      };
-
-      return temp;
-      // toReturn.username = result?.username;
-      // toReturn.pwd = result?.pwd;
-      if (result.status != 200) {
-        console.log("not 200")
-        // toReturn.username = result?.username;
-        // toReturn.pwd = result?.pwd;
-      } else if(result.status == 200) {
-        // toReturn.username = result?.username;
-        // toReturn.pwd = result?.pwd;
-        console.log(200);
-        // return result;
-        // var toReturn = {
-        //   username: result.body.
-        // }
-      }
-    }, err => {
-      //
-    });
-  }
-
   getUnapprovedCTs(): Array<UnappCareTaker> {
     var toReturn: Array<UnappCareTaker> = [];
     this.http.get<any>("api/caretakers", { observe: "response" }).subscribe(result => {
