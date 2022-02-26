@@ -38,7 +38,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './home/home.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { UserHomeComponent } from './user-home/user-home.component';
-import { LogoutComponent } from './logout/logout.component';
 import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
@@ -58,7 +57,6 @@ import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-
     HomeComponent,
     PagenotfoundComponent,
     UserHomeComponent,
-    LogoutComponent,
     AboutComponent,
     ServicesComponent,
     CareersComponent,

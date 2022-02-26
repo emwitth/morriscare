@@ -99,10 +99,6 @@ export class AppComponent {
   }
 
   // functions to get Role values in html
-  // ct = 'caretaker',
-  //   sm = 'staffmember',
-  //   hcp = 'healthcareprovider',
-  //   patient = 'patient'
   getAdmin() {
     return Roles.admin;
   }
