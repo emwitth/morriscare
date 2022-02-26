@@ -50,6 +50,7 @@ import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/reg
 import { LoginDialogComponent } from './dialog-components/login-dialog/login-dialog.component';
 import { CtManageComponent } from './ct-manage/ct-manage.component';
 import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/approve-ct-dialog.component';
+import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-dialog.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/
     RegisterCtDialogComponent,
     LoginDialogComponent,
     CtManageComponent,
-    ApproveCtDialogComponent
+    ApproveCtDialogComponent,
+    LogoutDialogComponent
   ],
   imports: [
     BrowserModule,

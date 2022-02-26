@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from './dialog-components/login-dialog/login-dialog.component';
+import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-dialog.component';
 import { Roles } from './global-variables';
 
 @Component({
@@ -59,6 +60,13 @@ export class AppComponent {
       {
         console.log('Canceled!')
       }
+    });
+  }
+
+  openLogoutDialog() {
+    const myCompDialog = this.dialog.open(LogoutDialogComponent, {data: ''});
+    myCompDialog.afterClosed().subscribe((res) => {
+      console.log("Dialog Closed");
     });
   }
 
