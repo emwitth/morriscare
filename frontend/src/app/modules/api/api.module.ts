@@ -21,8 +21,12 @@ export class ApiModule {
   constructor(private router: Router, private http: HttpClient, 
     private format: FormattingModule, private _snackBar: MatSnackBar){}
 
+  /**
+   * Fetches all the security questions possible.
+   * 
+   * @returns a list of question and id pairs
+   */
   getAllQuestions() {
-    // fetch all questions for use once user passes initial login
     var allQuestions: Array<qIDpair> = new Array<qIDpair>();
     this.http.get<any>("api/questions", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
@@ -38,6 +42,13 @@ export class ApiModule {
     return allQuestions;
   }
 
+  /**
+   * Updates the given information in body in the user of ID id.
+   * 
+   * @param id the id of the user
+   * @param body the information to change (a JSON object)
+   * @returns true indicating success, false otherwise
+   */
   updateUserInfo(id: string | null, body: any): boolean {
     if(id == null) {
       return false;
@@ -61,16 +72,18 @@ export class ApiModule {
     return false;
   }
 
+  /**
+   * Fetches an array of unaproved caretakers and their information.
+   * 
+   * @returns an array of unapproved caretakers
+   */
   getUnapprovedCTs(): Array<UnappCareTaker> {
     var toReturn: Array<UnappCareTaker> = [];
     this.http.get<any>("api/caretakers", { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
       if (result.status != 200) {
-        //
+        this.openSnackBar("Failed to fetch unapproved caretakers. Maybe reload the page or contact an administrator.", "Okay");
       } else if(result.status == 200) {
-        // console.log(result.body);
         result.body.forEach((element: any) => {
-          // console.log(element.roleID, type);
           var temp: UnappCareTaker = {
             firstName: element.firstName,
             lastName: element.lastName,
@@ -88,34 +101,43 @@ export class ApiModule {
         });
       }
     }, err => {
-      //
+      this.openSnackBar("Failed to fetch unapproved caretakers. Maybe reload the page or contact an administrator.", "Okay");
     });
     return toReturn;
   }
 
+  /**
+   * Fetches a list of users of a given type and their information
+   * 
+   * @param type the type of the user (types in gloabl variables)
+   * @returns an array of users of type
+   */
   getListOfUsers(type: string): Array<any> {
     var toReturn: Array<any> = [];
     this.http.get<any>("api/users", { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
       if (result.status != 200) {
-        //
+        this.openSnackBar("Failed to fetch users of type" + type + ". Maybe reload the page or contact an administrator.", "Okay");
       } else if(result.status == 200) {
-        // console.log(result.body);
         result.body.forEach((element: any) => {
-          // console.log(element.roleID, type);
           if(element.roleID == type) {
            toReturn.push(this.fillElement(type, element)); 
           }
         });
       }
     }, err => {
-      //
+      this.openSnackBar("Failed to fetch users of type" + type + ". Maybe reload the page or contact an administrator.", "Okay");
     });
     return toReturn;
   }
 
+  /**
+   * Returns an element of whatever type is wanted for the given type.
+   * 
+   * @param type returns the element containing the information wanted out of the user list
+   * @param element the element from the post request
+   * @returns a filled element
+   */
   private fillElement(type: string, element: any): any {
-    // console.log(element);
     var toReturn: StaffMember = {firstName: "string",
       lastName: "string",
       postalAddress: "string",
@@ -132,6 +154,12 @@ export class ApiModule {
     return toReturn;
   }
 
+  /**
+   * Opens a snackbar to indicate something (yummy)
+   * 
+   * @param message the message to display
+   * @param action the action to display
+   */
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       panelClass: 'mat-snackbar-colors'
