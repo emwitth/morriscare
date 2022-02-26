@@ -38,7 +38,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './home/home.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { UserHomeComponent } from './user-home/user-home.component';
-import { LogoutComponent } from './logout/logout.component';
 import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 import { CareersComponent } from './careers/careers.component';
@@ -50,6 +49,7 @@ import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/reg
 import { LoginDialogComponent } from './dialog-components/login-dialog/login-dialog.component';
 import { CtManageComponent } from './ct-manage/ct-manage.component';
 import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/approve-ct-dialog.component';
+import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,6 @@ import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/
     HomeComponent,
     PagenotfoundComponent,
     UserHomeComponent,
-    LogoutComponent,
     AboutComponent,
     ServicesComponent,
     CareersComponent,
@@ -68,7 +67,8 @@ import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/
     RegisterCtDialogComponent,
     LoginDialogComponent,
     CtManageComponent,
-    ApproveCtDialogComponent
+    ApproveCtDialogComponent,
+    LogoutDialogComponent
   ],
   imports: [
     BrowserModule,

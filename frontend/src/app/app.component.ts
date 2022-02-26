@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from './dialog-components/login-dialog/login-dialog.component';
+import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-dialog.component';
 import { Roles } from './global-variables';
+import {MatSidenav} from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +12,7 @@ import { Roles } from './global-variables';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   title = 'website';
   test = false;
 
@@ -40,7 +43,7 @@ export class AppComponent {
   openLoginDialog() {
     const myCompDialog = this.dialog.open(LoginDialogComponent, { data: '' });
     myCompDialog.afterClosed().subscribe((res) => {
-      // console.log('res', {res});
+      this.sidenav.open();
       if(res.data == true) {
         console.log(sessionStorage.getItem("role"));
         console.log(Roles.admin);
@@ -48,12 +51,26 @@ export class AppComponent {
           this.router.navigate(['admin/manage-staff']);
         }
         else if(this.checkRole(this.getSM())) {
-          this.router.navigate(['manage-care-taker']);
+          this.router.navigate(['staff/manage-care-taker']);
         }
         else {
           this.router.navigate(['home']);
         }
         console.log('Logged In!');
+      }
+      else
+      {
+        console.log('Canceled!')
+      }
+    });
+  }
+
+  openLogoutDialog() {
+    const myCompDialog = this.dialog.open(LogoutDialogComponent, {data: ''});
+    myCompDialog.afterClosed().subscribe((res) => {
+      if(res.data == true) {
+        this.sidenav.close();
+        console.log('Logged Out!');
       }
       else
       {
@@ -91,10 +108,6 @@ export class AppComponent {
   }
 
   // functions to get Role values in html
-  // ct = 'caretaker',
-  //   sm = 'staffmember',
-  //   hcp = 'healthcareprovider',
-  //   patient = 'patient'
   getAdmin() {
     return Roles.admin;
   }

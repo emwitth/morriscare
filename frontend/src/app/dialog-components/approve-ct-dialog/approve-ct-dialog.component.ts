@@ -1,6 +1,5 @@
 import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ApiModule } from 'src/app/modules/api/api.module';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -16,7 +15,6 @@ export class ApproveCtDialogComponent implements OnInit {
   password: string = "";
 
   constructor( 
-    private api: ApiModule,
     private http: HttpClient,
     public dialogRef: MatDialogRef<ApproveCtDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public mydata: any) { }
@@ -25,34 +23,18 @@ export class ApproveCtDialogComponent implements OnInit {
   }
 
   approveCareTaker(id: string) {
-    // var temp = this.api.approveCareTaker(id);
-    // console.log(temp);
-    this.http.post<any>("api/caretaker_enroll/" + id + "/", { observe: "response" }).subscribe(result => {
-      console.log(result.username);
-      console.log(result.pwd);
-        this.username = result.username;
-        this.password = result.pwd;
-
-      // toReturn.username = result?.username;
-      // toReturn.pwd = result?.pwd;
+    this.http.post<any>("api/caretaker_enroll/" + id + "/",{}, { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
         console.log("not 200")
-        // toReturn.username = result?.username;
-        // toReturn.pwd = result?.pwd;
-      } else if(result.status == 200) {
-        // toReturn.username = result?.username;
-        // toReturn.pwd = result?.pwd;
-        console.log(200);
-        // return result;
-        // var toReturn = {
-        //   username: result.body.
-        // }
+      } else {
+        console.log("200");
+        this.username = result.body.username;
+        this.password = result.body.pwd;
       }
     }, err => {
       //
     });
     this.isAdded = true;
-    // this.dialogRef.close({ event: 'close', data: false });
   }
 
   closeDialog(result: boolean) { this.dialogRef.close({ event: 'close', data: result }); }

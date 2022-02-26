@@ -1,19 +1,19 @@
-<nav class="navbar sticky-top navbar-dark navbar-expand-sm navbar-custom" style="background-color: var(--mainColor);">
+<nav class="navbar sticky-top navbar-expand-sm navbar-custom" style="background-color: var(--mainColor);">
 
   <div class="container-fluid">
     <!-- Home Screen Links -->
     <ul *ngIf="!checkLoggedIn()" class="navbar-nav nav-pills">
       <li class="nav-item">
-        <a class="nav-link" href="">Home</a>
+        <a class="nav-link navWhiteText" href="">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="about">About</a>
+        <a class="nav-link navWhiteText" href="about">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="services">Services</a>
+        <a class="nav-link navWhiteText" href="services">Services</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="careers">Careers</a>
+        <a class="nav-link navWhiteText" href="careers">Careers</a>
       </li>
     </ul>
     <!-- Menu Button -->
@@ -31,44 +31,44 @@
       </button>
       <mat-menu #usermenu="matMenu">
         <button mat-menu-item [routerLink]="'settings'">Settings</button>
-        <button mat-menu-item [routerLink]="'logout'">Logout</button>
+        <button mat-menu-item (click)="openLogoutDialog()">Logout</button>
       </mat-menu>
     </div>
   </div>
 
 </nav>
 
-<mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="side">
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" opened>
     <ul class="nav flex-column">
       <!-- Sidebar Options Admin -->
       <div *ngIf="checkRole(getAdmin())">
         <li *ngFor="let function of adminFunctions" class="nav-item">
-          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+          <a class="nav-link navWhiteText" href={{function.link}}>{{function.title}}</a>
         </li>
       </div>
       <!-- Sidebar Options Staff Member -->
       <div *ngIf="checkRole(getSM())">
         <li *ngFor="let function of smFunctions" class="nav-item">
-          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+          <a class="nav-link navWhiteText" href={{function.link}}>{{function.title}}</a>
         </li>
       </div>
       <!-- Sidebar Options Care Taker -->
       <div *ngIf="checkRole(getCT())">
         <li *ngFor="let function of ctFunctions" class="nav-item">
-          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+          <a class="nav-link navWhiteText" href={{function.link}}>{{function.title}}</a>
         </li>
       </div>
       <!-- Sidebar Options Health Care Professional -->
       <div *ngIf="checkRole(getHCP())">
         <li *ngFor="let function of hcpFunctions" class="nav-item">
-          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+          <a class="nav-link navWhiteText" href={{function.link}}>{{function.title}}</a>
         </li>
       </div>
       <!-- Sidebar Options Patient -->
       <div *ngIf="checkRole(getPatient())">
         <li *ngFor="let function of patientFunctions" class="nav-item">
-          <a class="nav-link" href={{function.link}}>{{function.title}}</a>
+          <a class="nav-link navWhiteText" href={{function.link}}>{{function.title}}</a>
         </li>
       </div>
     </ul>
@@ -81,8 +81,3 @@
     <!---------------------------------------------------------------->
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<!-- This is important, DO NOT DELETE -->
-<!-- It is why the other pages are shown when you route to them -->
-<!-- <router-outlet *ngIf="!checkLoggedIn()"></router-outlet> -->
-<!---------------------------------------------------------------->
