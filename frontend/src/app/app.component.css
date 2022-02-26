@@ -6,9 +6,17 @@
   height: var(--navbarHeight);
 }
 
+.navWhiteText {
+  color: white;
+}
+
 .sidenav-container {
     width: 100%;
     height: calc(100% - var(--navbarHeight));
+  }
+
+  mat-sidenav {
+    background-color: var(--mainColor);
   }
   
   mat-drawer-content {

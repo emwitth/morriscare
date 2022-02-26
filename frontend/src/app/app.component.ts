@@ -43,7 +43,6 @@ export class AppComponent {
   openLoginDialog() {
     const myCompDialog = this.dialog.open(LoginDialogComponent, { data: '' });
     myCompDialog.afterClosed().subscribe((res) => {
-      // console.log('res', {res});
       this.sidenav.open();
       if(res.data == true) {
         console.log(sessionStorage.getItem("role"));
