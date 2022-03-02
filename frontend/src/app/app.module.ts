@@ -54,6 +54,7 @@ import { CtManageComponent } from './ct-manage/ct-manage.component';
 import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/approve-ct-dialog.component';
 import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-dialog.component';
 import { HcpApplicationComponent } from './hcp-application/hcp-application.component';
+import { JobListComponent } from './job-list/job-list.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { HcpApplicationComponent } from './hcp-application/hcp-application.compo
     CtManageComponent,
     ApproveCtDialogComponent,
     LogoutDialogComponent,
-    HcpApplicationComponent
+    HcpApplicationComponent,
+    JobListComponent
   ],
   imports: [
     BrowserModule,

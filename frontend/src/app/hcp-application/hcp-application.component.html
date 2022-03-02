@@ -87,6 +87,7 @@
             <button mat-raised-button color="primary" 
                 [disabled]="form.pristine || form.invalid" (click)="submit()">Submit
             </button>
+            <button mat-raised-button (click)="submit()" routerLink="/careers/{{type}}">Cancel</button>
         </div>
     </div>
 </form>

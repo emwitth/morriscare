@@ -12,6 +12,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { StaffManageComponent } from './staff-manage/staff-manage.component';
 import { CtManageComponent } from './ct-manage/ct-manage.component';
 import { HcpApplicationComponent } from './hcp-application/hcp-application.component';
+import { JobListComponent } from './job-list/job-list.component';
 
 const routes: Routes = [
   /* default path */
@@ -35,6 +36,10 @@ const routes: Routes = [
   { 
     path: 'careers', 
     component: CareersComponent
+  },
+  { 
+    path: 'careers/:type', 
+    component: JobListComponent
   },
   { 
     path: 'careers/:type/:id', 
