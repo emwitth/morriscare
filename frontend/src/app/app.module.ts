@@ -12,13 +12,14 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 // Custom Modules
 import { FormattingModule } from './modules/formatting/formatting.module';
 import { ApiModule } from './modules/api/api.module';
+import { SnackbarModule } from './modules/snackbar/snackbar.module';
 
 // APP Modules
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Angular Materials Modules
-import {MatCommonModule} from '@angular/material/core';
+import { MatCommonModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule  } from '@angular/material/button';
@@ -33,6 +34,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 // Components
 import { HomeComponent } from './home/home.component';
@@ -45,11 +48,12 @@ import { SettingsComponent } from './settings/settings.component';
 import { StaffManageComponent } from './staff-manage/staff-manage.component';
 import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-dialog.component';
 import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/remove-sm-dialog.component';
-import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/register-ct-dialog.component';
+import { RegisterCtDialogComponent } from './dialog-components/register-ct-dialog/register-ct-dialog.component';
 import { LoginDialogComponent } from './dialog-components/login-dialog/login-dialog.component';
 import { CtManageComponent } from './ct-manage/ct-manage.component';
 import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/approve-ct-dialog.component';
 import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-dialog.component';
+import { HcpApplicationComponent } from './hcp-application/hcp-application.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +72,8 @@ import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-
     LoginDialogComponent,
     CtManageComponent,
     ApproveCtDialogComponent,
-    LogoutDialogComponent
+    LogoutDialogComponent,
+    HcpApplicationComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +100,10 @@ import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-
     FormattingModule,
     MatSelectModule,
     ApiModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    SnackbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

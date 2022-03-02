@@ -1,0 +1,92 @@
+<h1>Application for {{type | titlecase}}</h1>
+<form [formGroup]="form">
+    <div class="d-flex flex-row">
+        <!-- Left Half of Screen -->
+        <div class="p-2 flex-fill">
+            <div class="centered-full-width-rows-container">
+                <p>General Information</p>
+                <!-- First Name -->
+                <mat-form-field appearance="fill">
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="Enter your first name" formControlName="first">
+                    <mat-error *ngIf="this.form.get('first')?.hasError('required')">You must enter a value</mat-error>
+                    <mat-error *ngIf="this.form.get('first')?.hasError('pattern')">You must use only letters</mat-error>
+                </mat-form-field>
+                <!-- Last Name -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Enter your last name" formControlName="last">
+                    <mat-error *ngIf="this.form.get('last')?.hasError('required')">You must enter a value</mat-error>
+                    <mat-error *ngIf="this.form.get('last')?.hasError('pattern')">You must use only letters</mat-error>
+                </mat-form-field>
+                <!-- Phone Number -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Phone Number</mat-label>
+                    <input type="tel" matInput mask="(000) 000-0000" placeholder="(555) 555-1234" formControlName="phone">
+                    <mat-error *ngIf="this.form.get('phone')?.hasError('required')">You must enter a value</mat-error>
+                    <mat-error *ngIf="this.form.get('phone')?.hasError('pattern')">You must enter valid phone number</mat-error>
+                </mat-form-field>
+                <!-- Email Address -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input type="tel" matInput placeholder="name@email.com" formControlName="email">
+                    <mat-error *ngIf="this.form.get('email')?.hasError('required')">You must enter a value</mat-error>
+                    <mat-error *ngIf="this.form.get('email')?.hasError('email')">You must enter valid email</mat-error>
+                </mat-form-field>
+                <!-- Sex -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Sex</mat-label>
+                    <mat-select placeholder="Choose one" formControlName="sex">
+                        <mat-option value="m"> Male </mat-option>
+                        <mat-option value="f"> Female </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="this.form.get('sex')?.hasError('required')">You must select a value</mat-error>
+                </mat-form-field>
+                <!-- Postal Address -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Enter Postal Address" formControlName="address">
+                    <mat-error *ngIf="this.form.get('address')?.hasError('required')">You must enter a value</mat-error>
+                    <mat-error *ngIf="this.form.get('address')?.hasError('pattern')">You must use only letters or numbers</mat-error>
+                </mat-form-field>
+                <!-- Date of Birth -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [max]="today" [matDatepicker]="picker" formControlName="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="this.form.get('dob')?.hasError('required')">You must select a value</mat-error>
+                </mat-form-field>
+                <!-- Social Security Number -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Social Security Number</mat-label>
+                    <input type="tel" matInput mask="000-00-0000" placeholder="000-00-0000" formControlName="ssn">
+                    <mat-error *ngIf="this.form.get('ssn')?.hasError('required')">You must enter a value</mat-error>
+                    <mat-error *ngIf="this.form.get('ssn')?.hasError('pattern')">You must enter valid social security number</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- Right Half of Screen -->
+        <div class="p-2 flex-fill">
+            <div class="centered-full-width-rows-container">
+                <p>Qualifications</p>
+                <!-- Years Experience -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Years of Experience</mat-label>
+                    <input matInput mask="0*" formControlName="experience">
+                    <mat-error *ngIf="this.form.get('experience')?.hasError('required')">You must enter a value</mat-error>
+                    <mat-error *ngIf="this.form.get('experience')?.hasError('pattern')">You must enter years as a number</mat-error>
+                </mat-form-field>
+                <!-- Qualifications -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Qualifications</mat-label>
+                    <textarea matInput placeholder="Qualifications must include degrees and respective institutions." formControlName="qualifications"></textarea>
+                    <mat-error *ngIf="this.form.get('qualifications')?.hasError('required')">You must enter your qualifications</mat-error>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" 
+                [disabled]="form.pristine || form.invalid" (click)="submit()">Submit
+            </button>
+        </div>
+    </div>
+</form>

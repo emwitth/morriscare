@@ -1,3 +1,4 @@
+import { SnackbarModule } from './../snackbar/snackbar.module';
 import { Roles } from 'src/app/global-variables';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -7,7 +8,6 @@ import { StaffMember } from 'src/app/interfaces/StaffMember';
 import { UnappCareTaker } from 'src/app/interfaces/CareTaker';
 import { HCP } from 'src/app/interfaces/HCP';
 import { FormattingModule } from '../formatting/formatting.module';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { qIDpair } from 'src/app/interfaces/QIDPair';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { qIDpair } from 'src/app/interfaces/QIDPair';
 export class ApiModule { 
 
   constructor(private router: Router, private http: HttpClient, 
-    private format: FormattingModule, private _snackBar: MatSnackBar){}
+    private snackbar: SnackbarModule, private format: FormattingModule){}
 
   /**
    * Fetches all the security questions possible.
@@ -30,14 +30,14 @@ export class ApiModule {
     var allQuestions: Array<qIDpair> = new Array<qIDpair>();
     this.http.get<any>("api/questions", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
-        this.openSnackBar("Failed to fetch security questions", "Okay");
+        this.snackbar.openSnackbarErrorCust("Failed to fetch security questions");
       } else if(result.status == 200) {
         result.body.forEach((element: qIDpair) => {
           allQuestions.push(element);
         });
       }
     }, err => {
-      this.openSnackBar("Failed to fetch security questions", "Okay");
+      this.snackbar.openSnackbarErrorCust("Failed to fetch security questions");
     });
     return allQuestions;
   }
@@ -57,18 +57,18 @@ export class ApiModule {
     this.http.put<any>("api/user/" + id + "/", body, { observe: "response" }).subscribe(result => {
       console.log(result.status);
       if (result.status != 200) {
-        this.openSnackBar("An Error Occured, please try again", "Okay");
+        this.snackbar.openSnackbarError();
         return false;
       } else {
-        this.openSnackBar("Success!", "Okay");
+        this.snackbar.openSnackbarSuccess();
         console.log("I WAS HIT");
         return true;
       }
     }, err => {
-      this.openSnackBar("An Error Occured, please try again", "Okay");
+      this.snackbar.openSnackbarError();
       return false;
     });
-    this.openSnackBar("An Error Occured, please try again", "Okay");
+    this.snackbar.openSnackbarError();
     return false;
   }
 
@@ -81,7 +81,7 @@ export class ApiModule {
     var toReturn: Array<UnappCareTaker> = [];
     this.http.get<any>("api/caretakers", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
-        this.openSnackBar("Failed to fetch unapproved caretakers. Maybe reload the page or contact an administrator.", "Okay");
+        this.snackbar.openSnackbarErrorCust("Failed to fetch unapproved caretakers. Maybe reload the page or contact an administrator.");
       } else if(result.status == 200) {
         result.body.forEach((element: any) => {
           var temp: UnappCareTaker = {
@@ -101,7 +101,7 @@ export class ApiModule {
         });
       }
     }, err => {
-      this.openSnackBar("Failed to fetch unapproved caretakers. Maybe reload the page or contact an administrator.", "Okay");
+      this.snackbar.openSnackbarErrorCust("Failed to fetch unapproved caretakers. Maybe reload the page or contact an administrator.");
     });
     return toReturn;
   }
@@ -116,7 +116,7 @@ export class ApiModule {
     var toReturn: Array<any> = [];
     this.http.get<any>("api/users", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
-        this.openSnackBar("Failed to fetch users of type" + type + ". Maybe reload the page or contact an administrator.", "Okay");
+        this.snackbar.openSnackbarErrorCust("Failed to fetch users of type" + type + ". Maybe reload the page or contact an administrator.");
       } else if(result.status == 200) {
         result.body.forEach((element: any) => {
           if(element.roleID == type) {
@@ -125,7 +125,7 @@ export class ApiModule {
         });
       }
     }, err => {
-      this.openSnackBar("Failed to fetch users of type" + type + ". Maybe reload the page or contact an administrator.", "Okay");
+      this.snackbar.openSnackbarErrorCust("Failed to fetch users of type" + type + ". Maybe reload the page or contact an administrator.");
     });
     return toReturn;
   }
@@ -153,17 +153,4 @@ export class ApiModule {
     toReturn.userID = element.userID;
     return toReturn;
   }
-
-  /**
-   * Opens a snackbar to indicate something (yummy)
-   * 
-   * @param message the message to display
-   * @param action the action to display
-   */
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      panelClass: 'mat-snackbar-colors'
-    });
-  }
-
 }
