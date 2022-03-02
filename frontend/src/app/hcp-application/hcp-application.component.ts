@@ -9,10 +9,11 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./hcp-application.component.css']
 })
 export class HcpApplicationComponent implements OnInit {
+  // variables passed in via route
   id: number = -1;
   type: string = "";
 
-  // forms
+  // form
   form: FormGroup;
 
   today: Date = new Date();
@@ -44,6 +45,7 @@ export class HcpApplicationComponent implements OnInit {
     console.log("experience", this.form.get("experience")?.value);
     console.log("qualifications", this.form.get("qualifications")?.value);
 
+    // put all form values in an object
     var body = {
       firstName: this.form.get("first")?.value,
       lastName: this.form.get("last")?.value,
@@ -57,6 +59,7 @@ export class HcpApplicationComponent implements OnInit {
       qualifications: this.form.get("qualifications")?.value
     }
     
+    // post to the backend
     // this.http.post<any>("api/application/" + this.id + "/applicant", body, { observe: "response" }).subscribe(result => {
     //   if (result.status != 200) {
     //     //
@@ -69,6 +72,7 @@ export class HcpApplicationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // get the values from the route for use later
     this.id = this.route.snapshot.params?.id;
     this.type = this.route.snapshot.params?.type;
 
