@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Components to route to
-import { HomeComponent } from './home/home.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
@@ -18,7 +18,7 @@ const routes: Routes = [
   /* default path */
   { 
     path: '', 
-    component: HomeComponent
+    component: WelcomeComponent
   },
   /* UN-LOGGED-IN PATHS */
   { 
