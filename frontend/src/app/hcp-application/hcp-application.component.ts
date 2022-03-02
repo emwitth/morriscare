@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 
 @Component({
   selector: 'app-hcp-application',
@@ -18,7 +19,8 @@ export class HcpApplicationComponent implements OnInit {
 
   today: Date = new Date();
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient) { 
+  constructor(private route: ActivatedRoute, private fb: FormBuilder,
+    private http: HttpClient, private snackbar: SnackbarModule) { 
     this.form = this.fb.group({
       first: ['', [Validators.required, Validators.pattern("[A-Za-z]*")]],
       last: ['', [Validators.required, Validators.pattern("[A-Za-z]*")]],
@@ -62,12 +64,12 @@ export class HcpApplicationComponent implements OnInit {
     // post to the backend
     // this.http.post<any>("api/application/" + this.id + "/applicant", body, { observe: "response" }).subscribe(result => {
     //   if (result.status != 200) {
-    //     //
+    //     this.snackbar.openSnackbarError();
     //   } else if(result.status == 200) {
-
+    //     this.snackbar.openSnackbarSuccessCust("Application Successfully Sent, watch your email for more information!");
     //   }
     // }, err => {
-    //   //
+    //   this.snackbar.openSnackbarError();
     // });
   }
 
