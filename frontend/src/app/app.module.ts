@@ -12,6 +12,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 // Custom Modules
 import { FormattingModule } from './modules/formatting/formatting.module';
 import { ApiModule } from './modules/api/api.module';
+import { SnackbarModule } from './modules/snackbar/snackbar.module';
 
 // APP Modules
 import { AppRoutingModule } from './app-routing.module';
@@ -101,7 +102,8 @@ import { HcpApplicationComponent } from './hcp-application/hcp-application.compo
     ApiModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    SnackbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
