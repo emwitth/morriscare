@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./job-list.component.css']
 })
 export class JobListComponent implements OnInit {
-  jobs: Array<Application> = new Array<Application>();
+  postings: Array<Application> = new Array<Application>();
   type: string = "";
 
   constructor(private route: ActivatedRoute, private snackbar: SnackbarModule,
@@ -19,12 +19,28 @@ export class JobListComponent implements OnInit {
   ngOnInit(): void {
     this.type = this.route.snapshot.params?.type;
 
+    this.postings.push({
+      type: "p",
+      qualifications: "7 years of experience",
+      education: "bachelors degree in nursing"
+    });
+    this.postings.push({
+      type: "p",
+      qualifications: "18 years of experience",
+      education: "masters degree in nursing"
+    });
+    this.postings.push({
+      type: "p",
+      qualifications: "5-10 years of experience",
+      education: "bachelors degree in nursing"
+    });
+
     // this.http.get<any>("api/applications?type=" + this.type.charAt(0), { observe: "response" }).subscribe(result => {
     //   if (result.status != 200) {
     //     this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
     //   } else if(result.status == 200) {
     //     result.body.forEach((element: Application) => {
-    //       this.jobs.push(element);
+    //       this.postings.push(element);
     //     });
     //   }
     // }, err => {
