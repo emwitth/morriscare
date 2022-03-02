@@ -50,6 +50,7 @@ import { LoginDialogComponent } from './dialog-components/login-dialog/login-dia
 import { CtManageComponent } from './ct-manage/ct-manage.component';
 import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/approve-ct-dialog.component';
 import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-dialog.component';
+import { HcpApplicationComponent } from './hcp-application/hcp-application.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-
     LoginDialogComponent,
     CtManageComponent,
     ApproveCtDialogComponent,
-    LogoutDialogComponent
+    LogoutDialogComponent,
+    HcpApplicationComponent
   ],
   imports: [
     BrowserModule,
