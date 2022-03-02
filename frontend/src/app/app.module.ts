@@ -48,7 +48,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { StaffManageComponent } from './staff-manage/staff-manage.component';
 import { AddSmDialogComponent } from './dialog-components/add-sm-dialog/add-sm-dialog.component';
 import { RemoveSmDialogComponent } from './dialog-components/remove-sm-dialog/remove-sm-dialog.component';
-import { RegisterCtDialogComponent } from './dialog-components/add-ct-dialog/register-ct-dialog.component';
+import { RegisterCtDialogComponent } from './dialog-components/register-ct-dialog/register-ct-dialog.component';
 import { LoginDialogComponent } from './dialog-components/login-dialog/login-dialog.component';
 import { CtManageComponent } from './ct-manage/ct-manage.component';
 import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/approve-ct-dialog.component';

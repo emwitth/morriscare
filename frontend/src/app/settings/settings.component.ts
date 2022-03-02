@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { ApiModule } from './../modules/api/api.module';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { qIDpair } from '../interfaces/QIDPair';
 
 @Component({
@@ -22,7 +21,7 @@ export class SettingsComponent implements OnInit {
   questions: Array<qIDpair> = new Array<qIDpair>();
 
   constructor(private fb: FormBuilder, private api: ApiModule,
-    private http: HttpClient, private _snackBar: MatSnackBar,) {
+    private http: HttpClient) {
     this.passwordForm = this.fb.group({
       OldPassword: ['', Validators.required],
       NewPassword: ['', [Validators.required, Validators.minLength(6), 
