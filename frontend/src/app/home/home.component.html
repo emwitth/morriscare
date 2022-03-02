@@ -1,1 +1,27 @@
-<p>home works!</p>
+<nav class="navbar sticky-top navbar-expand-sm navbar-custom" style="background-color: var(--mainColor);">
+    <div class="container-fluid">
+        <!-- Home Screen Links -->
+        <ul class="navbar-nav nav-pills">
+          <li class="nav-item">
+            <button mat-flat-button color="primary" routerLink="home">Home</button>
+          </li>
+          <li class="nav-item">
+            <button mat-flat-button color="primary" routerLink="about">About</button>
+          </li>
+          <li class="nav-item">
+            <button mat-flat-button color="primary" routerLink="services">Services</button>
+          </li>
+          <li class="nav-item">
+            <button mat-flat-button color="primary" routerLink="careers">Careers</button>
+          </li>
+        </ul>
+        <!-- Login Button -->
+        <button mat-flat-button color="primary" (click)="openLoginDialog()">
+            Login
+        </button>
+    </div>
+</nav>
+<!-- This is important, DO NOT DELETE -->
+<!-- It is why the other pages are shown when you route to them -->
+<router-outlet></router-outlet>
+<!---------------------------------------------------------------->

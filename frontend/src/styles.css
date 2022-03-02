@@ -7,6 +7,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     --navbarHeight: 50px;
     --mainColor: #3f51b5;
 }
+
+.navWhiteText {
+    color: white;
+}
+
+.navbar-custom {
+    height: var(--navbarHeight);
+}
+
+.white-icon {
+    color: white;
+}
+
 .flex-center {
     display: flex;
     justify-content: center;

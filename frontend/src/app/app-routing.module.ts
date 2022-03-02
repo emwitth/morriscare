@@ -13,37 +13,44 @@ import { StaffManageComponent } from './staff-manage/staff-manage.component';
 import { CtManageComponent } from './ct-manage/ct-manage.component';
 import { HcpApplicationComponent } from './hcp-application/hcp-application.component';
 import { JobListComponent } from './job-list/job-list.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   /* default path */
   { 
     path: '', 
-    component: WelcomeComponent
-  },
-  /* UN-LOGGED-IN PATHS */
-  { 
-    path: 'settings', 
-    component: SettingsComponent
-  },
-  {
-    path: 'about', 
-    component: AboutComponent
-  },
-  { 
-    path: 'services', 
-    component: ServicesComponent
-  },
-  { 
-    path: 'careers', 
-    component: CareersComponent
-  },
-  { 
-    path: 'careers/:type', 
-    component: JobListComponent
-  },
-  { 
-    path: 'careers/:type/:id', 
-    component: HcpApplicationComponent
+    component: HomeComponent,
+    children: [
+      /* UN-LOGGED-IN PATHS */
+      { 
+        path: 'home', 
+        component: WelcomeComponent
+      },
+      { 
+        path: 'settings', 
+        component: SettingsComponent
+      },
+      {
+        path: 'about', 
+        component: AboutComponent
+      },
+      { 
+        path: 'services', 
+        component: ServicesComponent
+      },
+      { 
+        path: 'careers', 
+        component: CareersComponent
+      },
+      { 
+        path: 'careers/:type', 
+        component: JobListComponent
+      },
+      { 
+        path: 'careers/:type/:id', 
+        component: HcpApplicationComponent
+      },
+    ]
   },
   /* LOGGED IN PATHS */
   /* staff member paths */
