@@ -22,17 +22,20 @@ export class JobListComponent implements OnInit {
     this.postings.push({
       type: "p",
       qualifications: "7 years of experience",
-      education: "bachelors degree in nursing"
+      education: "bachelors degree in nursing",
+      id: 1
     });
     this.postings.push({
       type: "p",
       qualifications: "18 years of experience",
-      education: "masters degree in nursing"
+      education: "masters degree in nursing",
+      id: 2
     });
     this.postings.push({
       type: "p",
       qualifications: "5-10 years of experience",
-      education: "bachelors degree in nursing"
+      education: "bachelors degree in nursing",
+      id: 4
     });
 
     // this.http.get<any>("api/applications?type=" + this.type.charAt(0), { observe: "response" }).subscribe(result => {
