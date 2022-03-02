@@ -55,6 +55,7 @@ import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/
 import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-dialog.component';
 import { HcpApplicationComponent } from './hcp-application/hcp-application.component';
 import { JobListComponent } from './job-list/job-list.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { JobListComponent } from './job-list/job-list.component';
     ApproveCtDialogComponent,
     LogoutDialogComponent,
     HcpApplicationComponent,
-    JobListComponent
+    JobListComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
