@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Applicant } from '../interfaces/Applicant';
 
 @Component({
   selector: 'app-applicant-list',
