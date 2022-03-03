@@ -38,7 +38,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
 // Components
-import { HomeComponent } from './home/home.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { AboutComponent } from './about/about.component';
@@ -55,11 +55,12 @@ import { ApproveCtDialogComponent } from './dialog-components/approve-ct-dialog/
 import { LogoutDialogComponent } from './dialog-components/logout-dialog/logout-dialog.component';
 import { HcpApplicationComponent } from './hcp-application/hcp-application.component';
 import { JobListComponent } from './job-list/job-list.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    WelcomeComponent,
     PagenotfoundComponent,
     UserHomeComponent,
     AboutComponent,
@@ -75,7 +76,8 @@ import { JobListComponent } from './job-list/job-list.component';
     ApproveCtDialogComponent,
     LogoutDialogComponent,
     HcpApplicationComponent,
-    JobListComponent
+    JobListComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
