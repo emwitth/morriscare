@@ -14,6 +14,7 @@ import { CtManageComponent } from './ct-manage/ct-manage.component';
 import { HcpApplicationComponent } from './hcp-application/hcp-application.component';
 import { JobListComponent } from './job-list/job-list.component';
 import { HomeComponent } from './home/home.component';
+import { ApplicationManageComponent } from './application-manage/application-manage.component';
 
 const routes: Routes = [
   /* default path */
@@ -61,6 +62,10 @@ const routes: Routes = [
       { 
         path: 'manage-care-taker', 
         component: CtManageComponent
+      },
+      { 
+        path: 'applications', 
+        component: ApplicationManageComponent
       }
     ]
   },
@@ -76,6 +81,10 @@ const routes: Routes = [
       { 
         path: 'manage-care-taker', 
         component: CtManageComponent
+      },
+      { 
+        path: 'applications', 
+        component: ApplicationManageComponent
       }
     ]
   },

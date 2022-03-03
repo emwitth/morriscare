@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>New Application</h1>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="centered-full-width-rows-container">
+            <!-- Type -->
+            <mat-form-field appearance="fill">
+                <mat-label>Type</mat-label>
+                <mat-select placeholder="Choose one" formControlName="Type">
+                    <mat-option value="n"> Nurse </mat-option>
+                    <mat-option value="p"> Physiotherapist </mat-option>
+                </mat-select>
+                <mat-error *ngIf="this.form.get('Type')?.hasError('required')">You must select a value</mat-error>
+            </mat-form-field>
+            <!-- Qualifications -->
+            <mat-form-field appearance="fill">
+                <mat-label>Qualifications</mat-label>
+                <input matInput placeholder="Enter Wanted Qualifications" formControlName="Qualifications">
+                <mat-error *ngIf="this.form.get('Qualifications')?.hasError('required')">You must enter a value</mat-error>
+                <mat-error *ngIf="this.form.get('Qualifications')?.hasError('pattern')">You must use only letters or numbers</mat-error>
+            </mat-form-field>
+            <!-- Education -->
+            <mat-form-field appearance="fill">
+                <mat-label>Education</mat-label>
+                <textarea matInput placeholder="Enter Wanted Education" formControlName="Education"></textarea>
+                <mat-error *ngIf="this.form.get('Education')?.hasError('required')">You must enter a value</mat-error>
+                <mat-error *ngIf="this.form.get('Education')?.hasError('pattern')">You must use only letters or numbers</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<!-- Actions -->
+<mat-dialog-actions>
+    <!-- Cancel -->
+    <button mat-raised-button (click)="closeDialog()">Cancel</button>
+    <!-- Initial Login -->
+    <button  mat-raised-button color="primary" style="float:right" 
+        [disabled]="form.pristine || form.invalid" (click)="create()">Create
+    </button>
+</mat-dialog-actions>

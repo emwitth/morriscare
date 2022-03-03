@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import {MatDialog,} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { RegisterCtDialogComponent as RegisterCtDialogComponent } from '../dialog-components/register-ct-dialog/register-ct-dialog.component';
 
 @Component({
