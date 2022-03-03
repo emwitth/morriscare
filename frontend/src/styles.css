@@ -6,6 +6,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 :root{
     --navbarHeight: 50px;
     --mainColor: #3f51b5;
+    --indicationColor: #29305c;
 }
 
 .navWhiteText {
@@ -18,6 +19,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .white-icon {
     color: white;
+}
+
+.hover-class:hover {
+    background-color: var(--indicationColor);
 }
 
 .flex-center {
