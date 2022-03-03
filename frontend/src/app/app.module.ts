@@ -57,6 +57,7 @@ import { HcpApplicationComponent } from './hcp-application/hcp-application.compo
 import { JobListComponent } from './job-list/job-list.component';
 import { HomeComponent } from './home/home.component';
 import { ApplicationManageComponent } from './application-manage/application-manage.component';
+import { AddPostingDialogComponent } from './dialog-components/add-posting-dialog/add-posting-dialog.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { ApplicationManageComponent } from './application-manage/application-man
     HcpApplicationComponent,
     JobListComponent,
     HomeComponent,
-    ApplicationManageComponent
+    ApplicationManageComponent,
+    AddPostingDialogComponent,
   ],
   imports: [
     BrowserModule,
