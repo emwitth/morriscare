@@ -9,7 +9,8 @@
             <p>Qualifications: {{application.qualifications}}</p>
             <p>Education Required: {{application.education}}</p>
             <mat-card-actions>
-                <button mat-raised-button color="primary"
+                <button mat-raised-button color="primary" 
+                [state]="{data: {qualifications: application.qualifications, education: application.education}}"
                             routerLink="{{application.id}}/applicants">Details</button>
             </mat-card-actions>
         </mat-card>
