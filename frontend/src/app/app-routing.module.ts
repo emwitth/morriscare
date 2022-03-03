@@ -15,6 +15,9 @@ import { HcpApplicationComponent } from './hcp-application/hcp-application.compo
 import { JobListComponent } from './job-list/job-list.component';
 import { HomeComponent } from './home/home.component';
 import { ApplicationManageComponent } from './application-manage/application-manage.component';
+import { ApplicationDetailsComponent } from './application-details/application-details.component';
+import { ApplicantListComponent } from './applicant-list/applicant-list.component';
+import { ApplicantDetailsComponent } from './applicant-details/applicant-details.component';
 
 const routes: Routes = [
   /* default path */
@@ -66,6 +69,20 @@ const routes: Routes = [
       { 
         path: 'applications', 
         component: ApplicationManageComponent
+      },
+      {
+        path: 'applications/:id',
+        component: ApplicationDetailsComponent,
+        children: [
+          {
+            path: 'applicants',
+            component: ApplicantListComponent
+          },
+          {
+            path: 'applicants/:id',
+            component: ApplicantDetailsComponent
+          }
+        ]
       }
     ]
   },
@@ -84,7 +101,21 @@ const routes: Routes = [
       },
       { 
         path: 'applications', 
-        component: ApplicationManageComponent
+        component: ApplicationManageComponent,
+      },
+      {
+        path: 'applications/:id',
+        component: ApplicationDetailsComponent,
+        children: [
+          {
+            path: 'applicants',
+            component: ApplicantListComponent
+          },
+          {
+            path: 'applicants/:id',
+            component: ApplicantDetailsComponent
+          }
+        ]
       }
     ]
   },
