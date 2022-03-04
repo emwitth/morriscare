@@ -1,15 +1,19 @@
-<div *ngFor="let applicant of applicants">
-    <mat-card>
-        <div class="d-flex justify-content-between">
-            <div>
-                <h3>{{applicant.firstName | titlecase}} {{applicant.lastName | titlecase}}</h3>
-                <p>{{applicant.yearsOfExperience}} years of experience</p>
-                <p>{{applicant.qualifications}}</p>
+<div style="height:100%">
+    <div *ngFor="let applicant of applicants; let i = index">
+        <mat-card *ngIf="!isClosed[i]" [@openClose] >
+            <div class="d-flex justify-content-between" *ngIf="!isClosed[i]" [@openClose]>
+                <div>
+                    <h3>{{applicant.firstName | titlecase}} {{applicant.lastName | titlecase}}</h3>
+                    <p>{{applicant.yearsOfExperience}} years of experience</p>
+                    <p>{{applicant.qualifications}}</p>
+                </div>
+                <div style="text-align: right;">
+                    <p>Born {{applicant.dateOfBirth}}</p>
+                    <p>{{applicant.sex}}</p>
+                    <button mat-raised-button type="button" (click)="open(i)">Open</button><br>
+                    <button *ngIf="isOpen[i]" [@openClose] mat-raised-button type="button" (click)="close()">close</button>
+                </div>
             </div>
-            <div style="text-align: right;">
-                <p>Born {{applicant.dateOfBirth}}</p>
-                <p>{{applicant.sex}}</p>
-            </div>
-        </div>
-    </mat-card><br>
+        </mat-card><br *ngIf="!isClosed[i]">
+    </div>
 </div>

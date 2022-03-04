@@ -14,7 +14,6 @@ export class ApplicationDetailsComponent implements OnInit {
   APPID: number = 1;
 
   constructor(private route: ActivatedRoute) { }
-
   ngOnInit(): void {
     console.log(history.state.data);
     console.log("details", this.route.snapshot.params);

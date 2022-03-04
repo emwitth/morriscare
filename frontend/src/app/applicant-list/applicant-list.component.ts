@@ -1,19 +1,78 @@
 import { Component, OnInit } from '@angular/core';
 import { Applicant } from '../interfaces/Applicant';
 import { Roles } from '../global-variables';
-import { ActivatedRoute } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-applicant-list',
   templateUrl: './applicant-list.component.html',
-  styleUrls: ['./applicant-list.component.css']
+  styleUrls: ['./applicant-list.component.css'],
+  animations: [
+    // trigger('openClose', [
+    //   state('open', style({})),
+    //   state('closed', style({opacity: 0})),
+    //   transition('open => closed', [
+    //     animate('1s')
+    //   ]),
+    //   transition('closed => open', [
+    //     animate('0.5s')
+    //   ]),
+    // ]),
+    trigger(
+      'openClose', 
+      [
+        transition(
+          ':enter', 
+          [
+            style({ opacity: 0 }),
+            animate('1s ease-out', 
+                    style({ opacity: 1 }))
+          ]
+        ),
+        transition(
+          ':leave', 
+          [
+            style({ opacity: 1 }),
+            animate('1s ease-in', 
+                    style({ height: 0, opacity: 0 }))
+          ]
+        )
+      ]
+    )
+  ]
 })
 export class ApplicantListComponent implements OnInit {
 
   applicants: Array<Applicant> = new Array<Applicant>();
+  isOpen: Array<boolean> = new Array<boolean>();
+  isClosed: Array<boolean> = new Array<boolean>();
+
+  open(index: number) {
+    this.isOpen[index] = true;
+    console.log(this.isOpen);
+    for(var i = 0; i < this.isOpen.length; i++) {
+      if(index != i){
+        this.isClosed[i] = true;
+      }
+    }
+    console.log("isClosed",this.isClosed);
+  }
+
+  close() {
+    for(var i = 0; i < this.isOpen.length; i++) {
+        this.isOpen[i] = false;
+    }
+    console.log(this.isOpen);
+    for(var i = 0; i < this.isOpen.length; i++) {
+      this.isClosed[i] = false;
+    }
+    console.log("isClosed",this.isClosed);
+  }
+
+
   userType: string = '';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.applicants.push({
@@ -55,6 +114,32 @@ export class ApplicantListComponent implements OnInit {
       qualifications: "Education of me is me me me",
       id: 9
     });
+    this.applicants.push({
+      firstName: "John",
+      lastName: "Paul",
+      email: "jpail@pope.aol.net",
+      sex: "M",
+      phoneNumber: "(608) 434-9087",
+      address: "The Vatican Somewhere",
+      dateOfBirth: "05/05/1990",
+      ssn: "432-65-2345",
+      yearsOfExperience: "5",
+      qualifications: "Education of me is me me me",
+      id: 10
+    });
+    this.applicants.push({
+      firstName: "John",
+      lastName: "Paul",
+      email: "jpail@pope.aol.net",
+      sex: "M",
+      phoneNumber: "(608) 434-9087",
+      address: "The Vatican Somewhere",
+      dateOfBirth: "05/05/1990",
+      ssn: "432-65-2345",
+      yearsOfExperience: "5",
+      qualifications: "Education of me is me me me",
+      id: 11
+    });
 
     if(Roles.admin == sessionStorage.getItem("role")) {
       this.userType = "admin";
@@ -62,6 +147,11 @@ export class ApplicantListComponent implements OnInit {
     else if(Roles.sm == sessionStorage.getItem("role")) {
       this.userType = "staff";
     }
+
+    this.applicants.forEach(element => {
+      this.isOpen.push(false);
+      this.isClosed.push(false);
+    });
   }
 
 }
