@@ -1,1 +1,15 @@
-<p>applicant-list works!</p>
+<div *ngFor="let applicant of applicants">
+    <mat-card>
+        <div class="d-flex justify-content-between">
+            <div>
+                <h3>{{applicant.firstName | titlecase}} {{applicant.lastName | titlecase}}</h3>
+                <p>{{applicant.yearsOfExperience}} years of experience</p>
+                <p>{{applicant.qualifications}}</p>
+            </div>
+            <div style="text-align: right;">
+                <p>Born {{applicant.dateOfBirth}}</p>
+                <p>{{applicant.sex}}</p>
+            </div>
+        </div>
+    </mat-card><br>
+</div>

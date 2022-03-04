@@ -71,18 +71,8 @@ const routes: Routes = [
         component: ApplicationManageComponent
       },
       {
-        path: 'applications/:id',
+        path: 'applications/:id/applicants',
         component: ApplicationDetailsComponent,
-        children: [
-          {
-            path: 'applicants',
-            component: ApplicantListComponent
-          },
-          {
-            path: 'applicants/:id',
-            component: ApplicantDetailsComponent
-          }
-        ]
       }
     ]
   },
@@ -104,18 +94,8 @@ const routes: Routes = [
         component: ApplicationManageComponent,
       },
       {
-        path: 'applications/:id',
+        path: 'applications/:id/applicants',
         component: ApplicationDetailsComponent,
-        children: [
-          {
-            path: 'applicants',
-            component: ApplicantListComponent
-          },
-          {
-            path: 'applicants/:id',
-            component: ApplicantDetailsComponent
-          }
-        ]
       }
     ]
   },

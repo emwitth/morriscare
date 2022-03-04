@@ -12,6 +12,7 @@ export interface Applicant {
   dateOfBirth: string,
   ssn: string,
   yearsOfExperience: string,
-  qualifications: string
+  qualifications: string,
+  id: number
 }
   
