@@ -8,16 +8,6 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   templateUrl: './applicant-list.component.html',
   styleUrls: ['./applicant-list.component.css'],
   animations: [
-    // trigger('openClose', [
-    //   state('open', style({})),
-    //   state('closed', style({opacity: 0})),
-    //   transition('open => closed', [
-    //     animate('1s')
-    //   ]),
-    //   transition('closed => open', [
-    //     animate('0.5s')
-    //   ]),
-    // ]),
     trigger(
       'openClose', 
       [
@@ -38,8 +28,50 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
           ]
         )
       ]
-    )
-  ]
+    ),
+    trigger(
+      'exit-button', 
+      [
+        transition(
+          ':enter', 
+          [
+            style({ opacity: 0 }),
+            animate('1s ease-out', 
+                    style({ opacity: 1 }))
+          ]
+        ),
+        transition(
+          ':leave', 
+          [
+            style({ opacity: 1 }),
+            animate('1s ease-in', 
+                    style({ right: "20px", opacity: 0 }))
+          ]
+        )
+      ]
+    ),
+  trigger(
+    'bottom-animation', 
+    [
+      transition(
+        ':enter', 
+        [
+          style({ height: 0, opacity: 0 }),
+          animate('1s ease-out', 
+                  style({ height: 130, opacity: 1 }))
+        ]
+      ),
+      transition(
+        ':leave', 
+        [
+          style({ opacity: 1 }),
+          animate('1s ease-in', 
+                  style({ height: 0, opacity: 0 }))
+        ]
+      )
+    ]
+  )
+]
 })
 export class ApplicantListComponent implements OnInit {
 
