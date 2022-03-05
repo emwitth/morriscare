@@ -20,22 +20,28 @@ export class JobListComponent implements OnInit {
     this.type = this.route.snapshot.params?.type;
 
     this.postings.push({
-      type: "p",
-      qualifications: "7 years of experience",
+      typeHS: "p",
+      qualification: "7 years of experience",
       education: "bachelors degree in nursing",
-      id: 1
+      adID: 1,
+      yearOExp: 12,
+      deleted: false
     });
     this.postings.push({
-      type: "p",
-      qualifications: "18 years of experience",
-      education: "masters degree in nursing",
-      id: 2
+      typeHS: "p",
+      qualification: "7 years of experience",
+      education: "bachelors degree in nursing",
+      adID: 1,
+      yearOExp: 12,
+      deleted: false
     });
     this.postings.push({
-      type: "p",
-      qualifications: "5-10 years of experience",
+      typeHS: "p",
+      qualification: "7 years of experience",
       education: "bachelors degree in nursing",
-      id: 4
+      adID: 1,
+      yearOExp: 12,
+      deleted: false
     });
 
     // this.http.get<any>("api/applications?type=" + this.type.charAt(0), { observe: "response" }).subscribe(result => {

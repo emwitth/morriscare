@@ -1,12 +1,12 @@
 <h1>All Jobs for {{type | titlecase}}s</h1>
 <div *ngFor="let job of postings" class="container centered-partial-width-rows-container">
     <mat-card>
-        <mat-card-title>Job Post {{job.id}}</mat-card-title>
-        <p>Qualifications: {{job.qualifications}}</p>
+        <mat-card-title>Job Post {{job.adID}}</mat-card-title>
+        <p>Qualifications: {{job.qualification}}</p>
         <p>Education Required: {{job.education}}</p>
         <mat-card-actions>
             <button mat-raised-button color="primary"
-                        routerLink="{{job.id}}">Apply</button>
+                        routerLink="{{job.adID}}">Apply</button>
         </mat-card-actions>
     </mat-card>
 <br>

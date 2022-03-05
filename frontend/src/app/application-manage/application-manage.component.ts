@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPostingDialogComponent } from '../dialog-components/add-posting-dialog/add-posting-dialog.component';
 import { Application } from './../interfaces/application';
+import { HttpClient } from '@angular/common/http';
+import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 
 @Component({
   selector: 'app-application-manage',
@@ -11,28 +13,28 @@ import { Application } from './../interfaces/application';
 export class ApplicationManageComponent implements OnInit {
   applications: Array<Application> = new Array<Application>();
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private http: HttpClient, private snackbar: SnackbarModule) { }
 
   ngOnInit(): void {
-    this.applications.push({
-      type: "n",
-      qualifications: "7 years of experience",
-      education: "bachelors degree in nursing",
-      id: 1
-    });
-    this.applications.push({
-      type: "p",
-      qualifications: "18 years of experience",
-      education: "masters degree in nursing",
-      id: 2
-    });
-    this.applications.push({
-      type: "n",
-      qualifications: "5-10 years of experience",
-      education: "bachelors degree in nursing",
-      id: 4
+    this.http.get<any>("api/applications/", { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch applications");
+      } else if(result.status == 200) {
+        result.body.forEach((element: Application) => {
+          this.applications.push(element);
+        });
+      }
+    }, err => {
+      this.snackbar.openSnackbarErrorCust("Failed to fetch applications");
     });
   }
+
+  // typeHS: string,
+  // yearOExp: number,
+  // qualification: string,
+  // education: string,
+  // adID: number
+  // deleted: boolean
 
   openAddApplicationDialog() {
     const myCompDialog = this.dialog.open(AddPostingDialogComponent, { data: '' });

@@ -3,9 +3,11 @@
  */
 
 export interface Application {
-  type: string,
-  qualifications: string,
+  typeHS: string,
+  yearOExp: number,
+  qualification: string,
   education: string,
-  id: number
+  adID: number
+  deleted: boolean
 }
   
