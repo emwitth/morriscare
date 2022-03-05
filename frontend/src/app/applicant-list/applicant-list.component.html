@@ -1,6 +1,7 @@
 <div style="height:100%">
     <div *ngFor="let applicant of applicants; let i = index">
-        <mat-card *ngIf="!isClosed[i]" [@openClose] style="overflow: hidden">
+        <div *ngIf="!isClosed[i]" [@openClose]>
+        <mat-card style="overflow: hidden">
             <div class="d-flex justify-content-between" *ngIf="!isClosed[i]" [@openClose]>
                 <div>
                     <h3>
@@ -31,6 +32,7 @@
                     <button mat-raised-button color="primary">Approve</button>
                 </div>
             </div>
-        </mat-card><br *ngIf="!isClosed[i]">
+        </mat-card><br *ngIf="!isClosed[i]" [@openClose]>
+    </div>
     </div>
 </div>

@@ -12,7 +12,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
       'openClose', 
       [
         transition(
-          ':enter', 
+          ':enter',
           [
             style({ height:0, opacity: 0 }),
             animate('1s ease-out', 
@@ -27,23 +27,6 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
                     style({ height: 0, opacity: 0 }))
           ]
         )
-      ]
-    ),
-    trigger(
-      'exit-button', 
-      [
-        state('open', style({
-          "transform": "rotate(0deg)"
-        })),
-        state('closed', style({
-          "transform": "rotate(90deg)"
-        })),
-        transition('open => closed', [
-          animate('1s')
-        ]),
-        transition('closed => open', [
-          animate('1s')
-        ]),
       ]
     ),
   trigger(
