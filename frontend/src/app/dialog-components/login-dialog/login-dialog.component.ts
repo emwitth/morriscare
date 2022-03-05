@@ -80,7 +80,7 @@ export class LoginDialogComponent implements OnInit {
     }
 
     this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
+      console.log(result.body);
       if (result.status != 200) {
         this.isIncorrectLogin = true;
       } else if(result.status == 200) {
@@ -90,37 +90,48 @@ export class LoginDialogComponent implements OnInit {
         this.info.push(result.body?.lastName);
         this.info.push(result.body?.username);
         this.info.push(result.body?.userID.toString());
-        this.info.push(result.body?.roleID.toString());
+        this.info.push(result.body?.role);
         console.log(this.info);
 
-        // setup security questions
-        this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1].question;
-        this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1].question;
-        this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1].question;
-
-        // setup answers
-        this.answers.answer1 = result.body?.securityQuestionOneAnswer;
-        this.answers.answer2 = result.body?.securityQuestionTwoAnswer;
-        this.answers.answer3 = result.body?.securityQuestionThreeAnswer;
-
-        // console.log(this.questions);
-
-        this.initializeQuestionArray(this.createRandomArray());
-
-        // if first time logging in
-        if(this.answers.answer1 == null) {
-          sessionStorage.setItem("firstTime","true");
-          sessionStorage.setItem("name", this.info[0]);
-          sessionStorage.setItem("last", this.info[1]);
-          sessionStorage.setItem("username", this.info[2]);
-          sessionStorage.setItem("id", this.info[3]);
-          sessionStorage.setItem("role", this.info[4]);
-          sessionStorage.setItem("login", 'true');
-          this.router.navigate(['/settings']);
-        }
-        else {
-          this.isLoginPassed = true;
-        }
+          this.http.get<any>("api/question/" + this.info[3] + "/", { observe: "response" }).subscribe(result => {
+            // console.log(result.body);
+            if (result.status != 200) {
+              //
+            } else if(result.status == 200) {
+              console.log(result.body);
+      
+              // setup security questions
+              this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1].question;
+              this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1].question;
+              this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1].question;
+      
+              // setup answers
+              this.answers.answer1 = result.body?.securityQuestionOneAnswer;
+              this.answers.answer2 = result.body?.securityQuestionTwoAnswer;
+              this.answers.answer3 = result.body?.securityQuestionThreeAnswer;
+      
+              // console.log(this.questions);
+      
+              this.initializeQuestionArray(this.createRandomArray());
+      
+              // if first time logging in
+              if(this.answers.answer1 == '') {
+                sessionStorage.setItem("firstTime","true");
+                sessionStorage.setItem("name", this.info[0]);
+                sessionStorage.setItem("last", this.info[1]);
+                sessionStorage.setItem("username", this.info[2]);
+                sessionStorage.setItem("id", this.info[3]);
+                sessionStorage.setItem("role", this.info[4]);
+                sessionStorage.setItem("login", 'true');
+                this.router.navigate(['/settings']);
+              }
+              else {
+                //
+              }
+            }
+          }, err => {
+            //
+          });
       }
     }, err => {
       this.isIncorrectLogin = true;
