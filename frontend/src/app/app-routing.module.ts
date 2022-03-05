@@ -16,8 +16,6 @@ import { JobListComponent } from './job-list/job-list.component';
 import { HomeComponent } from './home/home.component';
 import { ApplicationManageComponent } from './application-manage/application-manage.component';
 import { ApplicationDetailsComponent } from './application-details/application-details.component';
-import { ApplicantListComponent } from './applicant-list/applicant-list.component';
-import { ApplicantDetailsComponent } from './applicant-details/applicant-details.component';
 
 const routes: Routes = [
   /* default path */

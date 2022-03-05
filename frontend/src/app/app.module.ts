@@ -59,7 +59,6 @@ import { HomeComponent } from './home/home.component';
 import { ApplicationManageComponent } from './application-manage/application-manage.component';
 import { AddPostingDialogComponent } from './dialog-components/add-posting-dialog/add-posting-dialog.component';
 import { ApplicantListComponent } from './applicant-list/applicant-list.component';
-import { ApplicantDetailsComponent } from './applicant-details/applicant-details.component';
 import { ApplicationDetailsComponent } from './application-details/application-details.component';
 
 @NgModule({
@@ -86,7 +85,6 @@ import { ApplicationDetailsComponent } from './application-details/application-d
     ApplicationManageComponent,
     AddPostingDialogComponent,
     ApplicantListComponent,
-    ApplicantDetailsComponent,
     ApplicationDetailsComponent,
   ],
   imports: [
