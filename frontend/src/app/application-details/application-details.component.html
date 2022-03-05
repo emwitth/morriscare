@@ -1,0 +1,19 @@
+<div class="container p-2 my-5 border">
+    <button mat-icon-button color="primary" style="font-size:large" routerLink="/{{userType}}/applications">
+        <mat-icon>navigate_before</mat-icon>
+    </button>
+    <h1 class="blockquote">Manage Applicants</h1>
+    <div class="d-flex">
+        <div class="flex-fill">
+            <div class="container border centered-full-width-rows-container rounded details-box">
+                <h2>Application Details</h2>
+                <p>Qualifications: {{qualifications}}</p>
+                <p>Education: {{education}}</p>
+            </div> <br>
+            <button mat-raised-button color="primary">Remove</button>
+        </div>
+        <div class="flex-fill">
+            <app-applicant-list></app-applicant-list>
+        </div>
+    </div>
+</div>

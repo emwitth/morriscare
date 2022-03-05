@@ -3,4 +3,17 @@
         <h1 class="blockquote">Manage Applications</h1>
         <button mat-raised-button color="primary" (click)="openAddApplicationDialog()">New Applications</button>
     </div>
+    <div *ngFor="let application of applications" class="container centered-partial-width-rows-container">
+        <mat-card>
+            <mat-card-title>Application {{application.id}}</mat-card-title>
+            <p>Qualifications: {{application.qualifications}}</p>
+            <p>Education Required: {{application.education}}</p>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" 
+                [state]="{data: {qualifications: application.qualifications, education: application.education}}"
+                            routerLink="{{application.id}}/applicants">Details</button>
+            </mat-card-actions>
+        </mat-card>
+    <br>
+    </div>
 </div>
