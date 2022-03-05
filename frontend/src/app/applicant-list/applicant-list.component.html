@@ -18,8 +18,9 @@
                     <button mat-raised-button type="button" (click)="open(i)">Open</button><br>
                 </div>
             </div>
-            <div *ngIf="isOpen[i]" [@bottom-animation]>
+            <div *ngIf="isOpen[i]" [@bottom-animation] style="height: 30vw">
                 <mat-divider></mat-divider>
+                <h2>Additional Information</h2>
                 <p>{{applicant.ssn}}</p>
                 <p>{{applicant.address}}</p>
                 <p>{{applicant.phoneNumber}}</p>
