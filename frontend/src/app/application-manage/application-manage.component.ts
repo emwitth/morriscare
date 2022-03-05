@@ -28,14 +28,7 @@ export class ApplicationManageComponent implements OnInit {
       this.snackbar.openSnackbarErrorCust("Failed to fetch applications");
     });
   }
-
-  // typeHS: string,
-  // yearOExp: number,
-  // qualification: string,
-  // education: string,
-  // adID: number
-  // deleted: boolean
-
+  
   openAddApplicationDialog() {
     const myCompDialog = this.dialog.open(AddPostingDialogComponent, { data: '' });
     myCompDialog.afterClosed().subscribe((res) => {
