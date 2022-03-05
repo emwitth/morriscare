@@ -74,68 +74,75 @@ export class LoginDialogComponent implements OnInit {
   closeDialog() { this.dialogRef.close({ event: 'close', data: false }); }
 
   login() {
-    var body = {
-      username: this.loginForm.get("Username")?.value,
-      pwd: this.loginForm.get("Password")?.value
-    }
+    // var body = {
+    //   username: this.loginForm.get("Username")?.value,
+    //   pwd: this.loginForm.get("Password")?.value
+    // }
 
-    this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
-      console.log(result.body);
-      if (result.status != 200) {
-        this.isIncorrectLogin = true;
-      } else if(result.status == 200) {
-        // console.log(result.body);
-        // if login passed, store some information
-        this.info.push(result.body?.firstName);
-        this.info.push(result.body?.lastName);
-        this.info.push(result.body?.username);
-        this.info.push(result.body?.userID.toString());
-        this.info.push(result.body?.role);
-        console.log(this.info);
+    // this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
+    //   console.log(result.body);
+    //   if (result.status != 200) {
+    //     this.isIncorrectLogin = true;
+    //   } else if(result.status == 200) {
+    //     // console.log(result.body);
+    //     // if login passed, store some information
+    //     this.info.push(result.body?.firstName);
+    //     this.info.push(result.body?.lastName);
+    //     this.info.push(result.body?.username);
+    //     this.info.push(result.body?.userID.toString());
+    //     this.info.push(result.body?.role);
+    //     console.log(this.info);
 
-          this.http.get<any>("api/question/" + this.info[3] + "/", { observe: "response" }).subscribe(result => {
-            // console.log(result.body);
-            if (result.status != 200) {
-              //
-            } else if(result.status == 200) {
-              console.log(result.body);
+    //       this.http.get<any>("api/question/" + this.info[3] + "/", { observe: "response" }).subscribe(result => {
+    //         // console.log(result.body);
+    //         if (result.status != 200) {
+    //           //
+    //         } else if(result.status == 200) {
+    //           console.log(result.body);
       
-              // setup security questions
-              this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1].question;
-              this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1].question;
-              this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1].question;
+    //           // setup security questions
+    //           this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1].question;
+    //           this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1].question;
+    //           this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1].question;
       
-              // setup answers
-              this.answers.answer1 = result.body?.securityQuestionOneAnswer;
-              this.answers.answer2 = result.body?.securityQuestionTwoAnswer;
-              this.answers.answer3 = result.body?.securityQuestionThreeAnswer;
+    //           // setup answers
+    //           this.answers.answer1 = result.body?.securityQuestionOneAnswer;
+    //           this.answers.answer2 = result.body?.securityQuestionTwoAnswer;
+    //           this.answers.answer3 = result.body?.securityQuestionThreeAnswer;
       
-              // console.log(this.questions);
+    //           // console.log(this.questions);
       
-              this.initializeQuestionArray(this.createRandomArray());
+    //           this.initializeQuestionArray(this.createRandomArray());
       
-              // if first time logging in
-              if(this.answers.answer1 == '') {
-                sessionStorage.setItem("firstTime","true");
-                sessionStorage.setItem("name", this.info[0]);
-                sessionStorage.setItem("last", this.info[1]);
-                sessionStorage.setItem("username", this.info[2]);
-                sessionStorage.setItem("id", this.info[3]);
-                sessionStorage.setItem("role", this.info[4]);
-                sessionStorage.setItem("login", 'true');
-                this.router.navigate(['/settings']);
-              }
-              else {
-                //
-              }
-            }
-          }, err => {
-            //
-          });
-      }
-    }, err => {
-      this.isIncorrectLogin = true;
-    });
+    //           // if first time logging in
+    //           if(this.answers.answer1 == '') {
+    //             sessionStorage.setItem("firstTime","true");
+    //             sessionStorage.setItem("name", this.info[0]);
+    //             sessionStorage.setItem("last", this.info[1]);
+    //             sessionStorage.setItem("username", this.info[2]);
+    //             sessionStorage.setItem("id", this.info[3]);
+    //             sessionStorage.setItem("role", this.info[4]);
+    //             sessionStorage.setItem("login", 'true');
+    //             this.router.navigate(['/settings']);
+    //           }
+    //           else {
+    //             //
+    //           }
+    //         }
+    //       }, err => {
+    //         //
+    //       });
+    //   }
+    // }, err => {
+    //   this.isIncorrectLogin = true;
+    // });
+    sessionStorage.setItem("name", "Evan");
+    sessionStorage.setItem("last", "Witthun");
+    sessionStorage.setItem("username", "Admin07");
+    sessionStorage.setItem("id", "8");
+    sessionStorage.setItem("role", "1");
+    sessionStorage.setItem("login", 'true');
+    this.dialogRef.close({ event: 'close', data: true });
   }
 
   checkFirstTime() {
