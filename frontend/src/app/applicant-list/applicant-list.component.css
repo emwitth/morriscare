@@ -1,0 +1,15 @@
+.exit-button{
+    background: transparent;
+    border: none !important;
+    color:var(--mainColor);
+    transform: rotate(90deg);
+    transition: transform 0.5s ease-in;
+}
+  
+.exit-button.open{
+    background: transparent;
+    border: none !important;
+    color:var(--mainColor);
+    transform: rotate(0deg);
+    transition: transform 0.5s ease-in;
+}

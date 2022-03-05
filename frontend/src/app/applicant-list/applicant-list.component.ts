@@ -32,22 +32,18 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     trigger(
       'exit-button', 
       [
-        transition(
-          ':enter', 
-          [
-            style({ opacity: 0 }),
-            animate('1s ease-out', 
-                    style({ opacity: 1 }))
-          ]
-        ),
-        transition(
-          ':leave', 
-          [
-            style({ opacity: 1 }),
-            animate('1s ease-in', 
-                    style({ right: "20px", opacity: 0 }))
-          ]
-        )
+        state('open', style({
+          "transform": "rotate(0deg)"
+        })),
+        state('closed', style({
+          "transform": "rotate(90deg)"
+        })),
+        transition('open => closed', [
+          animate('1s')
+        ]),
+        transition('closed => open', [
+          animate('1s')
+        ]),
       ]
     ),
   trigger(
@@ -80,27 +76,27 @@ export class ApplicantListComponent implements OnInit {
   isClosed: Array<boolean> = new Array<boolean>();
 
   open(index: number) {
-    this.isOpen[index] = true;
-    console.log(this.isOpen);
-    for(var i = 0; i < this.isOpen.length; i++) {
-      if(index != i){
-        this.isClosed[i] = true;
+    var button = document.getElementById('button' + index);
+    if(!this.isOpen[index])
+    {
+      if(button != null) {button.className = "exit-button open"}
+      this.isOpen[index] = true;
+      for(var i = 0; i < this.isClosed.length; i++) {
+        if(index != i){
+          this.isClosed[i] = true;
+        }
       }
     }
-    console.log("isClosed",this.isClosed);
-  }
-
-  close() {
-    for(var i = 0; i < this.isOpen.length; i++) {
+    else {
+      if(button != null) {button.className = "exit-button"}
+      for(var i = 0; i < this.isOpen.length; i++) {
         this.isOpen[i] = false;
+      }
+      for(var i = 0; i < this.isClosed.length; i++) {
+        this.isClosed[i] = false;
+      }
     }
-    console.log(this.isOpen);
-    for(var i = 0; i < this.isOpen.length; i++) {
-      this.isClosed[i] = false;
-    }
-    console.log("isClosed",this.isClosed);
   }
-
 
   userType: string = '';
 
