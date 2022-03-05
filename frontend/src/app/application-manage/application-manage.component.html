@@ -5,9 +5,10 @@
     </div>
     <div *ngFor="let application of applications" class="container centered-partial-width-rows-container">
         <mat-card>
-            <mat-card-title>Application {{application.adID}}</mat-card-title>
+            <mat-card-title>Application {{application.adID}}: {{application.typeHS == 'p' ? 'Physiotherapist' : 'Nurse'}}</mat-card-title>
             <p>Qualifications: {{application.qualification}}</p>
             <p>Education Required: {{application.education}}</p>
+            <p>Experience Wanted: {{application.yearOExp}}</p>
             <mat-card-actions>
                 <button mat-raised-button color="primary" 
                 [state]="{data: {qualifications: application.qualification, education: application.education}}"
