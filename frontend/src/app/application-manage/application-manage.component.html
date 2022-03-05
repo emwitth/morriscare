@@ -4,16 +4,18 @@
         <button mat-raised-button color="primary" (click)="openAddApplicationDialog()">New Applications</button>
     </div>
     <div *ngFor="let application of applications" class="container centered-partial-width-rows-container">
-        <mat-card>
+        <mat-card 
+        [state]="{data: {qual: application.qualification, ed: application.education, exp: application.yearOExp, type: application.typeHS}}" 
+        routerLink="{{application.adID}}/applicants">
             <mat-card-title>Application {{application.adID}}: {{application.typeHS == 'p' ? 'Physiotherapist' : 'Nurse'}}</mat-card-title>
             <p>Qualifications: {{application.qualification}}</p>
             <p>Education Required: {{application.education}}</p>
-            <p>Experience Wanted: {{application.yearOExp}}</p>
-            <mat-card-actions>
+            <p>Experience Wanted: {{application.yearOExp}} years</p>
+            <!-- <mat-card-actions>
                 <button mat-raised-button color="primary" 
-                [state]="{data: {qualifications: application.qualification, education: application.education}}"
+                [state]="{data: {qual: application.qualification, ed: application.education, exp: application.yearOExp, type: application.typeHS}}"
                             routerLink="{{application.adID}}/applicants">Details</button>
-            </mat-card-actions>
+            </mat-card-actions> -->
         </mat-card>
     <br>
     </div>

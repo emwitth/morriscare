@@ -28,12 +28,16 @@ export class ApplicationManageComponent implements OnInit {
       this.snackbar.openSnackbarErrorCust("Failed to fetch applications");
     });
   }
-  
+
   openAddApplicationDialog() {
     const myCompDialog = this.dialog.open(AddPostingDialogComponent, { data: '' });
     myCompDialog.afterClosed().subscribe((res) => {
       // Trigger After Dialog Closed 
       console.log('After Closed', { res });
+
+      if(res.data == true) {
+        window.location.reload();
+      }
     });
   }
 

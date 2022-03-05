@@ -4,11 +4,13 @@
     </button>
     <h1 class="blockquote">Manage Applicants</h1>
     <div class="d-flex">
-        <div class="flex-fill">
+        <div class="flex-fill" style="max-width:50%">
             <div class="container border centered-full-width-rows-container rounded details-box">
                 <h2>Application Details</h2>
+                <p>Type: {{type}}</p>
                 <p>Qualifications: {{qualifications}}</p>
                 <p>Education: {{education}}</p>
+                <p>Experience: {{experience}} years</p>
             </div> <br>
             <button mat-raised-button color="primary">Remove</button>
         </div>

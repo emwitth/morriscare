@@ -9,8 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ApplicationDetailsComponent implements OnInit {
   userType: string = "";
-  qualifications: string = "";
-  education: string = "";
+  qualifications: string = "unavailable";
+  education: string = "unavailable";
+  type: string = "unavailable";
+  experience: string = "unavailable";
   APPID: number = 1;
 
   constructor(private route: ActivatedRoute) { }
@@ -19,8 +21,10 @@ export class ApplicationDetailsComponent implements OnInit {
     console.log("details", this.route.snapshot.params);
     this.APPID = this.route.snapshot.params?.appId;
 
-    this.qualifications = history.state.data.qualifications;
-    this.education = history.state.data.education;
+    this.qualifications = history.state.data.qual;
+    this.education = history.state.data.ed;
+    this.experience = history.state.data.exp;
+    this.type = (history.state.data.type == 'p' ? 'Physiotherapist' : 'Nurse');
 
     if(Roles.admin == sessionStorage.getItem("role")) {
       this.userType = "admin";
