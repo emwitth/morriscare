@@ -13,9 +13,7 @@ export class HomeComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private router: Router) { }
 
-  ngOnInit(): void {
-    this.router.navigate(['home']);
-  }
+  ngOnInit(): void {}
 
   openLoginDialog() {
     const myCompDialog = this.dialog.open(LoginDialogComponent, { data: '' });
