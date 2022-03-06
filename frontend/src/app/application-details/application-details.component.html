@@ -12,7 +12,7 @@
                 <p>Education: {{education}}</p>
                 <p>Experience: {{experience}} years</p>
             </div> <br>
-            <button mat-raised-button color="primary">Remove</button>
+            <button mat-raised-button color="primary" (click)="remove()">Remove</button>
         </div>
         <div class="flex-fill" style="max-width: 50%">
             <app-applicant-list></app-applicant-list>
