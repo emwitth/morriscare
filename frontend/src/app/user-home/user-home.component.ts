@@ -34,9 +34,6 @@ export class UserHomeComponent implements OnInit {
     {title: "Home", link:"home"}
   ];
 
-  patientFunctions = [
-    {title: "Home", link:"home"}
-  ];
 
   constructor(public dialog: MatDialog, private router: Router) {}
 
@@ -100,9 +97,5 @@ export class UserHomeComponent implements OnInit {
 
   getHCP() {
     return Roles.hcp;
-  }
-
-  getPatient() {
-    return Roles.patient;
   }
 }

@@ -55,10 +55,6 @@ export class HomeComponent implements OnInit {
   getHCP() {
     return Roles.hcp;
   }
-  
-  getPatient() {
-    return Roles.patient;
-  }
 
   checkRole(role: string) {
     return sessionStorage?.getItem('role') == role;
