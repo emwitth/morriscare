@@ -1,4 +1,11 @@
-<h1>All Jobs for {{type | titlecase}}s</h1>
+<div class="container centered-partial-width-rows-container d-flex flex-row">
+    <button mat-button color="primary" routerLink="/careers" style="height:50%">
+        <mat-icon>navigate_before</mat-icon> Back
+    </button>
+    <h1>
+        All Jobs for {{type | titlecase}}s
+    </h1>
+</div>
 <div *ngFor="let job of postings" class="container centered-partial-width-rows-container">
     <mat-card>
         <mat-card-title>Job Post {{job.adID}}</mat-card-title>
