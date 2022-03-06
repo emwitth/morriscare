@@ -36,7 +36,7 @@ export class HcpApplicationComponent implements OnInit {
       qualifications: ['', Validators.required]
     }, {});
   }
-  
+
   submit(){
     // console.log("first", this.form.get("first")?.value);
     // console.log("last", this.form.get("last")?.value);
@@ -65,17 +65,22 @@ export class HcpApplicationComponent implements OnInit {
       phoneNumber: this.form.get("phone")?.value,
       postalAddress: this.form.get("address")?.value,
     }
+    console.log(body);
     
     // post to the backend
-    // this.http.post<any>("api/applicants/" + this.id + "/", body, { observe: "response" }).subscribe(result => {
-    //   if (result.status != 200) {
-    //     this.snackbar.openSnackbarError();
-    //   } else if(result.status == 200) {
-    //     this.snackbar.openSnackbarSuccessCust("Application Successfully Sent, watch your email for more information!");
-    //   }
-    // }, err => {
-    //   this.snackbar.openSnackbarError();
-    // });
+    this.http.post<any>("api/applicants/" + this.id + "/", body, { observe: "response" }).subscribe(result => {
+      // console.log(result, result);
+      if (result.status != 200) {
+        console.log("!200", result.body);
+        this.snackbar.openSnackbarErrorCust(result.body);
+      } else if(result.status == 200) {
+        console.log("200", result);
+        this.snackbar.openSnackbarSuccessCust("Application Successfully Sent, watch your email for more information!");
+      }
+    }, err => {
+      console.log("err", err);
+      this.snackbar.openSnackbarErrorCust(err.error.error);
+    });
   }
 
   ngOnInit(): void {
