@@ -19,42 +19,19 @@ export class JobListComponent implements OnInit {
   ngOnInit(): void {
     this.type = this.route.snapshot.params?.type;
 
-    this.postings.push({
-      typeHS: "p",
-      qualification: "7 years of experience",
-      education: "bachelors degree in nursing",
-      adID: 1,
-      yearOExp: 12,
-      deleted: false
+    this.http.get<any>("api/applications/", { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
+      } else if(result.status == 200) {
+        result.body.forEach((element: Application) => {
+          if(element.typeHS == (this.type == 'nurse' ? 'n' : 'p')) {
+            this.postings.push(element);
+          }
+        });
+      }
+    }, err => {
+      this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
     });
-    this.postings.push({
-      typeHS: "p",
-      qualification: "7 years of experience",
-      education: "bachelors degree in nursing",
-      adID: 1,
-      yearOExp: 12,
-      deleted: false
-    });
-    this.postings.push({
-      typeHS: "p",
-      qualification: "7 years of experience",
-      education: "bachelors degree in nursing",
-      adID: 1,
-      yearOExp: 12,
-      deleted: false
-    });
-
-    // this.http.get<any>("api/applications?type=" + this.type.charAt(0), { observe: "response" }).subscribe(result => {
-    //   if (result.status != 200) {
-    //     this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
-    //   } else if(result.status == 200) {
-    //     result.body.forEach((element: Application) => {
-    //       this.postings.push(element);
-    //     });
-    //   }
-    // }, err => {
-    //   this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
-    // });
   }
 
 }
