@@ -6,7 +6,7 @@ import { Roles } from '../global-variables';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { FormattingModule } from '../modules/formatting/formatting.module';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 
@@ -96,7 +96,7 @@ export class ApplicantListComponent implements OnInit {
 
   constructor(private snackbar: SnackbarModule, private http: HttpClient,
     public format: FormattingModule, private route: ActivatedRoute,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog, public router: Router) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params?.id;
@@ -139,8 +139,8 @@ export class ApplicantListComponent implements OnInit {
       // Trigger After Dialog Closed 
       if(res.data == true) {
         this.http.get<any>("api/deny/" + id + "/", { observe: "response" }).subscribe(result => {
-          this.snackbar.openSnackbarError();
           if (result.status != 200) {
+            this.snackbar.openSnackbarError();
           } else if(result.status == 200) {
             console.log(result.body);
           }
@@ -162,12 +162,14 @@ export class ApplicantListComponent implements OnInit {
     myCompDialog.afterClosed().subscribe((res) => {
       // Trigger After Dialog Closed
       if(res.data == true) {
+        this.snackbar.openSnackbarSuccessCust("Creating account. This may take a second!");
         this.http.get<any>("api/approve/" + id + "/", { observe: "response" }).subscribe(result => {
           console.log("RESULT:",result);
-          this.snackbar.openSnackbarError();
           if (result.status != 200) {
+            this.snackbar.openSnackbarError();
           } else if(result.status == 200) {
             console.log(result.body);
+            this.router.navigate([this.userType + "/applications"]);
           }
         }, err => {
           this.snackbar.openSnackbarErrorCust(err.error.error);
