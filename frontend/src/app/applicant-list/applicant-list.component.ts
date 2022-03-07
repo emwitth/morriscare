@@ -127,9 +127,9 @@ export class ApplicantListComponent implements OnInit {
     }
   }
 
-  reject(first: string, last: string) {
+  reject(first: string, last: string, id: number) {
     const myCompDialog = this.dialog.open(ConfirmationDialogComponent, { data: {
-      title: "Reject", 
+      title: "Reject " + first + " " + last, 
       details:[
         "Are you sure you would like to reject " + first + " " + last + "?",
         "This will result in their application being deleted."
@@ -138,21 +138,40 @@ export class ApplicantListComponent implements OnInit {
     myCompDialog.afterClosed().subscribe((res) => {
       // Trigger After Dialog Closed 
       if(res.data == true) {
+        this.http.get<any>("api/deny/" + id + "/", { observe: "response" }).subscribe(result => {
+          this.snackbar.openSnackbarError();
+          if (result.status != 200) {
+          } else if(result.status == 200) {
+            console.log(result.body);
+          }
+        }, err => {
+          this.snackbar.openSnackbarErrorCust(err.error.error);
+        });
       }
     });
   }
 
-  approve(first: string, last: string) {
+  approve(first: string, last: string, id: number) {
     const myCompDialog = this.dialog.open(ConfirmationDialogComponent, { data: {
-      title: "Approve", 
+      title: "Approve " + first + " " + last, 
       details:[
         "Are you sure you would like to reject " + first + " " + last + "?",
         "This will result in account being created."
       ]
     } });
     myCompDialog.afterClosed().subscribe((res) => {
-      // Trigger After Dialog Closed 
+      // Trigger After Dialog Closed
       if(res.data == true) {
+        this.http.get<any>("api/approve/" + id + "/", { observe: "response" }).subscribe(result => {
+          console.log("RESULT:",result);
+          this.snackbar.openSnackbarError();
+          if (result.status != 200) {
+          } else if(result.status == 200) {
+            console.log(result.body);
+          }
+        }, err => {
+          this.snackbar.openSnackbarErrorCust(err.error.error);
+        });
       }
     });
   }
