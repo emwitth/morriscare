@@ -1,11 +1,14 @@
+import { ConfirmationDialogComponent } from './../dialog-components/confirmation-dialog/confirmation-dialog.component';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Applicant } from '../interfaces/Applicant';
 import { Roles } from '../global-variables';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-applicant-list',
@@ -65,6 +68,9 @@ export class ApplicantListComponent implements OnInit {
   userType: string = '';
   id: string = "";
 
+  @ViewChild('dialogRef')
+  dialogRef!: TemplateRef<any>;
+
   open(index: number) {
     var button = document.getElementById('button' + index);
     if(!this.isOpen[index])
@@ -89,7 +95,8 @@ export class ApplicantListComponent implements OnInit {
   }
 
   constructor(private snackbar: SnackbarModule, private http: HttpClient,
-    public format: FormattingModule, private route: ActivatedRoute) { }
+    public format: FormattingModule, private route: ActivatedRoute,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params?.id;
@@ -118,5 +125,35 @@ export class ApplicantListComponent implements OnInit {
     else if(Roles.sm == sessionStorage.getItem("role")) {
       this.userType = "staff";
     }
+  }
+
+  reject(first: string, last: string) {
+    const myCompDialog = this.dialog.open(ConfirmationDialogComponent, { data: {
+      title: "Reject", 
+      details:[
+        "Are you sure you would like to reject " + first + " " + last + "?",
+        "This will result in their application being deleted."
+      ]
+    } });
+    myCompDialog.afterClosed().subscribe((res) => {
+      // Trigger After Dialog Closed 
+      if(res.data == true) {
+      }
+    });
+  }
+
+  approve(first: string, last: string) {
+    const myCompDialog = this.dialog.open(ConfirmationDialogComponent, { data: {
+      title: "Approve", 
+      details:[
+        "Are you sure you would like to reject " + first + " " + last + "?",
+        "This will result in account being created."
+      ]
+    } });
+    myCompDialog.afterClosed().subscribe((res) => {
+      // Trigger After Dialog Closed 
+      if(res.data == true) {
+      }
+    });
   }
 }

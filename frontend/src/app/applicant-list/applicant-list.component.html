@@ -29,8 +29,9 @@
                         <p>Email: {{applicant.email}}</p>
                     </div>
                     <div class="d-flex justify-content-around">
-                        <button mat-raised-button color="primary">Reject</button>
-                        <button mat-raised-button color="primary">Approve</button>
+                        <button mat-raised-button color="primary" 
+                            (click)="reject(applicant.firstName, applicant.lastName)">Reject</button>
+                        <button mat-raised-button color="primary" (click)="approve(applicant.firstName, applicant.lastName)">Approve</button>
                     </div>
                 </div>
             </mat-card><br>
