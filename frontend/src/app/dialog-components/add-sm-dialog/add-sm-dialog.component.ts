@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FormattingModule } from 'src/app/modules/formatting/formatting.module';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { SnackbarModule } from 'src/app/modules/snackbar/snackbar.module';
 
 @Component({
   selector: 'app-add-sm-dialog',
@@ -24,9 +23,9 @@ export class AddSmDialogComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private format: FormattingModule,
+    private snackbar: SnackbarModule,
     public dialogRef: MatDialogRef<AddSmDialogComponent>,
-    private router: Router, private http: HttpClient,
+    private http: HttpClient,
     @Optional() @Inject(MAT_DIALOG_DATA) public mydata: any
   ) {
     this.form = this.fb.group({
@@ -46,11 +45,6 @@ export class AddSmDialogComponent implements OnInit {
   cancelAdd() { this.dialogRef.close({ event: 'close', data: false }); }
 
   /**
-   * Returns true indicating the request has been finished
-   */
-   ok() { this.dialogRef.close({ event: 'close', data: true }); }
-
-  /**
    * Returns true from the dialogue if the care taker 
    * account request goes through.
    */
@@ -66,23 +60,15 @@ export class AddSmDialogComponent implements OnInit {
 
     // console.log(body);
     this.http.post<any>("api/users/", body, { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
+      this.snackbar.openSnackbarError();
       if (result.status != 200) {
         // this.isIncorrectLogin = true;
       } else if(result.status == 200) {
         console.log(result.body);
-        
-        this.firstName = this.form.get('firstName')?.value,
-        this.lastName = this.form.get('lastName')?.value
-        this.username = result.body.username;
-        this.password = result.body.pwd;
-        this.isAdded = true;
-
+        this.dialogRef.close({ event: 'close', data: true }); 
       }
     }, err => {
-      // this.isIncorrectLogin = true;
+      this.snackbar.openSnackbarErrorCust(err.error.error);
     });
-
-    // this.dialogRef.close({ event: 'close', data: true }); 
   }
 }
