@@ -13,6 +13,7 @@ export class AddPostingDialogComponent implements OnInit {
   fromPage!: string;
   fromDialog!: string;
 
+  // form for dialog
   form: FormGroup;
 
   constructor(private fb: FormBuilder,private http: HttpClient,
@@ -22,38 +23,37 @@ export class AddPostingDialogComponent implements OnInit {
     ) {
       this.form = this.fb.group({
         Type: ['', Validators.required],
-        Qualifications: ['', [Validators.required, Validators.pattern("[A-Za-x0-9 ]*")]],
-        Education: ['', [Validators.required, Validators.pattern("[A-Za-x0-9 ]*")]]
+        Experience: ['', [Validators.required, Validators.pattern("[0-9]*")]],
+        Qualifications: ['', [Validators.required, Validators.pattern("[A-Za-z0-9 ]*")]],
+        Education: ['', [Validators.required, Validators.pattern("[A-Za-z0-9 ]*")]]
       }, {});
     }
 
-  create(){
-    console.log(this.form.get("Type")?.value);
-    console.log(this.form.get("Qualifications")?.value);
-    console.log(this.form.get("Education")?.value);
-    // var body = {
-    //   type: this.form.get("Type")?.value,
-    //   qualifications: this.form.get("Qualifications")?.value,
-    //   education: this.form.get("Education")?.value,
-    // }
+  ngOnInit(): void {}
 
-    // this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
-    //   // console.log(result.body);
-    //   if (result.status != 200) {
-    //     this.snackbar.openSnackbarErrorCust("Failed to submit new application. Please try again.")
-    //   } else if(result.status == 200) {
-    //     this.snackbar.openSnackbarSuccessCust("New Applicaion Successfully Submitted!");
-    //     this.dialogRef.close({ event: 'close', data: false });
-    //   }
-    // }, err => {
-    //   this.snackbar.openSnackbarErrorCust("Failed to submit new application. Please try again.")
-    // });
+  /**
+   * Asks backend to create a new application from form values
+   */
+  create(){
+    var body = {
+      typeHS: this.form.get("Type")?.value,
+      qualification: this.form.get("Qualifications")?.value,
+      education: this.form.get("Education")?.value,
+      yearOExp: this.form.get("Experience")?.value
+    }
+
+    this.http.post<any>("api/applications/", body, { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to submit new application. Please try again.")
+      } else if(result.status == 200) {
+        this.snackbar.openSnackbarSuccessCust("New Applicaion Successfully Submitted!");
+        this.dialogRef.close({ event: 'close', data: true });
+      }
+    }, err => {
+      this.snackbar.openSnackbarErrorCust(err.error.error);
+    });
   }
 
   // close dialogue with false state
   closeDialog() { this.dialogRef.close({ event: 'close', data: false }); }
-
-  ngOnInit(): void {
-  }
-
 }

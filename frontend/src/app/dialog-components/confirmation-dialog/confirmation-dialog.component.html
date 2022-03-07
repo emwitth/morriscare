@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<h3>
+    <div *ngFor="let line of details">{{line}}<br></div>
+</h3>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="closeDialog(false)">{{cancel}}</button>
+    <button mat-raised-button color="primary" (click)="closeDialog(true)">{{confirm}}</button>
+</div>

@@ -11,6 +11,13 @@
                 </mat-select>
                 <mat-error *ngIf="this.form.get('Type')?.hasError('required')">You must select a value</mat-error>
             </mat-form-field>
+            <!-- Experience -->
+            <mat-form-field appearance="fill">
+                <mat-label>Experience</mat-label>
+                <input matInput placeholder="Enter Wanted Experience" formControlName="Experience">
+                <mat-error *ngIf="this.form.get('Experience')?.hasError('required')">You must enter a value</mat-error>
+                <mat-error *ngIf="this.form.get('Experience')?.hasError('pattern')">You must use only numbers</mat-error>
+            </mat-form-field>
             <!-- Qualifications -->
             <mat-form-field appearance="fill">
                 <mat-label>Qualifications</mat-label>

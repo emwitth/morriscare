@@ -80,7 +80,7 @@ export class LoginDialogComponent implements OnInit {
     }
 
     this.http.post<any>("api/auth/", body, { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
+      console.log(result.body);
       if (result.status != 200) {
         this.isIncorrectLogin = true;
       } else if(result.status == 200) {
@@ -90,13 +90,13 @@ export class LoginDialogComponent implements OnInit {
         this.info.push(result.body?.lastName);
         this.info.push(result.body?.username);
         this.info.push(result.body?.userID.toString());
-        this.info.push(result.body?.roleID.toString());
+        this.info.push(result.body?.role);
         console.log(this.info);
 
         // setup security questions
-        this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1].question;
-        this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1].question;
-        this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1].question;
+        this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1]?.question;
+        this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1]?.question;
+        this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1]?.question;
 
         // setup answers
         this.answers.answer1 = result.body?.securityQuestionOneAnswer;

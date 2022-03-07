@@ -41,16 +41,9 @@
             </mat-form-field>
         </div>
     </form>
-    <div *ngIf="isAdded">
-        <p>{{this.firstName}} {{this.lastName}} has been added with the following information:</p>
-        <p>Username: {{this.username}}</p>
-        <p>Password: {{this.password}}</p>
-        <mat-error><small>Make sure to note the password as this will not be able to be seen again</small></mat-error>
-    </div>
 </div>
 <!-- Actions -->
 <div mat-dialog-actions>
     <button mat-raised-button *ngIf="!isAdded" (click)="cancelAdd()">Cancel</button>
     <button mat-raised-button *ngIf="!isAdded" color="primary" [disabled]="form.pristine || form.invalid" (click)="addStaffMember()">Add</button>
-    <button mat-raised-button *ngIf="isAdded" color="primary" (click)="ok()">Okay</button>
 </div>

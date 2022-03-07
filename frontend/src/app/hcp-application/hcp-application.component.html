@@ -51,7 +51,7 @@
                 </mat-form-field>
                 <!-- Date of Birth -->
                 <mat-form-field appearance="fill">
-                    <mat-label>Choose a date</mat-label>
+                    <mat-label>Enter your Date of Bith</mat-label>
                     <input matInput [max]="today" [matDatepicker]="picker" formControlName="dob">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -84,10 +84,11 @@
                     <mat-error *ngIf="this.form.get('qualifications')?.hasError('required')">You must enter your qualifications</mat-error>
                 </mat-form-field>
             </div>
+            <!-- Actions -->
             <button mat-raised-button color="primary" 
                 [disabled]="form.pristine || form.invalid" (click)="submit()">Submit
             </button>
-            <button mat-raised-button (click)="submit()" routerLink="/careers/{{type}}">Cancel</button>
+            <button mat-raised-button routerLink="/careers/{{type}}">Cancel</button>
         </div>
     </div>
 </form>

@@ -119,7 +119,7 @@ export class ApiModule {
         this.snackbar.openSnackbarErrorCust("Failed to fetch users of type" + type + ". Maybe reload the page or contact an administrator.");
       } else if(result.status == 200) {
         result.body.forEach((element: any) => {
-          if(element.roleID == type) {
+          if(element.role == type) {
            toReturn.push(this.fillElement(type, element)); 
           }
         });

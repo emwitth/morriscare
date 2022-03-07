@@ -46,12 +46,6 @@
             <button mat-flat-button color="primary" class="hover-class" routerLink="{{function.link}}">{{function.title}}</button>
           </li>
         </div>
-        <!-- Sidebar Options Patient -->
-        <div *ngIf="checkRole(getPatient())">
-          <li *ngFor="let function of patientFunctions" class="nav-item">
-            <button mat-flat-button color="primary" class="hover-class" routerLink="{{function.link}}">{{function.title}}</button>
-          </li>
-        </div>
       </ul>
     </mat-sidenav>
   

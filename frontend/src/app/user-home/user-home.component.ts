@@ -18,12 +18,14 @@ export class UserHomeComponent implements OnInit {
   adminFunctions = [
     {title: "Manage Staff", link:"manage-staff"},
     {title: "Manage Care Takers", link:"manage-care-taker"},
-    {title: "Manage Applications", link:"applications"}
+    {title: "Manage Applications", link:"applications"},
+    {title: "Manage HCPs", link:"manage-hcp"},
   ];
 
   smFunctions = [
     {title: "Manage Care Takers", link:"manage-care-taker"},
-    {title: "Manage Applications", link:"applications"}
+    {title: "Manage Applications", link:"applications"},
+    {title: "Manage HCPs", link:"manage-hcp"},
   ];
 
   ctFunctions = [
@@ -34,13 +36,13 @@ export class UserHomeComponent implements OnInit {
     {title: "Home", link:"home"}
   ];
 
-  patientFunctions = [
-    {title: "Home", link:"home"}
-  ];
 
   constructor(public dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {
+    if(sessionStorage?.firstTime) {
+      this.sidenav.close();
+    }
   }
 
   openLogoutDialog() {
@@ -100,9 +102,5 @@ export class UserHomeComponent implements OnInit {
 
   getHCP() {
     return Roles.hcp;
-  }
-
-  getPatient() {
-    return Roles.patient;
   }
 }

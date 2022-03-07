@@ -1,19 +1,19 @@
 <div class="container p-2 my-5 border">
     <div class="d-flex flex-row justify-content-between">
+        <!-- page title -->
         <h1 class="blockquote">Manage Applications</h1>
         <button mat-raised-button color="primary" (click)="openAddApplicationDialog()">New Applications</button>
     </div>
+    <!-- list of applications -->
     <div *ngFor="let application of applications" class="container centered-partial-width-rows-container">
-        <mat-card>
-            <mat-card-title>Application {{application.id}}</mat-card-title>
-            <p>Qualifications: {{application.qualifications}}</p>
+        <mat-card 
+        [state]="{data: {qual: application.qualification, ed: application.education, exp: application.yearOExp, type: application.typeHS}}" 
+        routerLink="{{application.adID}}/applicants"> <!-- on a click, each application routes to its details page -->
+            <mat-card-title>Application {{application.adID}}: {{application.typeHS == 'p' ? 'Physiotherapist' : 'Nurse'}}</mat-card-title>
+            <p>Qualifications: {{application.qualification}}</p>
             <p>Education Required: {{application.education}}</p>
-            <mat-card-actions>
-                <button mat-raised-button color="primary" 
-                [state]="{data: {qualifications: application.qualifications, education: application.education}}"
-                            routerLink="{{application.id}}/applicants">Details</button>
-            </mat-card-actions>
+            <p>Experience Wanted: {{application.yearOExp}} years</p>
         </mat-card>
-    <br>
+        <br>
     </div>
 </div>

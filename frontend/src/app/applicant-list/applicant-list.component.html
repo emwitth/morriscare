@@ -1,38 +1,49 @@
 <div style="height:100%">
+    <!-- shows if list of applicants comes back empty -->
+    <mat-error *ngIf="!isAppliedTo">No applicants for this job. Come back later!</mat-error>
+    <!-- creates an element for each applicant -->
     <div *ngFor="let applicant of applicants; let i = index">
         <div *ngIf="!isClosed[i]" [@openClose]>
-        <mat-card style="overflow: hidden">
-            <div class="d-flex justify-content-between" *ngIf="!isClosed[i]" [@openClose]>
-                <div>
-                    <h3>
-                        <button (click)="open(i)" class="exit-button" id="button{{i}}">
-                            <mat-icon>navigate_before</mat-icon>
-                        </button>
-                        {{applicant.firstName | titlecase}} {{applicant.lastName | titlecase}}
-                    </h3>
-                    <p>{{applicant.yearsOfExperience}} years of experience</p>
-                    <p>{{applicant.qualifications}}</p>
+            <mat-card style="overflow: hidden"> <!-- overflow hidden allows for smooth animation -->
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h3>
+                            <!-- the toggle carat button '<' -->
+                            <button (click)="toggle(i)" class="exit-button" id="button{{i}}">
+                                <mat-icon>navigate_before</mat-icon>
+                            </button>
+                            <!-- the name of the applicant -->
+                            {{applicant.firstName | titlecase}} {{applicant.lastName | titlecase}}
+                        </h3>
+                        <!-- overview information on left -->
+                        <p>{{applicant.yearOExp}} years of experience</p>
+                        <p>{{applicant.qualification}}</p>
+                    </div>
+                    <!-- overview information on right -->
+                    <div style="text-align: right;">
+                        <p>Born {{applicant.qualificationDate}}</p>
+                        <p>{{applicant.sex | uppercase}}</p>
+                    </div>
                 </div>
-                <div style="text-align: right;">
-                    <p>Born {{applicant.dateOfBirth}}</p>
-                    <p>{{applicant.sex}}</p>
+                <!-- the extra information that is displayed if card is expanded -->
+                <div *ngIf="isOpen[i]" [@bottom-animation] style="height: 25vw" class="container">
+                    <div style="padding-bottom: 5vw;">
+                        <mat-divider></mat-divider>
+                        <h2>Additional Information</h2>
+                        <p>SSN: {{applicant.ssn}}</p>
+                        <p>Address: {{applicant.postalAddress}}</p>
+                        <p>Phone Number: {{this.format.formatPhone(applicant.phoneNumber)}}</p>
+                        <p>Email: {{applicant.email}}</p>
+                    </div>
+                    <!-- the actions that can be taken on expanded card -->
+                    <div class="d-flex justify-content-around">
+                        <button mat-raised-button color="primary" 
+                            (click)="reject(applicant.firstName, applicant.lastName, applicant.pID)">Reject</button>
+                        <button mat-raised-button color="primary"
+                        (click)="approve(applicant.firstName, applicant.lastName, applicant.pID)">Approve</button>
+                    </div>
                 </div>
-            </div>
-            <div *ngIf="isOpen[i]" [@bottom-animation] style="height: 30vw" class="container">
-                <div style="padding-bottom: 10vw;">
-                    <mat-divider></mat-divider>
-                    <h2>Additional Information</h2>
-                    <p>SSN: {{applicant.ssn}}</p>
-                    <p>Address: {{applicant.address}}</p>
-                    <p>Phone Number: {{applicant.phoneNumber}}</p>
-                    <p>Email: {{applicant.email}}</p>
-                </div>
-                <div class="d-flex justify-content-around">
-                    <button mat-raised-button color="primary">Reject</button>
-                    <button mat-raised-button color="primary">Approve</button>
-                </div>
-            </div>
-        </mat-card><br *ngIf="!isClosed[i]" [@openClose]>
-    </div>
+            </mat-card><br>
+        </div>
     </div>
 </div>

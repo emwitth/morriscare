@@ -16,8 +16,7 @@ import { JobListComponent } from './job-list/job-list.component';
 import { HomeComponent } from './home/home.component';
 import { ApplicationManageComponent } from './application-manage/application-manage.component';
 import { ApplicationDetailsComponent } from './application-details/application-details.component';
-import { ApplicantListComponent } from './applicant-list/applicant-list.component';
-import { ApplicantDetailsComponent } from './applicant-details/applicant-details.component';
+import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
 
 const routes: Routes = [
   /* default path */
@@ -29,10 +28,6 @@ const routes: Routes = [
       { 
         path: 'home', 
         component: WelcomeComponent
-      },
-      { 
-        path: 'settings', 
-        component: SettingsComponent
       },
       {
         path: 'about', 
@@ -67,13 +62,21 @@ const routes: Routes = [
         component: CtManageComponent
       },
       { 
+        path: 'manage-hcp', 
+        component: HcpManageComponent
+      },
+      { 
         path: 'applications', 
         component: ApplicationManageComponent
       },
       {
         path: 'applications/:id/applicants',
         component: ApplicationDetailsComponent,
-      }
+      },
+      { 
+        path: 'settings', 
+        component: SettingsComponent
+      },
     ]
   },
   /* admin paths */
@@ -90,12 +93,44 @@ const routes: Routes = [
         component: CtManageComponent
       },
       { 
+        path: 'manage-hcp', 
+        component: HcpManageComponent
+      },
+      { 
         path: 'applications', 
         component: ApplicationManageComponent,
       },
       {
         path: 'applications/:id/applicants',
         component: ApplicationDetailsComponent,
+      },
+      { 
+        path: 'settings', 
+        component: SettingsComponent
+      },
+    ]
+  },
+   /* hcp paths */
+   {
+    path: "hcp",
+    component: UserHomeComponent,
+    children:
+    [
+      { 
+        path: 'settings', 
+        component: SettingsComponent
+      }
+    ]
+  },
+  /* caretaker paths */
+  {
+    path: "caretaker",
+    component: UserHomeComponent,
+    children:
+    [
+      { 
+        path: 'settings', 
+        component: SettingsComponent
       }
     ]
   },

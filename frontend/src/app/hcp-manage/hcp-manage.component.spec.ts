@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ApplicantDetailsComponent } from './applicant-details.component';
+import { HcpManageComponent } from './hcp-manage.component';
 
-describe('ApplicantDetailsComponent', () => {
-  let component: ApplicantDetailsComponent;
-  let fixture: ComponentFixture<ApplicantDetailsComponent>;
+describe('HcpManageComponent', () => {
+  let component: HcpManageComponent;
+  let fixture: ComponentFixture<HcpManageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ApplicantDetailsComponent ]
+      declarations: [ HcpManageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ApplicantDetailsComponent);
+    fixture = TestBed.createComponent(HcpManageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
