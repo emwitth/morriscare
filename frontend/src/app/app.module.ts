@@ -60,6 +60,7 @@ import { ApplicationManageComponent } from './application-manage/application-man
 import { AddPostingDialogComponent } from './dialog-components/add-posting-dialog/add-posting-dialog.component';
 import { ApplicantListComponent } from './applicant-list/applicant-list.component';
 import { ApplicationDetailsComponent } from './application-details/application-details.component';
+import { ConfirmationDialogComponent } from './dialog-components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { ApplicationDetailsComponent } from './application-details/application-d
     AddPostingDialogComponent,
     ApplicantListComponent,
     ApplicationDetailsComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
