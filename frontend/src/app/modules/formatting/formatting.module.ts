@@ -13,11 +13,21 @@ export class FormattingModule {
   /**
    * Formats a phone number nicely
    * 
-   * @param phoneNum the phone number as just numbers
+   * @param phoneNum the phone number as just digits
    * @returns a phone number in the format (555) 555-5555
    */
   formatPhone(phoneNum: string): string {
     return '(' + phoneNum.substring(0,3) + ') ' + phoneNum.substring(3,6) + '-' + phoneNum.substring(6,10);
+  }
+
+  /**
+   * Formats a social security number nicely
+   * 
+   * @param ssn a social security number as just digits
+   * @returns a social security number in the format 555-55-5555
+   */
+  formatSSN(ssn: string): string {
+    return ssn.substring(0,3) + '-' + ssn.substring(3,4) + '-' + ssn.substring(4,8);
   }
 
   /**
