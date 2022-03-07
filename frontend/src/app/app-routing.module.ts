@@ -28,10 +28,6 @@ const routes: Routes = [
         path: 'home', 
         component: WelcomeComponent
       },
-      { 
-        path: 'settings', 
-        component: SettingsComponent
-      },
       {
         path: 'about', 
         component: AboutComponent
@@ -71,7 +67,11 @@ const routes: Routes = [
       {
         path: 'applications/:id/applicants',
         component: ApplicationDetailsComponent,
-      }
+      },
+      { 
+        path: 'settings', 
+        component: SettingsComponent
+      },
     ]
   },
   /* admin paths */
@@ -94,6 +94,34 @@ const routes: Routes = [
       {
         path: 'applications/:id/applicants',
         component: ApplicationDetailsComponent,
+      },
+      { 
+        path: 'settings', 
+        component: SettingsComponent
+      },
+    ]
+  },
+   /* hcp paths */
+   {
+    path: "hcp",
+    component: UserHomeComponent,
+    children:
+    [
+      { 
+        path: 'settings', 
+        component: SettingsComponent
+      }
+    ]
+  },
+  /* caretaker paths */
+  {
+    path: "caretaker",
+    component: UserHomeComponent,
+    children:
+    [
+      { 
+        path: 'settings', 
+        component: SettingsComponent
       }
     ]
   },
