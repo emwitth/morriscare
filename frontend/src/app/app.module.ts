@@ -61,6 +61,7 @@ import { AddPostingDialogComponent } from './dialog-components/add-posting-dialo
 import { ApplicantListComponent } from './applicant-list/applicant-list.component';
 import { ApplicationDetailsComponent } from './application-details/application-details.component';
 import { ConfirmationDialogComponent } from './dialog-components/confirmation-dialog/confirmation-dialog.component';
+import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { ConfirmationDialogComponent } from './dialog-components/confirmation-di
     ApplicantListComponent,
     ApplicationDetailsComponent,
     ConfirmationDialogComponent,
+    HcpManageComponent,
   ],
   imports: [
     BrowserModule,

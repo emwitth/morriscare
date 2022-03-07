@@ -18,12 +18,14 @@ export class UserHomeComponent implements OnInit {
   adminFunctions = [
     {title: "Manage Staff", link:"manage-staff"},
     {title: "Manage Care Takers", link:"manage-care-taker"},
-    {title: "Manage Applications", link:"applications"}
+    {title: "Manage Applications", link:"applications"},
+    {title: "Manage HCPs", link:"manage-hcp"},
   ];
 
   smFunctions = [
     {title: "Manage Care Takers", link:"manage-care-taker"},
-    {title: "Manage Applications", link:"applications"}
+    {title: "Manage Applications", link:"applications"},
+    {title: "Manage HCPs", link:"manage-hcp"},
   ];
 
   ctFunctions = [
