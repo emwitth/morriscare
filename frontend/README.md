@@ -114,12 +114,12 @@ available and often they require custom functionality to happen within the subsc
 There are a few notable functions within the api modules that are used more than once however. These functions are used and are fairly portable and versatile.
 
 - getListOfUsers(type: string)
- - fetches a list of users of a given type and their information
+  - fetches a list of users of a given type and their information
 - updateUserInfo(id: string | null, body: any)
- - updates the given information in body in the user of ID id
- - can be used to update any information a user includes by simply providing an object containing the fields to be updated and their new values
+  - updates the given information in body in the user of ID id
+  - can be used to update any information a user includes by simply providing an object containing the fields to be updated and their new values
 - getAllQuestions()
- - fetches all the security questions possible (there are 6)
+  - fetches all the security questions possible (there are 6)
 
 **NOTE** be careful when using these functions and then accessing their returns in typescrypt directly afterwards. Because of the asynchronous nature of the http requests,
 this could cause problems. The functions are however safe to set a value and then use in an *ngFor loop in the html.
@@ -130,13 +130,13 @@ The formatting module is intended for different formatting functions needed thro
 for display or format items in the way the database expects for storage within it. The functions provided are as follows:
 
 - formatPhone(phoneNum: string): string
- - takes phoneNum, the phone number as just digits
- - returns a phone number in the format (555) 555-5555
+  - takes phoneNum, the phone number as just digits
+  - returns a phone number in the format (555) 555-5555
 - formatSSN(ssn: string): string
- - takes ssn, the social security number as just digits
- - returns a social security number in the format 555-55-5555
+  - takes ssn, the social security number as just digits
+  - returns a social security number in the format 555-55-5555
 - parseMomentDateToString(date: Date): string
- - parses a date object into a string representing a date as YYYY-MM-DD
+  - parses a date object into a string representing a date as YYYY-MM-DD
 
 ### Modules - snackbar
 
