@@ -1,6 +1,7 @@
 import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
+import { SnackbarModule } from 'src/app/modules/snackbar/snackbar.module';
 
 @Component({
   selector: 'app-approve-ct-dialog',
@@ -10,13 +11,11 @@ import { HttpClient } from '@angular/common/http';
 export class ApproveCtDialogComponent implements OnInit {
   fromPage!: string;
   fromDialog!: string;
-  isAdded: boolean = false;
-  username: string = "";
-  password: string = "";
 
   constructor( 
     private http: HttpClient,
     public dialogRef: MatDialogRef<ApproveCtDialogComponent>,
+    private snackbar: SnackbarModule,
     @Optional() @Inject(MAT_DIALOG_DATA) public mydata: any) { }
 
   ngOnInit(): void {
@@ -25,16 +24,13 @@ export class ApproveCtDialogComponent implements OnInit {
   approveCareTaker(id: string) {
     this.http.post<any>("api/caretaker_enroll/" + id + "/",{}, { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
-        console.log("not 200")
+        this.snackbar.openSnackbarError();
       } else {
-        console.log("200");
-        this.username = result.body.username;
-        this.password = result.body.pwd;
+        this.closeDialog(true);
       }
     }, err => {
-      //
+      this.snackbar.openSnackbarErrorCust(err.error.error);
     });
-    this.isAdded = true;
   }
 
   closeDialog(result: boolean) { this.dialogRef.close({ event: 'close', data: result }); }
