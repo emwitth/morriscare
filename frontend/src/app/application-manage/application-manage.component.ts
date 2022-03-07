@@ -11,11 +11,13 @@ import { SnackbarModule } from '../modules/snackbar/snackbar.module';
   styleUrls: ['./application-manage.component.css']
 })
 export class ApplicationManageComponent implements OnInit {
+  // a list of all the applications
   applications: Array<Application> = new Array<Application>();
 
   constructor(public dialog: MatDialog, private http: HttpClient, private snackbar: SnackbarModule) { }
 
   ngOnInit(): void {
+    // retrieve all the pending applications (job postings)
     this.http.get<any>("api/applications/", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
         this.snackbar.openSnackbarErrorCust("Failed to fetch applications");
@@ -29,13 +31,15 @@ export class ApplicationManageComponent implements OnInit {
     });
   }
 
+  /**
+   * opens dialog for creating a new applications
+   */
   openAddApplicationDialog() {
     const myCompDialog = this.dialog.open(AddPostingDialogComponent, { data: '' });
     myCompDialog.afterClosed().subscribe((res) => {
-      // Trigger After Dialog Closed 
-      console.log('After Closed', { res });
-
+      // watch dialog for result
       if(res.data == true) {
+        // if dialog returns true, reload page to reveal new application in list
         window.location.reload();
       }
     });

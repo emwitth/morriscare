@@ -84,6 +84,7 @@
                     <mat-error *ngIf="this.form.get('qualifications')?.hasError('required')">You must enter your qualifications</mat-error>
                 </mat-form-field>
             </div>
+            <!-- Actions -->
             <button mat-raised-button color="primary" 
                 [disabled]="form.pristine || form.invalid" (click)="submit()">Submit
             </button>

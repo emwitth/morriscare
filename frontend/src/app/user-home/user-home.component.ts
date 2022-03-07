@@ -40,6 +40,9 @@ export class UserHomeComponent implements OnInit {
   constructor(public dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {
+    if(sessionStorage?.firstTime) {
+      this.sidenav.close();
+    }
   }
 
   openLogoutDialog() {

@@ -19,10 +19,16 @@ export class HcpManageComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private api: ApiModule) { }
 
+  /**
+   * Opens dialog to remove a user from the system
+   * 
+   * @param first the firstname of the account
+   * @param last the lastname of the account
+   * @param id the id of the account
+   */
   openRemoveDialog(first: string, last: string, id: string) {
     const myCompDialog = this.dialog.open(RemoveSmDialogComponent, { data: {firstName: first, lastName:last, id: id} });
     myCompDialog.afterClosed().subscribe((res) => {
-      // Trigger After Dialog Closed 
       if(res.data == true) {
         window.location.reload();
       }
@@ -30,9 +36,8 @@ export class HcpManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // get staff member from back end
+    // get hcp from back end
     this.hcps = this.api.getListOfUsers(Roles.hcp);
-    console.log(this.hcps);
   }
 
 }

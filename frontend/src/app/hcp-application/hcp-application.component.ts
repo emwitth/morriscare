@@ -37,20 +37,14 @@ export class HcpApplicationComponent implements OnInit {
     }, {});
   }
 
-  submit(){
-    // console.log("first", this.form.get("first")?.value);
-    // console.log("last", this.form.get("last")?.value);
-    // console.log("phone", this.form.get("phone")?.value);
-    // console.log("email", this.form.get("email")?.value);
-    // console.log("sex", this.form.get("sex")?.value);
-    // console.log("address", this.form.get("address")?.value);
-    console.log("dob", this.form.get("dob")?.value);
-    var temp = this.form.get("dob")?.value;
-    console.log("dob", this.format.parseMomentDateToString(temp));
-    // console.log("ssn", this.form.get("ssn")?.value);
-    // console.log("experience", this.form.get("experience")?.value);
-    // console.log("qualifications", this.form.get("qualifications")?.value);
+  
+  ngOnInit(): void {
+    // get the values from the route for use later
+    this.id = this.route.snapshot.params?.id;
+    this.type = this.route.snapshot.params?.type;
+  }
 
+  submit(){
     // put all form values in an object
     var body = {
       firstName: this.form.get("first")?.value,
@@ -65,11 +59,9 @@ export class HcpApplicationComponent implements OnInit {
       phoneNumber: this.form.get("phone")?.value,
       postalAddress: this.form.get("address")?.value,
     }
-    console.log(body);
     
     // post to the backend
     this.http.post<any>("api/applicants/" + this.id + "/", body, { observe: "response" }).subscribe(result => {
-      // console.log(result, result);
       if (result.status != 200) {
         console.log("!200", result.body);
         this.snackbar.openSnackbarErrorCust(result.body);
@@ -82,15 +74,4 @@ export class HcpApplicationComponent implements OnInit {
       this.snackbar.openSnackbarErrorCust(err.error.error);
     });
   }
-
-  ngOnInit(): void {
-    // get the values from the route for use later
-    this.id = this.route.snapshot.params?.id;
-    this.type = this.route.snapshot.params?.type;
-
-    console.log(this.type, this.id);
-
-    console.log(this.today);
-  }
-
 }

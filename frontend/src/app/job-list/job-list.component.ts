@@ -17,8 +17,10 @@ export class JobListComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit(): void {
+    // get type to query for correct job postings
     this.type = this.route.snapshot.params?.type;
 
+    // get job postings from backend
     this.http.get<any>("api/applications/", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
         this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
@@ -30,7 +32,7 @@ export class JobListComponent implements OnInit {
         });
       }
     }, err => {
-      this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
+      this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type + ": " + err.error.error);
     });
   }
 

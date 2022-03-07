@@ -13,6 +13,7 @@ export class AddPostingDialogComponent implements OnInit {
   fromPage!: string;
   fromDialog!: string;
 
+  // form for dialog
   form: FormGroup;
 
   constructor(private fb: FormBuilder,private http: HttpClient,
@@ -28,11 +29,12 @@ export class AddPostingDialogComponent implements OnInit {
       }, {});
     }
 
+  ngOnInit(): void {}
+
+  /**
+   * Asks backend to create a new application from form values
+   */
   create(){
-    console.log(this.form.get("Type")?.value);
-    console.log(this.form.get("Qualifications")?.value);
-    console.log(this.form.get("Education")?.value);
-    console.log(this.form.get("Experience")?.value);
     var body = {
       typeHS: this.form.get("Type")?.value,
       qualification: this.form.get("Qualifications")?.value,
@@ -41,7 +43,6 @@ export class AddPostingDialogComponent implements OnInit {
     }
 
     this.http.post<any>("api/applications/", body, { observe: "response" }).subscribe(result => {
-      // console.log(result.body);
       if (result.status != 200) {
         this.snackbar.openSnackbarErrorCust("Failed to submit new application. Please try again.")
       } else if(result.status == 200) {
@@ -49,14 +50,10 @@ export class AddPostingDialogComponent implements OnInit {
         this.dialogRef.close({ event: 'close', data: true });
       }
     }, err => {
-      this.snackbar.openSnackbarErrorCust("Failed to submit new application. Please try again.")
+      this.snackbar.openSnackbarErrorCust(err.error.error);
     });
   }
 
   // close dialogue with false state
   closeDialog() { this.dialogRef.close({ event: 'close', data: false }); }
-
-  ngOnInit(): void {
-  }
-
 }

@@ -27,7 +27,6 @@ export class FormattingModule {
    * @returns a string representing the date as YYYY-MM-DD
    */
   parseMomentDateToString(date: Date): string {
-    console.log(date);
-    return date.toISOString(). slice(0, 10);
+    return date.toISOString().slice(0, 10);
   }
 }
