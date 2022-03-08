@@ -1,3 +1,4 @@
+import { Roles } from 'src/app/global-variables';
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -116,7 +117,10 @@ export class LoginDialogComponent implements OnInit {
           sessionStorage.setItem("id", this.info[3]);
           sessionStorage.setItem("role", this.info[4]);
           sessionStorage.setItem("login", 'true');
-          this.router.navigate(['/settings']);
+          if(this.info[4] == Roles.admin) {this.router.navigate(['/admin/settings']);}
+          if(this.info[4] == Roles.ct) {this.router.navigate(['/caretaker/settings']);}
+          if(this.info[4] == Roles.sm) {this.router.navigate(['/staff/settings']);}
+          if(this.info[4] == Roles.hcp) {this.router.navigate(['/hcp/settings']);}
         }
         else {
           this.isLoginPassed = true;

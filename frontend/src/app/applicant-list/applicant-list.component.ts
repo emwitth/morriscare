@@ -132,6 +132,7 @@ export class ApplicantListComponent implements OnInit {
   * @param index the index of which applicant is being expanded
   */
   toggle(index: number) {
+    console.log("toggle", index);
     var button = document.getElementById('button' + index);
     if(!this.isOpen[index])
     { // opens one element, hides all others, rotates exit button to <
@@ -152,6 +153,8 @@ export class ApplicantListComponent implements OnInit {
         this.isClosed[i] = false;
       }
     }
+    console.log("isClosed",this.isClosed);
+    console.log("isOpen",this.isOpen);
   }
 
   /**
@@ -160,8 +163,9 @@ export class ApplicantListComponent implements OnInit {
    * @param first the first name of the appliant
    * @param last the last name of the applicant
    * @param id the pID of the applicant
+   * @param index the index of the applicant
    */
-  reject(first: string, last: string, id: number) {
+  reject(first: string, last: string, id: number, index: number) {
     // dialog asks for confirmation
     const myCompDialog = this.dialog.open(ConfirmationDialogComponent, { data: {
       title: "Reject " + first + " " + last, 
@@ -178,8 +182,8 @@ export class ApplicantListComponent implements OnInit {
           if (result.status != 200) {
             this.snackbar.openSnackbarError();
           } else if(result.status == 200) {
-            this.isRejected[id] = true;
-            this.toggle(id);
+            this.isRejected[index] = true;
+            this.toggle(index);
           }
         }, err => {
           this.snackbar.openSnackbarErrorCust(err.error.error);

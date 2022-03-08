@@ -38,7 +38,7 @@
                     <!-- the actions that can be taken on expanded card -->
                     <div class="d-flex justify-content-around">
                         <button mat-raised-button color="primary" 
-                            (click)="reject(applicant.firstName, applicant.lastName, applicant.pID)">Reject</button>
+                            (click)="reject(applicant.firstName, applicant.lastName, applicant.pID, i)">Reject</button>
                         <button mat-raised-button color="primary"
                         (click)="approve(applicant.firstName, applicant.lastName, applicant.pID)">Approve</button>
                     </div>
