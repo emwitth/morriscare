@@ -1,58 +1,56 @@
-<nav class="navbar sticky-top navbar-expand-sm navbar-custom" style="background-color: var(--mainColor);">
-
-    <div class="container-fluid">
-      <!-- Menu Button -->
-      <button *ngIf="checkLoggedIn()" [disabled]="checkFirstTime()" mat-icon-button class="example-icon white-icon hover-class" (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
+<nav class="navbar sticky-top navbar-expand-sm navbar-custom">
+  <div class="container-fluid">
+    <!-- Menu Button -->
+    <button *ngIf="checkLoggedIn()" [disabled]="checkFirstTime()" mat-icon-button class="example-icon white-icon hover-class" (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <!-- User Menu -->
+    <div *ngIf="checkLoggedIn()">
+      <button mat-flat-button color="primary" class="hover-class" [matMenuTriggerFor]="usermenu">
+        WELCOME, {{getName()}}!
       </button>
-      <!-- User Menu -->
-      <div *ngIf="checkLoggedIn()">
-        <button mat-flat-button color="primary" class="hover-class" [matMenuTriggerFor]="usermenu">
-          WELCOME, {{getName()}}!
-        </button>
-        <mat-menu #usermenu="matMenu">
-          <button mat-menu-item [routerLink]="'settings'">Settings</button>
-          <button mat-menu-item (click)="openLogoutDialog()">Logout</button>
-        </mat-menu>
-      </div>
+      <mat-menu #usermenu="matMenu">
+        <button mat-menu-item [routerLink]="'settings'">Settings</button>
+        <button mat-menu-item (click)="openLogoutDialog()">Logout</button>
+      </mat-menu>
     </div>
+  </div> 
+</nav>
   
-  </nav>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" opened>
+    <ul class="nav flex-column">
+      <!-- Sidebar Options Admin -->
+      <div *ngIf="checkRole(getAdmin())">
+        <li *ngFor="let function of adminFunctions" class="nav-item">
+          <button mat-flat-button color="primary" class="hover-class sidenav-button" routerLink="{{function.link}}">{{function.title}}</button>
+        </li>
+      </div>
+      <!-- Sidebar Options Staff Member -->
+      <div *ngIf="checkRole(getSM())">
+        <li *ngFor="let function of smFunctions" class="nav-item">
+          <button mat-flat-button color="primary" class="hover-class sidenav-button" routerLink="{{function.link}}">{{function.title}}</button>
+        </li>
+      </div>
+      <!-- Sidebar Options Care Taker -->
+      <div *ngIf="checkRole(getCT())">
+        <li *ngFor="let function of ctFunctions" class="nav-item">
+          <button mat-flat-button color="primary" class="hover-class sidenav-button" routerLink="{{function.link}}">{{function.title}}</button>
+        </li>
+      </div>
+      <!-- Sidebar Options Health Care Professional -->
+      <div *ngIf="checkRole(getHCP())">
+        <li *ngFor="let function of hcpFunctions" class="nav-item">
+          <button mat-flat-button color="primary" class="hover-class sidenav-buttons" routerLink="{{function.link}}">{{function.title}}</button>
+        </li>
+      </div>
+    </ul>
+  </mat-sidenav>
   
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav mode="side" opened>
-      <ul class="nav flex-column">
-        <!-- Sidebar Options Admin -->
-        <div *ngIf="checkRole(getAdmin())">
-          <li *ngFor="let function of adminFunctions" class="nav-item">
-            <button mat-flat-button color="primary" class="hover-class" routerLink="{{function.link}}">{{function.title}}</button>
-          </li>
-        </div>
-        <!-- Sidebar Options Staff Member -->
-        <div *ngIf="checkRole(getSM())">
-          <li *ngFor="let function of smFunctions" class="nav-item">
-            <button mat-flat-button color="primary" class="hover-class" routerLink="{{function.link}}">{{function.title}}</button>
-          </li>
-        </div>
-        <!-- Sidebar Options Care Taker -->
-        <div *ngIf="checkRole(getCT())">
-          <li *ngFor="let function of ctFunctions" class="nav-item">
-            <button mat-flat-button color="primary" class="hover-class" routerLink="{{function.link}}">{{function.title}}</button>
-          </li>
-        </div>
-        <!-- Sidebar Options Health Care Professional -->
-        <div *ngIf="checkRole(getHCP())">
-          <li *ngFor="let function of hcpFunctions" class="nav-item">
-            <button mat-flat-button color="primary" class="hover-class" routerLink="{{function.link}}">{{function.title}}</button>
-          </li>
-        </div>
-      </ul>
-    </mat-sidenav>
-  
-    <mat-sidenav-content>
-      <!-- This is important, DO NOT DELETE -->
-      <!-- It is why the other pages are shown when you route to them -->
-      <router-outlet></router-outlet>
-      <!---------------------------------------------------------------->
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  <mat-sidenav-content>
+    <!-- This is important, DO NOT DELETE -->
+    <!-- It is why the other pages are shown when you route to them -->
+    <router-outlet></router-outlet>
+    <!---------------------------------------------------------------->
+  </mat-sidenav-content>
+</mat-sidenav-container>

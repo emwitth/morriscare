@@ -13,3 +13,8 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
+.sidenav-button {
+  width: 100%;
+  text-align: left;
+}
