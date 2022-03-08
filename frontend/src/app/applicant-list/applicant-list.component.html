@@ -3,7 +3,7 @@
     <mat-error *ngIf="!isAppliedTo">No applicants for this job. Come back later!</mat-error>
     <!-- creates an element for each applicant -->
     <div *ngFor="let applicant of applicants; let i = index">
-        <div *ngIf="!isClosed[i]" [@openClose]>
+        <div *ngIf="!isClosed[i] && !isRejected[i]" [@openClose]>
             <mat-card style="overflow: hidden"> <!-- overflow hidden allows for smooth animation -->
                 <div class="d-flex justify-content-between">
                     <div>

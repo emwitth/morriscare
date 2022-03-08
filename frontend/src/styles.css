@@ -3,6 +3,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/* Global Variables */
 :root{
     --navbarHeight: 50px;
     --mainColor: #3f51b5;
@@ -15,6 +16,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .navbar-custom {
     height: var(--navbarHeight);
+    background-color: var(--mainColor);
+    box-shadow: 0px 2px 5px;
 }
 
 .white-icon {
@@ -25,6 +28,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: var(--indicationColor);
 }
 
+
+/* Center Items and Size to different amounts */
 .flex-center {
     display: flex;
     justify-content: center;
@@ -51,6 +56,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 50%;
 }
 
+/* Snackbar Styles */
 .mat-snackbar-colors {
     color: var(--mainColor) !important;
     background-color: #f3f3f3 !important;

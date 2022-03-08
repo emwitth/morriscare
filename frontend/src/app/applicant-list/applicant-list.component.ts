@@ -70,6 +70,7 @@ export class ApplicantListComponent implements OnInit {
   // the variables indicating whether a applicant is expanded, shown, or hidden
   isOpen: Array<boolean> = new Array<boolean>(); // indicates which applicant entry is expanded
   isClosed: Array<boolean> = new Array<boolean>(); // indicates that all the other entries are closed
+  isRejected: Array<boolean> = new Array<boolean>(); // indicates whether an applicant has been rejected or not
 
   // indicates whether any applicants have applied to this application
   isAppliedTo: boolean = false;
@@ -103,6 +104,7 @@ export class ApplicantListComponent implements OnInit {
           this.applicants.push(element);
           this.isOpen.push(false);
           this.isClosed.push(false);
+          this.isRejected.push(false);
         });
         // if list comes back empty, set boolean 
         // so ngIf can display message indicating such
@@ -176,7 +178,8 @@ export class ApplicantListComponent implements OnInit {
           if (result.status != 200) {
             this.snackbar.openSnackbarError();
           } else if(result.status == 200) {
-            console.log(result.body);
+            this.isRejected[id] = true;
+            this.toggle(id);
           }
         }, err => {
           this.snackbar.openSnackbarErrorCust(err.error.error);
