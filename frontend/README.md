@@ -84,7 +84,7 @@ you want. You will want to unzip the folder and move the contents to `/var/www/h
 In order to accomplish this, I go through the following steps. I copy the `dist.zip` file to the `www` directory using the command (from my home directory)
 `sudo cp /var/www/dist.zip`. Next, I navigate to the `/var/www` directory and unzip the file: `sudo unzip dist.zip`. Before I go on, I move the current contents of html to
 a folder called `past-builds`. Within this folder there are folders for each sprint. If there is more than one build per sprint, I will add an extra folder titled a number.
-For example, in sprint three, there were two sprints. For the second build, I moved the contents of `html` to `past-builds/sprint-3/1` with the command
+For example, in sprint three, there were two builds. For the second build, I moved the contents of `html` to `past-builds/sprint-3/1` with the command
 `sudo cp -r html/* past-builds/sprint-3/1` then I removed all of the contents of the `html` directory using `sudo rm -r html/*` and moved the new build into it with
 `sudo cp -r dist/frontend/* html`. The `-r`, 'recursive', portion of these commands makes sure the command does not skip directories within the html and dist/frontend folders.
 
