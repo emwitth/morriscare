@@ -24,6 +24,7 @@ const routes: Routes = [
     path: '', 
     component: HomeComponent,
     children: [
+      { path: '', redirectTo: '/home', pathMatch: 'full' },
       /* UN-LOGGED-IN PATHS */
       { 
         path: 'home', 
