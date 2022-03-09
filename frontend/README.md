@@ -34,7 +34,7 @@ Angular Materials is used in html mainly for forms. Most buttons present and all
 All Angular Materials components used must be imported in `app.modules.ts`. Notably, Angular Materials is also used extensively
 for any [dialogs](https://material.angular.io/components/dialog/overview) or [snackbars](https://material.angular.io/components/snack-bar/overview), alert messages.
 
-## Running the project
+## Running the project for development
 
 The project runs via [node.js](https://nodejs.org/en/). Installing node should be a simple Google search away so I will not belabor those directions here.
 In particular, the project uses [Node Package Manager (npm)](https://www.npmjs.com/) for installation and running. This should be installed automatically with node.js.
@@ -54,10 +54,46 @@ however is detailed in `proxy.config.json`. In this case, any request going to l
 backend server to be proxied correctly. Succesfully running `npm run start` should eventually give an indication of the development server being opened on `localhost:4200`
 This is where you can then connect to to view the website while developing.
 
-### Building the project
+## Building the project for deployment
 
-In order to build this project the command `ng build` should be run. This command should put the command in turn in `dist/frontend`. Those files should then be put into the
-appropriate folder on the server. More on this when I refresh my memory at the end of this sprint for which folder. The latest build should be in the main directory and a zipped version should also exist.
+In order to build this project the command `ng build` should be run. This command should put the build in `dist/frontend`. It is possible with changes that the project becomes 
+too large to be buildt under the current parameters. If the build does not generate all files in dist/frontend (ie is missing index.html, etc) and the warning
+`Warning: budgets: initial exceeded maximum budget` is seen, the project is too large. In this case, the budgets in `angular.json` should be modified.
+
+```
+             "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1.5mb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+```
+
+### Deploying to the Server
+
+If the build runs succesfully, those file should be moved to the server. I accomplish this by zipping the folder and using the command
+`scp dist.zip  witthun1759@138.49.101.87:~/dist.zip`. If you are not me, replace with your username for the server. You can then copy this from your home directory to wherever
+you want. You will want to unzip the folder and move the contents to `/var/www/html`, replacing what is already in that directory with the latest build.
+
+In order to accomplish this, I go through the following steps. I copy the `dist.zip` file to the `www` directory using the command (from my home directory)
+`sudo cp /var/www/dist.zip`. Next, I navigate to the `/var/www` directory and unzip the file: `sudo unzip dist.zip`. Before I go on, I move the current contents of html to
+a folder called `past-builds`. Within this folder there are folders for each sprint. If there is more than one build per sprint, I will add an extra folder titled a number.
+For example, in sprint three, there were two sprints. For the second build, I moved the contents of `html` to `past-builds/sprint-3/1` with the command
+`sudo cp -r html/* past-builds/sprint-3/1` then I removed all of the contents of the `html` directory using `sudo rm -r html/*` and moved the new build into it with
+`sudo cp -r dist/frontend/* html`. The `-r`, 'recursive', portion of these commands makes sure the command does not skip directories within the html and dist/frontend folders.
+
+After the new build is situated in the html folder, restart the server with the command `sudo systemctl restart httpd.service`.
+The changes should now appear when visiting `138.49.101.87`.
+
+### Server Options
+
+TODO
 
 ## Style
 
