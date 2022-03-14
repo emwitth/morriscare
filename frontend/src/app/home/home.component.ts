@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
           this.router.navigate(['staff/manage-care-taker']);
         }
         else {
-          this.router.navigate(['home']);
+          this.router.navigate(['hcp']);
         }
         console.log('Logged In!');
       }

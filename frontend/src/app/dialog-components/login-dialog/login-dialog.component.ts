@@ -128,6 +128,7 @@ export class LoginDialogComponent implements OnInit {
       }
     }, err => {
       this.isIncorrectLogin = true;
+      console.log(err.error.error);
     });
   }
 
