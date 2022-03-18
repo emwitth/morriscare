@@ -159,7 +159,7 @@
                         <mat-error *ngIf="this.ageForm.get('max')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
                     <mat-error *ngIf="this.ageForm.errors?.minGTMax && this.ageForm.get('max')?.dirty">
-                        Start time must be after end time
+                       Minimum age must be less than maximum
                     </mat-error>
                 </div>
             </form>
