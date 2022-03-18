@@ -1,1 +1,107 @@
-<p>ct-request works!</p>
+<div class="container p-2 my-5 border">
+    <h1 class="blockquote">Request Service</h1>
+    <form [formGroup]="form">
+        <div class="d-flex flex-row">
+            <!-- Patient Information -->
+            <div class="p-2 flex-fill border-end max-width-half">
+                <div class="centered-full-width-rows-container">
+                    <h2 class="blockquote">Patient Information</h2>
+                    <!-- First Name -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="Enter your patient's first name" formControlName="firstName">
+                        <mat-error *ngIf="this.form.get('firstName')?.hasError('required')">You must enter a value</mat-error>
+                    </mat-form-field>
+                    <!-- Last Name -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Enter your patient's last name" formControlName="lastName">
+                        <mat-error *ngIf="this.form.get('lastName')?.hasError('required')">You must enter a value</mat-error>
+                    </mat-form-field>
+                    <!-- Sex -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Sex</mat-label>
+                        <mat-select placeholder="Choose one" formControlName="sex">
+                            <mat-option value="m"> Male </mat-option>
+                            <mat-option value="f"> Female </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="this.form.get('sex')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                    <!-- Date of Birth -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Enter your patient's Date of Bith</mat-label>
+                        <input matInput [max]="today" [matDatepicker]="dob" formControlName="dob">
+                        <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                        <mat-datepicker #dob></mat-datepicker>
+                        <mat-error *ngIf="this.form.get('dob')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                    <!-- Location -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Location of Service</mat-label>
+                        <input matInput placeholder="Enter your patient's location" formControlName="lastName">
+                        <mat-error *ngIf="this.form.get('lastName')?.hasError('required')">You must enter a value</mat-error>
+                    </mat-form-field>
+                    <!-- Phone Number -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Phone Number</mat-label>
+                        <input type="tel" matInput mask="(000) 000-0000" placeholder="(555) 555-1234" formControlName="phone">
+                        <mat-error *ngIf="this.form.get('phone')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.form.get('phone')?.hasError('pattern')">You must enter valid phone number</mat-error>
+                    </mat-form-field>
+                    <!-- Email Address -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input type="tel" matInput placeholder="name@email.com" formControlName="email">
+                        <mat-error *ngIf="this.form.get('email')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.form.get('email')?.hasError('email')">You must enter valid email</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <!-- Service Information -->
+            <div class="p-2 flex-fill border-start max-width-half">
+                <div class="centered-full-width-rows-container">
+                    <h2 class="blockquote">Service Information</h2>
+                    <!-- Type -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Service Type</mat-label>
+                        <mat-select placeholder="Choose one" formControlName="type">
+                            <mat-option value="nurse"> Nurse </mat-option>
+                            <mat-option value="physiotherapist"> Physiotherapist </mat-option>
+                            <mat-option value="psychiatrist"> Psychiatrist </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="this.form.get('sex')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                    <!-- Date Row -->
+                    <div class="d-flex flex-row justify-content-between">
+                        <!-- Start Date -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>Enter your desired starting date</mat-label>
+                            <input matInput [min]="today" [matDatepicker]="startDate" formControlName="startDate">
+                            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                            <mat-datepicker #startDate></mat-datepicker>
+                            <mat-error *ngIf="this.form.get('startDate')?.hasError('required')">You must select a value</mat-error>
+                        </mat-form-field>
+                        <!-- End Date -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>Enter your desired ending date</mat-label>
+                            <input matInput [min]="today" [matDatepicker]="endDate" formControlName="endDate">
+                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                            <mat-datepicker #endDate></mat-datepicker>
+                            <mat-error *ngIf="this.form.get('endDate')?.hasError('required')">You must select a value</mat-error>
+                        </mat-form-field>
+                        <h2>{{numberOfDays}}</h2>
+                    </div>
+                    <!-- Sex Wanted -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Wanted Sex of Health Care Professional</mat-label>
+                        <mat-select placeholder="Choose one" formControlName="gender">
+                            <mat-option value="m"> Male </mat-option>
+                            <mat-option value="f"> Female </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="this.form.get('gender')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -28,6 +28,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: var(--indicationColor);
 }
 
+.max-width-half {
+    max-width: 50%;
+}
 
 /* Center Items and Size to different amounts */
 .flex-center {
