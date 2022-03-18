@@ -1,3 +1,4 @@
+import { CtRequestComponent } from './ct-request/ct-request.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -129,6 +130,10 @@ const routes: Routes = [
     component: UserHomeComponent,
     children:
     [
+      {
+        path: 'request-care',
+        component: CtRequestComponent
+      },
       { 
         path: 'settings', 
         component: SettingsComponent

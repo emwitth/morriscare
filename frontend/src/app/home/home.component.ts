@@ -27,6 +27,9 @@ export class HomeComponent implements OnInit {
         else if(this.checkRole(this.getSM())) {
           this.router.navigate(['staff/manage-care-taker']);
         }
+        else if(this.checkRole(this.getCT())){
+          this.router.navigate(['caretaker/request-care']);
+        }
         else {
           this.router.navigate(['hcp']);
         }

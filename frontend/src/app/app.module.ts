@@ -62,6 +62,7 @@ import { ApplicantListComponent } from './applicant-list/applicant-list.componen
 import { ApplicationDetailsComponent } from './application-details/application-details.component';
 import { ConfirmationDialogComponent } from './dialog-components/confirmation-dialog/confirmation-dialog.component';
 import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
+import { CtRequestComponent } from './ct-request/ct-request.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
     ApplicationDetailsComponent,
     ConfirmationDialogComponent,
     HcpManageComponent,
+    CtRequestComponent,
   ],
   imports: [
     BrowserModule,
