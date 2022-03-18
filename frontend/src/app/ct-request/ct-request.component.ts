@@ -8,27 +8,46 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class CtRequestComponent implements OnInit {
 
-  form: FormGroup;
+  patientForm: FormGroup;
+  defaultServiceForm: FormGroup;
+  genderForm: FormGroup;
+  flexibleHoursForm: FormGroup;
+  ageForm: FormGroup;
 
   today: Date = new Date();
 
   numberOfDays:number = 10;
 
+  wantsGender: boolean = false;
+  wantsAge: boolean = false;
+  isFlexibleHours: boolean = false;
+
   constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
+    this.patientForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       sex: ['', Validators.required],
       dob: ['', Validators.required],
       location: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]]
+    });
+    this.defaultServiceForm = this.fb.group({
       type: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
-      gender: ['', Validators.required],
+    });
+    this.genderForm = this.fb.group({
+      gender: ['', Validators.required]
+    });
+    this.flexibleHoursForm = this.fb.group({
+      hours: ['', Validators.required]
+    });
+    this.ageForm = this.fb.group({
+      min: ['', Validators.required],
+      max: ['', Validators.required]
     });
   }
 

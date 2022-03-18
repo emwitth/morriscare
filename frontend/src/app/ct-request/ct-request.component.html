@@ -1,31 +1,31 @@
 <div class="container p-2 my-5 border">
     <h1 class="blockquote">Request Service</h1>
-    <form [formGroup]="form">
-        <div class="d-flex flex-row">
+    <div class="d-flex flex-row">
+        <div class="p-2 flex-fill border-end max-width-half">
             <!-- Patient Information -->
-            <div class="p-2 flex-fill border-end max-width-half">
+            <form [formGroup]="patientForm">
                 <div class="centered-full-width-rows-container">
                     <h2 class="blockquote">Patient Information</h2>
                     <!-- First Name -->
                     <mat-form-field appearance="fill">
                         <mat-label>First Name</mat-label>
                         <input matInput placeholder="Enter your patient's first name" formControlName="firstName">
-                        <mat-error *ngIf="this.form.get('firstName')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('firstName')?.hasError('required')">You must enter a value</mat-error>
                     </mat-form-field>
                     <!-- Last Name -->
                     <mat-form-field appearance="fill">
                         <mat-label>Last Name</mat-label>
                         <input matInput placeholder="Enter your patient's last name" formControlName="lastName">
-                        <mat-error *ngIf="this.form.get('lastName')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('lastName')?.hasError('required')">You must enter a value</mat-error>
                     </mat-form-field>
                     <!-- Sex -->
                     <mat-form-field appearance="fill">
                         <mat-label>Sex</mat-label>
                         <mat-select placeholder="Choose one" formControlName="sex">
-                            <mat-option value="m"> Male </mat-option>
+                               <mat-option value="m"> Male </mat-option>
                             <mat-option value="f"> Female </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="this.form.get('sex')?.hasError('required')">You must select a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('sex')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
                     <!-- Date of Birth -->
                     <mat-form-field appearance="fill">
@@ -33,32 +33,34 @@
                         <input matInput [max]="today" [matDatepicker]="dob" formControlName="dob">
                         <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
                         <mat-datepicker #dob></mat-datepicker>
-                        <mat-error *ngIf="this.form.get('dob')?.hasError('required')">You must select a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('dob')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
                     <!-- Location -->
                     <mat-form-field appearance="fill">
                         <mat-label>Location of Service</mat-label>
                         <input matInput placeholder="Enter your patient's location" formControlName="lastName">
-                        <mat-error *ngIf="this.form.get('lastName')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('lastName')?.hasError('required')">You must enter a value</mat-error>
                     </mat-form-field>
                     <!-- Phone Number -->
                     <mat-form-field appearance="fill">
                         <mat-label>Phone Number</mat-label>
                         <input type="tel" matInput mask="(000) 000-0000" placeholder="(555) 555-1234" formControlName="phone">
-                        <mat-error *ngIf="this.form.get('phone')?.hasError('required')">You must enter a value</mat-error>
-                        <mat-error *ngIf="this.form.get('phone')?.hasError('pattern')">You must enter valid phone number</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('phone')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('phone')?.hasError('pattern')">You must enter valid phone number</mat-error>
                     </mat-form-field>
                     <!-- Email Address -->
                     <mat-form-field appearance="fill">
                         <mat-label>Email</mat-label>
                         <input type="tel" matInput placeholder="name@email.com" formControlName="email">
-                        <mat-error *ngIf="this.form.get('email')?.hasError('required')">You must enter a value</mat-error>
-                        <mat-error *ngIf="this.form.get('email')?.hasError('email')">You must enter valid email</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('email')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('email')?.hasError('email')">You must enter valid email</mat-error>
                     </mat-form-field>
                 </div>
-            </div>
+            </form>
+        </div>
+        <div class="p-2 flex-fill border-start max-width-half">
             <!-- Service Information -->
-            <div class="p-2 flex-fill border-start max-width-half">
+            <form [formGroup]="defaultServiceForm">
                 <div class="centered-full-width-rows-container">
                     <h2 class="blockquote">Service Information</h2>
                     <!-- Type -->
@@ -69,9 +71,9 @@
                             <mat-option value="physiotherapist"> Physiotherapist </mat-option>
                             <mat-option value="psychiatrist"> Psychiatrist </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="this.form.get('sex')?.hasError('required')">You must select a value</mat-error>
+                        <mat-error *ngIf="this.defaultServiceForm.get('type')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
-                    <!-- Date Row -->
+                <!-- Date Row -->
                     <div class="d-flex flex-row justify-content-between">
                         <!-- Start Date -->
                         <mat-form-field appearance="fill">
@@ -79,7 +81,7 @@
                             <input matInput [min]="today" [matDatepicker]="startDate" formControlName="startDate">
                             <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
                             <mat-datepicker #startDate></mat-datepicker>
-                            <mat-error *ngIf="this.form.get('startDate')?.hasError('required')">You must select a value</mat-error>
+                            <mat-error *ngIf="this.defaultServiceForm.get('startDate')?.hasError('required')">You must select a value</mat-error>
                         </mat-form-field>
                         <!-- End Date -->
                         <mat-form-field appearance="fill">
@@ -87,21 +89,53 @@
                             <input matInput [min]="today" [matDatepicker]="endDate" formControlName="endDate">
                             <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                             <mat-datepicker #endDate></mat-datepicker>
-                            <mat-error *ngIf="this.form.get('endDate')?.hasError('required')">You must select a value</mat-error>
+                            <mat-error *ngIf="this.defaultServiceForm.get('endDate')?.hasError('required')">You must select a value</mat-error>
                         </mat-form-field>
                         <h2>{{numberOfDays}}</h2>
                     </div>
-                    <!-- Sex Wanted -->
-                    <mat-form-field appearance="fill">
+                </div>
+            </form>
+            <!-- Flexible Hours -->
+            <mat-slide-toggle color="primary" [(ngModel)]="isFlexibleHours">Flexible Hours?</mat-slide-toggle>
+            <form [formGroup]="flexibleHoursForm">
+                <div class="centered-full-width-rows-container">
+                    <mat-form-field *ngIf="isFlexibleHours" appearance="fill">
+                        <mat-label>Wanted Hours</mat-label>
+                        <input matInput type="number" formControlName="hours">
+                        <mat-error *ngIf="this.flexibleHoursForm.get('hours')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+            <!-- Sex Wanted -->
+            <mat-slide-toggle color="primary" [(ngModel)]="wantsGender">Specify Gender?</mat-slide-toggle>
+            <form [formGroup]="genderForm">
+                <div class="centered-full-width-rows-container">
+                    <mat-form-field *ngIf="wantsGender" appearance="fill">
                         <mat-label>Wanted Sex of Health Care Professional</mat-label>
                         <mat-select placeholder="Choose one" formControlName="gender">
                             <mat-option value="m"> Male </mat-option>
                             <mat-option value="f"> Female </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="this.form.get('gender')?.hasError('required')">You must select a value</mat-error>
+                        <mat-error *ngIf="this.genderForm.get('gender')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
                 </div>
-            </div>
+            </form>
+            <!-- Age Wanted -->
+            <mat-slide-toggle color="primary" [(ngModel)]="wantsAge">Specify Age Range?</mat-slide-toggle>
+            <form [formGroup]="ageForm">
+                <div class="centered-full-width-rows-container">
+                    <mat-form-field *ngIf="wantsAge" appearance="fill">
+                        <mat-label>Wanted Minimum Age of Health Care Professional</mat-label>
+                        <input matInput type="number" formControlName="min">
+                        <mat-error *ngIf="this.ageForm.get('min')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="wantsAge" appearance="fill">
+                        <mat-label>Wanted Maximum Age of Health Care Professional</mat-label>
+                        <input matInput type="number" formControlName="max">
+                        <mat-error *ngIf="this.ageForm.get('max')?.hasError('required')">You must select a value</mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
