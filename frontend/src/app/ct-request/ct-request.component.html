@@ -60,7 +60,7 @@
         </div>
         <div class="p-2 flex-fill border-start max-width-half">
             <!-- Service Information -->
-            <form [formGroup]="defaultServiceForm">
+            <form [formGroup]="typeForm">
                 <div class="centered-full-width-rows-container">
                     <h2 class="blockquote">Service Information</h2>
                     <!-- Type -->
@@ -71,30 +71,26 @@
                             <mat-option value="physiotherapist"> Physiotherapist </mat-option>
                             <mat-option value="psychiatrist"> Psychiatrist </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="this.defaultServiceForm.get('type')?.hasError('required')">You must select a value</mat-error>
+                        <mat-error *ngIf="this.typeForm.get('type')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
-                <!-- Date Row -->
-                    <div class="d-flex flex-row justify-content-between">
-                        <!-- Start Date -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Enter your desired starting date</mat-label>
-                            <input matInput [min]="today" [matDatepicker]="startDate" formControlName="startDate">
-                            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                            <mat-datepicker #startDate></mat-datepicker>
-                            <mat-error *ngIf="this.defaultServiceForm.get('startDate')?.hasError('required')">You must select a value</mat-error>
-                        </mat-form-field>
-                        <!-- End Date -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Enter your desired ending date</mat-label>
-                            <input matInput [min]="today" [matDatepicker]="endDate" formControlName="endDate">
-                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                            <mat-datepicker #endDate></mat-datepicker>
-                            <mat-error *ngIf="this.defaultServiceForm.get('endDate')?.hasError('required')">You must select a value</mat-error>
-                        </mat-form-field>
-                        <h2>{{numberOfDays}}</h2>
-                    </div>
                 </div>
             </form>
+            <!-- Date Row -->
+            <div class="d-flex flex-row justify-content-between">
+                <!-- Start Date -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your desired start and end date</mat-label>
+                    <mat-date-range-input [min]="today" [formGroup]="dateForm" [rangePicker]="startEndRange">
+                        <input matStartDate formControlName="startDate">
+                        <input matEndDate formControlName="endDate">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="startEndRange"></mat-datepicker-toggle>
+                    <mat-date-range-picker #startEndRange></mat-date-range-picker>
+                    <mat-error *ngIf="this.dateForm.get('startDate')?.hasError('required')">You must select a start date</mat-error>
+                    <mat-error *ngIf="this.dateForm.get('endDate')?.hasError('required')">You must select an end date</mat-error>
+                </mat-form-field>
+                <h2>{{numberOfDays}}</h2>
+            </div>
             <!-- Toggle Specific or Flexible Hours -->
             <mat-slide-toggle color="primary" [(ngModel)]="isFlexibleHours">Flexible Hours?</mat-slide-toggle>
             <!-- Specific Hours -->

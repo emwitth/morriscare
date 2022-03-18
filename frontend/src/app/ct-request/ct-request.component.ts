@@ -9,7 +9,8 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 export class CtRequestComponent implements OnInit {
 
   patientForm: FormGroup;
-  defaultServiceForm: FormGroup;
+  typeForm: FormGroup;
+  dateForm: FormGroup;
   specificHoursForm: FormGroup;
   flexibleHoursForm: FormGroup;
   genderForm: FormGroup;
@@ -33,8 +34,10 @@ export class CtRequestComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       email: ['', [Validators.required, Validators.email]]
     });
-    this.defaultServiceForm = this.fb.group({
-      type: ['', Validators.required],
+    this.typeForm = this.fb.group({
+      type: ['', Validators.required]
+    });
+    this.dateForm = this.fb.group({
       startDate: ['', Validators.required],
       endDate: ['', Validators.required]
     });
