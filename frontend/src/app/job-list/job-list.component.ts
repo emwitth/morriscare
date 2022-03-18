@@ -26,7 +26,7 @@ export class JobListComponent implements OnInit {
         this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
       } else if(result.status == 200) {
         result.body.forEach((element: Application) => {
-          if(element.typeHS == (this.type == 'nurse' ? 'n' : 'p')) {
+          if(element.typeHS == (this.type == 'nurse' ? 'n' : (this.type == 'psychiatrist'? 'ps' : 'p'))) {
             this.postings.push(element);
           }
         });
