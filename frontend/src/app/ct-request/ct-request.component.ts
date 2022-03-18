@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-ct-request',
@@ -41,7 +41,7 @@ export class CtRequestComponent implements OnInit {
     this.specificHoursForm = this.fb.group({
       startTime: ['', Validators.required],
       endTime: ['', Validators.required]
-    });
+    }, {validators: startBeforeEnd});
     this.genderForm = this.fb.group({
       gender: ['', Validators.required]
     });
@@ -51,10 +51,52 @@ export class CtRequestComponent implements OnInit {
     this.ageForm = this.fb.group({
       min: ['', Validators.required],
       max: ['', Validators.required]
-    });
+    }, {validators: minLTmax});
   }
 
   ngOnInit(): void {
   }
 
+}
+
+/**
+ * Validator to ensure a start time is before end time
+ * 
+ * @param g the form group
+ * @returns a group-scoped validator function
+ */
+ function startBeforeEnd(g: AbstractControl) {
+  const st = g.get('startTime');
+  const et = g.get('endTime');
+
+  const sh = parseInt(st?.value.substring(0,2));
+  const sm = parseInt(st?.value.substring(3,5));
+  const eh = parseInt(et?.value.substring(0,2));
+  const em = parseInt(et?.value.substring(3,5));
+
+  if (sh > eh) {
+    return {'startAfterEnd': true};
+  }
+  else if ( sh == eh && sm > em) {
+    return {'startAfterEnd': true};
+  }
+  else {
+    return null;
+  }
+}
+
+/**
+ * Validator to ensure a min age is less than max age
+ * 
+ * @param g the form group
+ * @returns a group-scoped validator function
+ */
+ function minLTmax(g: AbstractControl) {
+  const minFC = g.get('min');
+  const maxFC = g.get('max');
+
+  const min = parseInt(minFC?.value);
+  const max = parseInt(maxFC?.value);
+
+  return min < max ? null : {'minGTMax': true};
 }

@@ -113,6 +113,9 @@
                         <mat-error *ngIf="this.specificHoursForm.get('endTime')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
                 </div>
+                <mat-error *ngIf="this.specificHoursForm.errors?.startAfterEnd && this.specificHoursForm.get('endTime')?.dirty">
+                    Start time must be after end time
+                </mat-error>
             </form>
             <!-- Flexible Hours -->
             <form [formGroup]="flexibleHoursForm">
@@ -155,6 +158,9 @@
                         <input matInput type="number" formControlName="max">
                         <mat-error *ngIf="this.ageForm.get('max')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
+                    <mat-error *ngIf="this.ageForm.errors?.minGTMax && this.ageForm.get('max')?.dirty">
+                        Start time must be after end time
+                    </mat-error>
                 </div>
             </form>
         </div>
