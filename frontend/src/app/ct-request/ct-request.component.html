@@ -123,6 +123,40 @@
                     </mat-form-field>
                 </div>
             </form>
+            <!-- Weekdays -->
+            <section class="example-section" [formGroup]="daysForm">
+                <div class="d-flex flex-row justify-content-around">
+                    <div class="d-flex flex-column">
+                        <mat-checkbox color="primary" formControlName="monday"></mat-checkbox>
+                        <div class="align-self-center">M</div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <mat-checkbox color="primary" formControlName="tuesday"></mat-checkbox>
+                        <div class="align-self-center">T</div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <mat-checkbox color="primary" formControlName="wednesday"></mat-checkbox>
+                        <div class="align-self-center">W</div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <mat-checkbox color="primary" formControlName="thursday"></mat-checkbox>
+                        <div class="align-self-center">TH</div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <mat-checkbox color="primary" formControlName="friday"></mat-checkbox>
+                        <div class="align-self-center">F</div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <mat-checkbox color="primary" formControlName="saturday"></mat-checkbox>
+                        <div class="align-self-center">S</div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <mat-checkbox color="primary" formControlName="sunday"></mat-checkbox>
+                        <div class="align-self-center">SU</div>
+                    </div>
+                </div>
+            </section>
+            <!-- Optional Constraints -->
             <h2 class="blockquote">Optional Constraints</h2>
             <!-- Sex Wanted -->
             <mat-slide-toggle color="primary" [(ngModel)]="wantsGender">Specify Gender?</mat-slide-toggle>

@@ -13,6 +13,7 @@ export class CtRequestComponent implements OnInit {
   dateForm: FormGroup;
   specificHoursForm: FormGroup;
   flexibleHoursForm: FormGroup;
+  daysForm: FormGroup;
   genderForm: FormGroup;
   ageForm: FormGroup;
 
@@ -45,6 +46,15 @@ export class CtRequestComponent implements OnInit {
       startTime: ['', Validators.required],
       endTime: ['', Validators.required]
     }, {validators: startBeforeEnd});
+    this.daysForm = this.fb.group({
+      monday:['', Validators.required],
+      tuesday:['', Validators.required],
+      wednesday:['', Validators.required],
+      thursday:['', Validators.required],
+      friday:['', Validators.required],
+      saturday:['', Validators.required],
+      sunday:['', Validators.required],
+    });
     this.genderForm = this.fb.group({
       gender: ['', Validators.required]
     });
