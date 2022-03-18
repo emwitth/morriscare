@@ -10,8 +10,9 @@ export class CtRequestComponent implements OnInit {
 
   patientForm: FormGroup;
   defaultServiceForm: FormGroup;
-  genderForm: FormGroup;
+  specificHoursForm: FormGroup;
   flexibleHoursForm: FormGroup;
+  genderForm: FormGroup;
   ageForm: FormGroup;
 
   today: Date = new Date();
@@ -35,9 +36,11 @@ export class CtRequestComponent implements OnInit {
     this.defaultServiceForm = this.fb.group({
       type: ['', Validators.required],
       startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
+      endDate: ['', Validators.required]
+    });
+    this.specificHoursForm = this.fb.group({
       startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
+      endTime: ['', Validators.required]
     });
     this.genderForm = this.fb.group({
       gender: ['', Validators.required]
