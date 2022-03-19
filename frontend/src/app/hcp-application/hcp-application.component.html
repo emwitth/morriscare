@@ -77,11 +77,25 @@
                     <mat-error *ngIf="this.form.get('experience')?.hasError('required')">You must enter a value</mat-error>
                     <mat-error *ngIf="this.form.get('experience')?.hasError('pattern')">You must enter years as a number</mat-error>
                 </mat-form-field>
+                <!-- Education -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Education</mat-label>
+                    <mat-select placeholder="Choose Education" formControlName="education">
+                        <mat-option *ngFor="let choice of hiringEducation" value="{{choice}}">
+                            {{choice}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="this.form.get('education')?.hasError('required')">You must select a value</mat-error>
+                </mat-form-field>
                 <!-- Qualifications -->
                 <mat-form-field appearance="fill">
                     <mat-label>Qualifications</mat-label>
-                    <textarea matInput placeholder="Qualifications must include degrees and respective institutions." formControlName="qualifications"></textarea>
-                    <mat-error *ngIf="this.form.get('qualifications')?.hasError('required')">You must enter your qualifications</mat-error>
+                    <mat-select placeholder="Choose Education" formControlName="qualifications">
+                        <mat-option *ngFor="let choice of hiringRequirements" value="{{choice}}">
+                            {{choice}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="this.form.get('qualifications')?.hasError('required')">You must select a value</mat-error>
                 </mat-form-field>
             </div>
             <!-- Actions -->

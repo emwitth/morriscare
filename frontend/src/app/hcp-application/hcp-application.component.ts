@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { FormattingModule } from 'src/app/modules/formatting/formatting.module';
+import { HIRING_REQUIREMENTS, HIRING_EDUCATION } from 'src/app/global-variables';
 
 @Component({
   selector: 'app-hcp-application',
@@ -11,6 +12,10 @@ import { FormattingModule } from 'src/app/modules/formatting/formatting.module';
   styleUrls: ['./hcp-application.component.css']
 })
 export class HcpApplicationComponent implements OnInit {
+  // getters for global lists for dropdowns
+  get hiringRequirements() { return HIRING_REQUIREMENTS; }
+  get hiringEducation() { return HIRING_EDUCATION; }
+
   // variables passed in via route
   id: number = -1;
   type: string = "";
@@ -33,6 +38,7 @@ export class HcpApplicationComponent implements OnInit {
       dob: [new Date(), Validators.required],
       ssn: ['', [Validators.required, Validators.pattern("[0-9]{9}")]],
       experience: ['', [Validators.required, Validators.pattern("[0-9]*")]],
+      education: ['', Validators.required],
       qualifications: ['', Validators.required]
     }, {});
   }
@@ -53,7 +59,8 @@ export class HcpApplicationComponent implements OnInit {
       sex: this.form.get("sex")?.value,
       ssn: this.form.get("ssn")?.value,
       typeHS: this.type == 'nurse' ? 'n' : 'p',
-      qualification: this.form.get("qualifications")?.value,
+      qualification: this.form.get("education")?.value +  " Degree, I am "
+      + this.form.get("qualifications")?.value.lowercase(),
       qualificationDate: this.format.parseMomentDateToString(this.form.get("dob")?.value),
       yearOExp: this.form.get("experience")?.value,
       phoneNumber: this.form.get("phone")?.value,

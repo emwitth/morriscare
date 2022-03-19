@@ -11,7 +11,7 @@ export const enum Roles {
 /**
  * These are the choices for hiring requirement dropdowns
  */
-export const hiringRequirements: Array<string> = [
+export const HIRING_REQUIREMENTS: Array<string> = [
     "Test qualification",
     "Another qualification",
     "A very qualified individual"
@@ -20,7 +20,7 @@ export const hiringRequirements: Array<string> = [
 /**
  * These are the choices for hiring education dropdowns
  */
- export const hiringEducation: Array<string> = [
+ export const HIRING_EDUCATION: Array<string> = [
     "Bachelor's",
     "Master's",
     "Doctorate",
