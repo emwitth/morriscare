@@ -11,12 +11,14 @@
                         <mat-label>First Name</mat-label>
                         <input matInput placeholder="Enter your patient's first name" formControlName="firstName">
                         <mat-error *ngIf="this.patientForm.get('firstName')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('firstName')?.hasError('pattern')">Name can only have letters, sorry X Æ A-Xii</mat-error>
                     </mat-form-field>
                     <!-- Last Name -->
                     <mat-form-field appearance="fill">
                         <mat-label>Last Name</mat-label>
                         <input matInput placeholder="Enter your patient's last name" formControlName="lastName">
                         <mat-error *ngIf="this.patientForm.get('lastName')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('lastName')?.hasError('pattern')">Name can only have letters</mat-error>
                     </mat-form-field>
                     <!-- Sex -->
                     <mat-form-field appearance="fill">
@@ -40,6 +42,7 @@
                         <mat-label>Location of Service</mat-label>
                         <input matInput placeholder="Enter your patient's location" formControlName="location">
                         <mat-error *ngIf="this.patientForm.get('location')?.hasError('required')">You must enter a value</mat-error>
+                        <mat-error *ngIf="this.patientForm.get('location')?.hasError('pattern')">Address can only contain alphanumeric values</mat-error>
                     </mat-form-field>
                     <!-- Phone Number -->
                     <mat-form-field appearance="fill">
@@ -97,14 +100,20 @@
                     <!-- Start Time -->
                     <mat-form-field *ngIf="!isFlexibleHours" appearance="fill">
                         <mat-label>Start Time</mat-label>
-                        <input matInput type="time" formControlName="startTime">
+                        <input matInput type="time" step="1800" formControlName="startTime">
                         <mat-error *ngIf="this.specificHoursForm.get('startTime')?.hasError('required')">You must select a value</mat-error>
+                        <mat-error *ngIf="this.specificHoursForm.get('startTime')?.hasError('pattern')">
+                            Time must be in half hour increments
+                        </mat-error>
                     </mat-form-field>
                     <!-- End Time -->
                     <mat-form-field *ngIf="!isFlexibleHours" appearance="fill">
                         <mat-label>End Time</mat-label>
-                        <input matInput type="time" formControlName="endTime">
+                        <input matInput type="time" step="1800" formControlName="endTime">
                         <mat-error *ngIf="this.specificHoursForm.get('endTime')?.hasError('required')">You must select a value</mat-error>
+                        <mat-error *ngIf="this.specificHoursForm.get('endTime')?.hasError('pattern')">
+                            Time must be in half hour increments
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <mat-error *ngIf="this.specificHoursForm.errors?.startAfterEnd && this.specificHoursForm.get('endTime')?.dirty && !isFlexibleHours">

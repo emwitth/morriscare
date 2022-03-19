@@ -32,11 +32,11 @@ export class CtRequestComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private format: FormattingModule) {
     this.patientForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.pattern("[a-zA-Z]*")]],
+      lastName: ['', [Validators.required, Validators.pattern("[a-zA-Z]*")]],
       sex: ['', Validators.required],
       dob: [new Date(), Validators.required],
-      location: ['', Validators.required],
+      location: ['', [Validators.required, Validators.pattern("[a-zA-Z0-9., -]*")]],
       phone: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]]
     });
@@ -48,8 +48,8 @@ export class CtRequestComponent implements OnInit {
       endDate: [new Date(), Validators.required]
     });
     this.specificHoursForm = this.fb.group({
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required]
+      startTime: ['', [Validators.required, Validators.pattern("[0-9]{2}:((00)|(30))")]],
+      endTime: ['', [Validators.required, Validators.pattern("[0-9]{2}:((00)|(30))")]]
     }, {validators: startBeforeEnd});
     this.daysForm = this.fb.group({
       monday:[],
