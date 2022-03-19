@@ -47,23 +47,23 @@ export class CtRequestComponent implements OnInit {
       endTime: ['', Validators.required]
     }, {validators: startBeforeEnd});
     this.daysForm = this.fb.group({
-      monday:['', Validators.required],
-      tuesday:['', Validators.required],
-      wednesday:['', Validators.required],
-      thursday:['', Validators.required],
-      friday:['', Validators.required],
-      saturday:['', Validators.required],
-      sunday:['', Validators.required],
+      monday:[],
+      tuesday:[],
+      wednesday:[],
+      thursday:[],
+      friday:[],
+      saturday:[],
+      sunday:[],
     });
     this.genderForm = this.fb.group({
       gender: ['', Validators.required]
     });
     this.flexibleHoursForm = this.fb.group({
-      hours: ['', Validators.required]
+      hours: ['', [Validators.required, Validators.min(1), Validators.max(10)]]
     });
     this.ageForm = this.fb.group({
-      min: ['', Validators.required],
-      max: ['', Validators.required]
+      min: ['', [Validators.required, Validators.min(18)]],
+      max: ['', [Validators.required, Validators.min(18)]]
     }, {validators: minLTmax});
   }
 
