@@ -75,21 +75,19 @@
                     </mat-form-field>
                 </div>
             </form>
-            <!-- Date Row -->
-            <div class="d-flex flex-row justify-content-between">
-                <!-- Start Date -->
+            <!-- Dates Wanted -->
+            <div class="centered-full-width-rows-container">
                 <mat-form-field appearance="fill">
                     <mat-label>Enter your desired start and end date</mat-label>
                     <mat-date-range-input [min]="today" [formGroup]="dateForm" [rangePicker]="startEndRange">
-                        <input matStartDate formControlName="startDate">
-                        <input matEndDate formControlName="endDate">
+                        <input matStartDate (dateInput)="figureDays()" (dateChange)="figureDays()" formControlName="startDate">
+                        <input matEndDate (dateInput)="figureDays()" (dateChange)="figureDays()" formControlName="endDate">
                     </mat-date-range-input>
                     <mat-datepicker-toggle matSuffix [for]="startEndRange"></mat-datepicker-toggle>
                     <mat-date-range-picker #startEndRange></mat-date-range-picker>
                     <mat-error *ngIf="this.dateForm.get('startDate')?.hasError('required')">You must select a start date</mat-error>
                     <mat-error *ngIf="this.dateForm.get('endDate')?.hasError('required')">You must select an end date</mat-error>
                 </mat-form-field>
-                <h2>{{numberOfDays}}</h2>
             </div>
             <!-- Toggle Specific or Flexible Hours -->
             <mat-slide-toggle color="primary" [(ngModel)]="isFlexibleHours">Flexible Hours?</mat-slide-toggle>
@@ -128,33 +126,34 @@
                 <mat-label>Days</mat-label>
                 <div class="d-flex flex-row justify-content-around">
                     <div class="d-flex flex-column">
-                        <mat-checkbox color="primary" formControlName="monday"></mat-checkbox>
+                        <mat-checkbox color="primary" (change)="figureDays()" formControlName="monday"></mat-checkbox>
                         <div class="align-self-center">M</div>
                     </div>
                     <div class="d-flex flex-column">
-                        <mat-checkbox color="primary" formControlName="tuesday"></mat-checkbox>
+                        <mat-checkbox color="primary" (change)="figureDays()" formControlName="tuesday"></mat-checkbox>
                         <div class="align-self-center">T</div>
                     </div>
                     <div class="d-flex flex-column">
-                        <mat-checkbox color="primary" formControlName="wednesday"></mat-checkbox>
+                        <mat-checkbox color="primary" (change)="figureDays()" formControlName="wednesday"></mat-checkbox>
                         <div class="align-self-center">W</div>
                     </div>
                     <div class="d-flex flex-column">
-                        <mat-checkbox color="primary" formControlName="thursday"></mat-checkbox>
-                        <div class="align-self-center">TH</div>
+                        <mat-checkbox color="primary" (change)="figureDays()" formControlName="thursday"></mat-checkbox>
+                        <div class="align-self-center">R</div>
                     </div>
                     <div class="d-flex flex-column">
-                        <mat-checkbox color="primary" formControlName="friday"></mat-checkbox>
+                        <mat-checkbox color="primary" (change)="figureDays()" formControlName="friday"></mat-checkbox>
                         <div class="align-self-center">F</div>
                     </div>
                     <div class="d-flex flex-column">
-                        <mat-checkbox color="primary" formControlName="saturday"></mat-checkbox>
+                        <mat-checkbox color="primary" (change)="figureDays()" formControlName="saturday"></mat-checkbox>
                         <div class="align-self-center">S</div>
                     </div>
                     <div class="d-flex flex-column">
-                        <mat-checkbox color="primary" formControlName="sunday"></mat-checkbox>
-                        <div class="align-self-center">SU</div>
+                        <mat-checkbox color="primary" (change)="figureDays()" formControlName="sunday"></mat-checkbox>
+                        <div class="align-self-center">U</div>
                     </div>
+                    <h4>{{numberOfDays}} days total</h4>
                 </div>
             </section>
             <!-- Optional Constraints -->
@@ -194,6 +193,7 @@
                     Minimum age must be less than maximum
                  </mat-error>
             </form>
+            <button (click)="figureDays()">click me</button>
         </div>
     </div>
 </div>

@@ -19,7 +19,7 @@ export class CtRequestComponent implements OnInit {
 
   today: Date = new Date();
 
-  numberOfDays:number = 10;
+  numberOfDays:number = 0;
 
   wantsGender: boolean = false;
   wantsAge: boolean = false;
@@ -30,7 +30,7 @@ export class CtRequestComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       sex: ['', Validators.required],
-      dob: ['', Validators.required],
+      dob: [new Date(), Validators.required],
       location: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       email: ['', [Validators.required, Validators.email]]
@@ -39,8 +39,8 @@ export class CtRequestComponent implements OnInit {
       type: ['', Validators.required]
     });
     this.dateForm = this.fb.group({
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required]
+      startDate: [new Date(), Validators.required],
+      endDate: [new Date(), Validators.required]
     });
     this.specificHoursForm = this.fb.group({
       startTime: ['', Validators.required],
@@ -68,6 +68,48 @@ export class CtRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  figureDays() {
+    var count = 0;
+    var currentDate: Date = new Date(this.dateForm.get("startDate")?.value);
+    var endDate: Date = new Date(this.dateForm.get("endDate")?.value);
+    console.log(currentDate);
+    console.log(endDate);
+    while(currentDate <= endDate) {
+      console.log(currentDate.getDay(), currentDate);
+      count += this.incrementIfDay(currentDate.getDay());
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    console.log("count: ", count);
+    this.numberOfDays = count;
+  }
+
+  incrementIfDay(day: number): number {
+    if(day == 0 && this.daysForm.get("sunday")?.value == true ) {
+      return 1;
+    }
+    else if(day == 1 && this.daysForm.get("monday")?.value == true ) {
+      return 1;
+    }
+    else if(day == 2 && this.daysForm.get("tuesday")?.value == true ) {
+      return 1;
+    }
+    else if(day == 3 && this.daysForm.get("wednesday")?.value == true ) {
+      return 1;
+    }
+    else if(day == 4 && this.daysForm.get("thursday")?.value == true ) {
+      return 1;
+    }
+    else if(day == 5 && this.daysForm.get("friday")?.value == true ) {
+      return 1;
+    }
+    else if(day == 6 && this.daysForm.get("saturday")?.value == true ) {
+      return 1;
+    }
+    else {
+      return 0;
+    }
   }
 
 }
