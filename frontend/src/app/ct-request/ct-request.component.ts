@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormattingModule } from '../modules/formatting/formatting.module';
+
+export interface flexibleObject {
+  [key: string]: any
+}
 
 @Component({
   selector: 'app-ct-request',
@@ -25,7 +30,7 @@ export class CtRequestComponent implements OnInit {
   wantsAge: boolean = false;
   isFlexibleHours: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private format: FormattingModule) {
     this.patientForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -68,6 +73,78 @@ export class CtRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  submit() {
+
+    var body = {
+      takerID: 1,
+      patientFirstName: this.patientForm.get("firstName")?.value,
+      patientLastName: this.patientForm.get("lastName")?.value,
+      sex: this.patientForm.get("sex")?.value,
+      dateOfBirth: this.format.parseMomentDateToString(this.patientForm.get("dob")?.value),
+      locationOfService: this.patientForm.get("location")?.value,
+      patientPhoneNumber: this.patientForm.get("phone")?.value,
+      patientEmail: this.patientForm.get("email")?.value,
+      requirements: this.createRequirementsObject()
+    }
+
+    console.log("submitted: ", body);
+  }
+
+  createRequirementsObject(): flexibleObject {
+
+    var requirements : flexibleObject = {
+      serviceType: this.typeForm.get("type")?.value,
+      daysRequested: this.getDaysAsString(),
+      numDaysRequested: this.numberOfDays
+    }
+
+    if(this.isFlexibleHours) {
+      requirements.hoursPerDay = this.flexibleHoursForm.get("hours")?.value;
+    }
+    else {
+      requirements.startTime = this.specificHoursForm.get("startTime")?.value;
+      requirements.endTime = this.specificHoursForm.get("endTime")?.value;
+    }
+
+    if(this.wantsAge) {
+      requirements.minAge = this.ageForm.get("min")?.value;
+      requirements.maxAge = this.ageForm.get("max")?.value;
+    }
+
+    if(this.wantsGender) {
+      requirements.gender = this.genderForm.get("gender")?.value;
+    }
+
+    return requirements;
+  }
+
+  getDaysAsString(): string {
+    var daysArray = this.daysForm.value;
+    var days: string = "";
+    if(daysArray.sunday == true) {
+      days += "Sunday, "
+    }
+    if(daysArray.monday == true) {
+      days += "Monday, "
+    }
+    if(daysArray.tuesday == true) {
+      days += "Tuesday, "
+    }
+    if(daysArray.wednesday == true) {
+      days += "Wednesday, "
+    }
+    if(daysArray.thursday == true) {
+      days += "Thursday, "
+    }
+    if(daysArray.friday == true) {
+      days += "Friday, "
+    }
+    if(daysArray.saturday == true) {
+      days += "Saturday, "
+    }
+    return days.substring(0, days.length-2);
   }
 
   checkDisabledButton(): boolean {    

@@ -197,7 +197,7 @@
                     Minimum age must be less than maximum
                  </mat-error>
             </form>
-            <button mat-raised-button color="primary" [disabled]="checkDisabledButton()">Submit</button>
+            <button mat-raised-button color="primary" [disabled]="checkDisabledButton()" (click)="submit()">Submit</button>
         </div>
     </div>
 </div>
