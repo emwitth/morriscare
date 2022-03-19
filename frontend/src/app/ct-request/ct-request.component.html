@@ -38,8 +38,8 @@
                     <!-- Location -->
                     <mat-form-field appearance="fill">
                         <mat-label>Location of Service</mat-label>
-                        <input matInput placeholder="Enter your patient's location" formControlName="lastName">
-                        <mat-error *ngIf="this.patientForm.get('lastName')?.hasError('required')">You must enter a value</mat-error>
+                        <input matInput placeholder="Enter your patient's location" formControlName="location">
+                        <mat-error *ngIf="this.patientForm.get('location')?.hasError('required')">You must enter a value</mat-error>
                     </mat-form-field>
                     <!-- Phone Number -->
                     <mat-form-field appearance="fill">
@@ -107,7 +107,7 @@
                         <mat-error *ngIf="this.specificHoursForm.get('endTime')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
                 </div>
-                <mat-error *ngIf="this.specificHoursForm.errors?.startAfterEnd && this.specificHoursForm.get('endTime')?.dirty">
+                <mat-error *ngIf="this.specificHoursForm.errors?.startAfterEnd && this.specificHoursForm.get('endTime')?.dirty && !isFlexibleHours">
                     Start time must be after end time
                 </mat-error>
             </form>
@@ -193,10 +193,11 @@
                         <mat-error *ngIf="this.ageForm.get('max')?.hasError('min')">Age too low</mat-error>
                     </mat-form-field>
                 </div>
-                <mat-error *ngIf="this.ageForm.errors?.minGTMax && this.ageForm.get('max')?.dirty">
+                <mat-error *ngIf="this.ageForm.errors?.minGTMax && this.ageForm.get('max')?.dirty && wantsAge">
                     Minimum age must be less than maximum
                  </mat-error>
             </form>
+            <button mat-raised-button color="primary" [disabled]="checkDisabledButton()">Submit</button>
         </div>
     </div>
 </div>

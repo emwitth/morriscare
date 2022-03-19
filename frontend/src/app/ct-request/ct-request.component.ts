@@ -32,7 +32,7 @@ export class CtRequestComponent implements OnInit {
       sex: ['', Validators.required],
       dob: [new Date(), Validators.required],
       location: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      phone: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]]
     });
     this.typeForm = this.fb.group({
@@ -68,6 +68,60 @@ export class CtRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  checkDisabledButton(): boolean {    
+    // disable if patient form is not filled out
+    if(this.patientForm.pristine || this.patientForm.invalid) {
+      // console.log("patient failed");
+      return true;
+    }
+
+    // disable if type form is not filled out
+    if(this.typeForm.pristine || this.typeForm.invalid) {
+      // console.log("type failed");
+      return true;
+    }
+
+    // disable if date form is not filled out
+    if(this.dateForm.pristine || this.dateForm.invalid) {
+      // console.log("date failed");
+      return true;
+    }
+
+    // disable if days form is not filled out
+    if(this.daysForm.pristine || this.daysForm.invalid) {
+      // console.log("days failed");
+      return true;
+    }
+
+    // disable if flexible hours form is not filled out and flexible hours is specified
+    if(this.isFlexibleHours && (this.flexibleHoursForm.pristine || this.flexibleHoursForm.invalid)) {
+      // console.log("flexible failed");
+      return true;
+    }
+
+    // disable if specific hours form is not filled out and flexible hours is not specified
+     if(!this.isFlexibleHours && (this.specificHoursForm.pristine || this.specificHoursForm.invalid)) {
+      // console.log("specific failed");
+      return true
+    }
+
+    // disable if wants age and age form is not filled out
+    if(this.wantsAge && (this.ageForm.pristine || this.ageForm.invalid)) {
+      // console.log("age failed");
+      return true
+    }
+
+    // disable if wants gender and age form is not filled out
+    if(this.wantsGender && (this.genderForm.pristine || this.genderForm.invalid)) {
+      // console.log("gender failed");
+      return true
+    }
+
+    // console.log("all passed");
+
+    return false;
   }
 
   figureDays() {
