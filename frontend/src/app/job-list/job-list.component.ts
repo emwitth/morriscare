@@ -19,6 +19,7 @@ export class JobListComponent implements OnInit {
   ngOnInit(): void {
     // get type to query for correct job postings
     this.type = this.route.snapshot.params?.type;
+    console.log(this.type);
 
     // get job postings from backend
     this.http.get<any>("api/applications/", { observe: "response" }).subscribe(result => {
@@ -26,7 +27,7 @@ export class JobListComponent implements OnInit {
         this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
       } else if(result.status == 200) {
         result.body.forEach((element: Application) => {
-          if(element.typeHS == (this.type == 'nurse' ? 'n' : (this.type == 'psychiatrist'? 'ps' : 'p'))) {
+          if(element.typeHS == (this.type == 'nurse' ? 'n' : (this.type == 'physiotherapist'? 'p' : 'ps'))) {
             this.postings.push(element);
           }
         });
