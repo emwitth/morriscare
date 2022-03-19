@@ -1,4 +1,3 @@
-import { CtRequestComponent } from './ct-request/ct-request.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -18,6 +17,8 @@ import { HomeComponent } from './home/home.component';
 import { ApplicationManageComponent } from './application-manage/application-manage.component';
 import { ApplicationDetailsComponent } from './application-details/application-details.component';
 import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
+import { CtRequestComponent } from './ct-request/ct-request.component';
+import { CtRequestManageComponent } from './ct-request-manage/ct-request-manage.component';
 
 const routes: Routes = [
   /* default path */
@@ -75,6 +76,10 @@ const routes: Routes = [
         path: 'applications/:id/applicants',
         component: ApplicationDetailsComponent,
       },
+      {
+        path: 'manage-ct-request',
+        component: CtRequestManageComponent,
+      },
       { 
         path: 'settings', 
         component: SettingsComponent
@@ -105,6 +110,10 @@ const routes: Routes = [
       {
         path: 'applications/:id/applicants',
         component: ApplicationDetailsComponent,
+      },
+      {
+        path: 'manage-ct-request',
+        component: CtRequestManageComponent,
       },
       { 
         path: 'settings', 
