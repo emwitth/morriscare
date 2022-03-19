@@ -36,6 +36,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // Components
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -62,6 +64,7 @@ import { ApplicantListComponent } from './applicant-list/applicant-list.componen
 import { ApplicationDetailsComponent } from './application-details/application-details.component';
 import { ConfirmationDialogComponent } from './dialog-components/confirmation-dialog/confirmation-dialog.component';
 import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
+import { CtRequestComponent } from './ct-request/ct-request.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +93,7 @@ import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
     ApplicationDetailsComponent,
     ConfirmationDialogComponent,
     HcpManageComponent,
+    CtRequestComponent,
   ],
   imports: [
     BrowserModule,
@@ -119,7 +123,9 @@ import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    SnackbarModule
+    SnackbarModule,
+    MatSlideToggleModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
