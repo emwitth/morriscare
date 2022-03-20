@@ -5,9 +5,9 @@
 
 .description-text {
     position: absolute;
-    max-width: 400px;
+    max-width: 70%;
     text-align: center;
-    bottom: 0;
+    top: 50vh;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
 }
