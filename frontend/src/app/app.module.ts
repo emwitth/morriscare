@@ -65,6 +65,8 @@ import { ApplicationDetailsComponent } from './application-details/application-d
 import { ConfirmationDialogComponent } from './dialog-components/confirmation-dialog/confirmation-dialog.component';
 import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
 import { CtRequestComponent } from './ct-request/ct-request.component';
+import { CtRequestManageComponent } from './ct-request-manage/ct-request-manage.component';
+import { CtRequestDetailsComponent } from './ct-request-details/ct-request-details.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +96,8 @@ import { CtRequestComponent } from './ct-request/ct-request.component';
     ConfirmationDialogComponent,
     HcpManageComponent,
     CtRequestComponent,
+    CtRequestManageComponent,
+    CtRequestDetailsComponent,
   ],
   imports: [
     BrowserModule,
