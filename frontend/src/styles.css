@@ -32,6 +32,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     max-width: 50%;
 }
 
+.details-box {
+    background-color:rgb(163, 163, 163);
+    color: white;
+    width: 80%;
+}
+
 /* Center Items and Size to different amounts */
 .flex-center {
     display: flex;

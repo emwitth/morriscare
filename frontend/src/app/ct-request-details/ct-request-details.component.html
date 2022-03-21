@@ -1,1 +1,32 @@
-<p>{{request | json}}</p>
+<div class="container p-2 my-5 border">
+    <button mat-icon-button color="primary" style="font-size:large" routerLink="/{{userType}}/manage-ct-request">
+        <mat-icon>navigate_before</mat-icon>
+    </button>
+    <!-- title of page -->
+    <h1 class="blockquote">Manage Request {{id}}</h1>
+    <div class="d-flex">
+        <div class="flex-fill border-end" style="max-width:50%">
+            <div class="container border centered-half-width-rows-container rounded details-box">
+                <h2>Patient Information</h2>
+                <p>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</p>
+                <p>Sex: {{request.sex | uppercase}}</p>
+                <p>DOB: {{request.dateOfBirth | date}}</p>
+                <p>Phone: {{format.formatPhone(request.patientPhoneNumber)}}</p>
+                <p>Email: {{request.patientEmail}}</p>
+                <p>Address: {{request.locationOfService}}</p>
+            </div> <br>
+        </div>
+        <div class="flex-fill border-start" style="max-width:50%">
+            <div class="container border centered-half-width-rows-container rounded details-box">
+                <h2>Request Details</h2>
+                <p>Type: {{request.requirements.serviceType}}</p>
+                <p>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</p>
+                <p>{{request.requirements.numDaysRequested}} days: {{request.requirements.daysRequested}}</p>
+                <p *ngIf="!isFlexibleHours">Start Time: {{request.requirements.startTime}}, End Time {{request.requirements.endTime}}</p>
+                <p *ngIf="isFlexibleHours">Flexible Hours: wants {{request.requirements.hoursPerDay}} hours</p>
+                <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender}}</p>
+                <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.minAge}}, maximum {{request.requirements.maxAge}}</p>
+            </div>
+        </div>
+    </div>
+</div>
