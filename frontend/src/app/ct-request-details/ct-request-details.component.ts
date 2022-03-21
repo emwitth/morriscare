@@ -20,12 +20,12 @@ export class CtRequestDetailsComponent implements OnInit {
     // retrieve a single request
     this.http.get<any>("api/request/" + this.id + "/", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
-        this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
+        this.snackbar.openSnackbarErrorCust("Failed to fetch request " + this.id + ": status " + result.status);
       } else if(result.status == 200) {
         this.request = result.body;
       }
     }, err => {
-      this.snackbar.openSnackbarErrorCust("Failed to fetch request: " + err.error.error);
+      this.snackbar.openSnackbarErrorCust("Failed to fetch request " + this.id + ":" + err.error.error);
     });
   }
 
