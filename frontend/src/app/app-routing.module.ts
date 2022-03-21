@@ -19,6 +19,7 @@ import { ApplicationDetailsComponent } from './application-details/application-d
 import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
 import { CtRequestComponent } from './ct-request/ct-request.component';
 import { CtRequestManageComponent } from './ct-request-manage/ct-request-manage.component';
+import { CtRequestDetailsComponent } from './ct-request-details/ct-request-details.component';
 
 const routes: Routes = [
   /* default path */
@@ -80,6 +81,10 @@ const routes: Routes = [
         path: 'manage-ct-request',
         component: CtRequestManageComponent,
       },
+      {
+        path: 'manage-ct-request/request/:id',
+        component: CtRequestDetailsComponent,
+      },
       { 
         path: 'settings', 
         component: SettingsComponent
@@ -114,6 +119,10 @@ const routes: Routes = [
       {
         path: 'manage-ct-request',
         component: CtRequestManageComponent,
+      },
+      {
+        path: 'manage-ct-request/request/:id',
+        component: CtRequestDetailsComponent,
       },
       { 
         path: 'settings', 

@@ -1,7 +1,7 @@
 <div class="container p-2 my-5 border">
     <h1 class="blockquote">Manage Requests</h1>
     <div *ngFor="let request of requests" class="container centered-partial-width-rows-container">
-        <mat-card>
+        <mat-card routerLink="request/{{request.requestID}}">
             <mat-card-title>Request {{request.requestID}}: {{request.patientFirstName | titlecase}}
                 {{request.patientLastName | titlecase}}</mat-card-title>
             <p>For {{request.requirements.serviceType | lowercase}}</p>
