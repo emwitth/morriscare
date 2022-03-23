@@ -12,6 +12,7 @@ import { Roles } from '../global-variables';
   styleUrls: ['./ct-request-details.component.css']
 })
 export class CtRequestDetailsComponent implements OnInit {
+  hcpPickers: Array<number> = new Array<number>()
   request!: CTRequest;
   id = this.route.snapshot.params?.id;
   userType: string = "";
@@ -51,6 +52,14 @@ export class CtRequestDetailsComponent implements OnInit {
     else if(Roles.sm == sessionStorage.getItem("role")) {
       this.userType = "staff";
     }
+
+    // add initial hcp picker
+    this.add();
+  }
+
+  add() {
+    console.log(this.hcpPickers.length);
+    this.hcpPickers.push(this.hcpPickers.length);
   }
 
 }

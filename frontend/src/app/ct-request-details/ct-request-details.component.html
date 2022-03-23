@@ -27,6 +27,12 @@
                 <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender}}</p>
                 <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.minAge}}, maximum {{request.requirements.maxAge}}</p>
             </div>
+            <app-ct-request-hcp *ngFor="let picker of hcpPickers"></app-ct-request-hcp>
+            <div class="d-flex justify-content-center">
+                <button mat-icon-button color="primary" (click)="add()">
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+            </div>
         </div>
     </div>
 </div>
