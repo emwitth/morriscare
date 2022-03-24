@@ -10,6 +10,29 @@ export interface requestInformation {
   id: number
 }
 
+export interface hcpsForDropdown {
+    pID: number,
+    firstName: string,
+    lastName: string,
+    sex: string,
+    ssn: string,
+    salary: number,
+    typeHS: string,
+    qualification: string,
+    qualificationDate: string,
+    yearOExp: number,
+    phoneNumber: string,
+    postalAddress: string,
+    email: string,
+    enroll: boolean,
+    schedule: {
+        available: boolean
+    },
+    deleted: boolean,
+    advertiseID: number,
+    userID: number
+}
+
 @Component({
   selector: 'app-ct-request-hcp',
   templateUrl: './ct-request-hcp.component.html',
@@ -66,8 +89,13 @@ export class CtRequestHcpComponent implements OnInit {
         console.log("!200", result.body);
         this.snackbar.openSnackbarErrorCust("Error retrieving hcp: " + result);
       } else if(result.status == 200) {
+        this.hcps = [];
         console.log("200", result);
-        this.hcps = result.body;
+        result.body.forEach((hcp: hcpsForDropdown) => {
+          if(hcp.schedule.available == true) {
+            this.hcps.push(hcp);
+          }
+        });
       }
     }, err => {
       console.log("err", err);
