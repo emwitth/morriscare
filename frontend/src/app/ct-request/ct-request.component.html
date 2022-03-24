@@ -117,7 +117,7 @@
                     </mat-form-field>
                 </div>
                 <mat-error *ngIf="this.specificHoursForm.errors?.startAfterEnd && this.specificHoursForm.get('endTime')?.dirty && !isFlexibleHours">
-                    Start time must be after end time
+                    Start time must be before end time
                 </mat-error>
             </form>
             <!-- Flexible Hours -->

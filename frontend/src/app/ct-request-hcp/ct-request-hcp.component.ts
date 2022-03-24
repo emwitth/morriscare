@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { HttpClient } from '@angular/common/http';
 import { DAYS } from '../global-variables';
@@ -65,7 +65,7 @@ export class CtRequestHcpComponent implements OnInit {
     this.timeForm = this.fb.group({
       startTime:['', Validators.required],
       endTime:['', Validators.required]
-    });
+    }, {validators: startBeforeEnd});
     this.daysForm = this.fb.group({
       monday:[],
       tuesday:[],
@@ -146,5 +146,31 @@ export class CtRequestHcpComponent implements OnInit {
     }
 
     return result;
+  }
+}
+
+/**
+ * Validator to ensure a start time is before end time
+ * 
+ * @param g the form group
+ * @returns a group-scoped validator function
+ */
+ function startBeforeEnd(g: AbstractControl) {
+  const st = g.get('startTime');
+  const et = g.get('endTime');
+
+  const sh = parseInt(st?.value.substring(0,2));
+  const sm = parseInt(st?.value.substring(3,5));
+  const eh = parseInt(et?.value.substring(0,2));
+  const em = parseInt(et?.value.substring(3,5));
+
+  if (sh > eh) {
+    return {'startAfterEnd': true};
+  }
+  else if ( sh == eh && sm > em) {
+    return {'startAfterEnd': true};
+  }
+  else {
+    return null;
   }
 }

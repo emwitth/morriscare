@@ -22,6 +22,9 @@
             </mat-form-field>
         </div>
     </form>
+    <mat-error *ngIf="this.timeForm.errors?.startAfterEnd && this.timeForm.get('endTime')?.dirty && this.info.isFlex">
+        Start time must be before end time
+    </mat-error>
     <!-- Days Row -->
     <section class="example-section" [formGroup]="daysForm">
         <div class="d-flex flex-row justify-content-around">
