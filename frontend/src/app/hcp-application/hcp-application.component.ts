@@ -60,7 +60,7 @@ export class HcpApplicationComponent implements OnInit {
       ssn: this.form.get("ssn")?.value,
       typeHS: this.type == 'nurse' ? 'n' : (this.type == 'physiotherapist' ? 'p' : 'ps'),
       qualification: this.form.get("education")?.value +  " Degree, I am "
-      + this.form.get("qualifications")?.value.lowercase(),
+      + this.form.get("qualifications")?.value,
       qualificationDate: this.format.parseMomentDateToString(this.form.get("dob")?.value),
       yearOExp: this.form.get("experience")?.value,
       phoneNumber: this.form.get("phone")?.value,
