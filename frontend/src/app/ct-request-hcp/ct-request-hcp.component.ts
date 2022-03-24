@@ -1,13 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { HttpClient } from '@angular/common/http';
 import { DAYS } from '../global-variables';
-import { dashCaseToCamelCase } from '@angular/compiler/src/util';
+
 
 export interface requestInformation {
   enabled: Array<boolean>,
-  id: number
+  id: number,
+  isFlex: boolean,
+  start: string,
+  end: string
 }
 
 export interface hcpsForDropdown {
@@ -42,7 +45,11 @@ export class CtRequestHcpComponent implements OnInit {
   @Input('info') info!: requestInformation;
 
   daysForm: FormGroup;
+  hcpForm: FormGroup;
+  timeForm: FormGroup;
+
   hcps: Array<any> = [];
+  hasBeenPressed = false;
 
   // get accesssors for days enum
   get SUNDAY() { return DAYS.sunday; };
@@ -55,6 +62,10 @@ export class CtRequestHcpComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private snackbar: SnackbarModule,
     private http: HttpClient) {
+    this.timeForm = this.fb.group({
+      startTime:['', Validators.required],
+      endTime:['', Validators.required]
+    });
     this.daysForm = this.fb.group({
       monday:[],
       tuesday:[],
@@ -63,6 +74,9 @@ export class CtRequestHcpComponent implements OnInit {
       friday:[],
       saturday:[],
       sunday:[],
+    });
+    this.hcpForm = this.fb.group({
+      hcp:['', Validators.required],
     });
    }
 
@@ -80,8 +94,18 @@ export class CtRequestHcpComponent implements OnInit {
     if(this.daysForm.get("friday")?.value == true) {days.push(DAYS.friday)};
     if(this.daysForm.get("saturday")?.value == true) {days.push(DAYS.saturday)};
 
-    var body = {
-      daysRequested: days
+    var body;
+    if(this.info.isFlex) {
+      body = {
+        daysRequested: days,
+        startTime: this.timeForm.get("startTime")?.value,
+        endTime: this.timeForm.get("endTime")?.value
+      }
+    }
+    else {
+      body = {
+        daysRequested: days
+      }
     }
 
     this.http.post<any>("api/available_hcp/" + this.info.id + "/", body, { observe: "response" }).subscribe(result => {
@@ -96,11 +120,31 @@ export class CtRequestHcpComponent implements OnInit {
             this.hcps.push(hcp);
           }
         });
+        this.hasBeenPressed = true;
       }
     }, err => {
       console.log("err", err);
-      this.snackbar.openSnackbarErrorCust(err.error.error);
+      this.snackbar.openSnackbarErrorCust(err.error.error? err.error.error : err.message);
     });
   }
 
+  checkEnabled(): boolean {
+    var result: boolean = false;
+
+    result = result || this.daysForm.get("sunday")?.value;
+    result = result || this.daysForm.get("monday")?.value;
+    result = result || this.daysForm.get("tuesday")?.value;
+    result = result || this.daysForm.get("wednesday")?.value;
+    result = result || this.daysForm.get("thursday")?.value;
+    result = result || this.daysForm.get("friday")?.value;
+    result = result || this.daysForm.get("saturday")?.value;
+
+    console.log(this.timeForm.invalid, this.timeForm.pristine);
+
+    if(this.timeForm.invalid || this.timeForm.pristine) {
+      result = false;
+    }
+
+    return result;
+  }
 }

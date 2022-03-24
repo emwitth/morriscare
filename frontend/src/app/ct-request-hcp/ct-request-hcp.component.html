@@ -1,4 +1,27 @@
 <mat-card>
+    <!--Time Portion  -->
+    <form *ngIf="this.info.isFlex" [formGroup]="timeForm">
+        <div class="d-flex flex-row justify-content-around flex-wrap">
+            <!-- Start Time -->
+            <mat-form-field appearance="fill">
+                <mat-label>Start Time</mat-label>
+                <input matInput type="time" step="1800" formControlName="startTime">
+                <mat-error *ngIf="this.timeForm.get('startTime')?.hasError('required')">You must select a value</mat-error>
+                <mat-error *ngIf="this.timeForm.get('startTime')?.hasError('pattern')">
+                    Time must be in half hour increments
+                </mat-error>
+            </mat-form-field>
+            <!-- End Time -->
+            <mat-form-field appearance="fill">
+                <mat-label>End Time</mat-label>
+                <input matInput type="time" step="1800" formControlName="endTime">
+                <mat-error *ngIf="this.timeForm.get('endTime')?.hasError('required')">You must select a value</mat-error>
+                <mat-error *ngIf="this.timeForm.get('endTime')?.hasError('pattern')">
+                    Time must be in half hour increments
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
     <!-- Days Row -->
     <section class="example-section" [formGroup]="daysForm">
         <div class="d-flex flex-row justify-content-around">
@@ -32,9 +55,27 @@
             </div>
         </div>
     </section>
-    <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="getAvailableHCPs()">Find Available HCP's</button>
-    </mat-card-actions>
-    <p>{{hcps | json}}</p>
+    <br>
+    <button mat-raised-button color="primary" (click)="getAvailableHCPs()"
+    [disabled]="!checkEnabled()">Find Available HCP's</button>
+    <!-- HCPs Dropdown -->
+    <form [formGroup]="hcpForm">
+        <br>
+        <div *ngIf="hasBeenPressed" class="d-flex flex-row justify-content-around">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Available HCPS</mat-label>
+                    <mat-select placeholder="Choose one" [disabled]="hcps.length == 0" formControlName="hcp">
+                        <mat-option *ngFor="let hcp of hcps" value="m"> {{hcp.firstName | titlecase}} {{hcp.lastName | titlecase}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="this.hcpForm.get('hcp')?.hasError('required')">You must select a value</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-raised-button color="primary">Assign</button>
+            </div>
+        </div>
+        <mat-error *ngIf="hasBeenPressed && hcps.length == 0">There are no available HCPs for this day and time</mat-error>
+    </form>
 </mat-card>
 <br>

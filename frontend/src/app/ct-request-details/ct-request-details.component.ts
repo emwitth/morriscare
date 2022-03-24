@@ -8,7 +8,10 @@ import { Roles, DAYS } from '../global-variables';
 
 export interface requestInformation {
   enabled: Array<boolean>,
-  id: number
+  id: number,
+  isFlex: boolean,
+  start: string,
+  end: string
 }
 
 @Component({
@@ -71,6 +74,9 @@ export class CtRequestDetailsComponent implements OnInit {
             this.enabled[DAYS.saturday] = true;
           }
         });
+
+        // add initial hcp picker
+        this.add();
       }
     }, err => {
       this.snackbar.openSnackbarErrorCust("Failed to fetch request " + this.id + ":" + err.error.error);
@@ -83,16 +89,17 @@ export class CtRequestDetailsComponent implements OnInit {
     else if(Roles.sm == sessionStorage.getItem("role")) {
       this.userType = "staff";
     }
-
-    // add initial hcp picker
-    this.add();
   }
 
   add() {
     var info: requestInformation = {
       enabled: this.enabled,
-      id: this.id
+      id: this.id,
+      isFlex: this.isFlexibleHours,
+      start: this.request.requirements?.startTime,
+      end: this.request.requirements?.endTime
     };
+    console.log(info);
     this.hcpPickers.push(info);
   }
 
