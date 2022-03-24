@@ -6,13 +6,18 @@ import { FormattingModule } from '../modules/formatting/formatting.module';
 import { CTRequest, Requirements } from '../interfaces/CTRequest';
 import { Roles, DAYS } from '../global-variables';
 
+export interface requestInformation {
+  enabled: Array<boolean>,
+  id: number
+}
+
 @Component({
   selector: 'app-ct-request-details',
   templateUrl: './ct-request-details.component.html',
   styleUrls: ['./ct-request-details.component.css']
 })
 export class CtRequestDetailsComponent implements OnInit {
-  hcpPickers: Array<number> = new Array<number>()
+  hcpPickers: Array<requestInformation> = new Array<requestInformation>()
   request!: CTRequest;
   id = this.route.snapshot.params?.id;
   userType: string = "";
@@ -84,8 +89,11 @@ export class CtRequestDetailsComponent implements OnInit {
   }
 
   add() {
-    console.log(this.hcpPickers.length);
-    this.hcpPickers.push(this.hcpPickers.length);
+    var info: requestInformation = {
+      enabled: this.enabled,
+      id: this.id
+    };
+    this.hcpPickers.push(info);
   }
 
 }

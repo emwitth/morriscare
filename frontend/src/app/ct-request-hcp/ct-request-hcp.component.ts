@@ -1,7 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { SnackbarModule } from '../modules/snackbar/snackbar.module';
+import { HttpClient } from '@angular/common/http';
 import { DAYS } from '../global-variables';
+import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 
+export interface requestInformation {
+  enabled: Array<boolean>,
+  id: number
+}
 
 @Component({
   selector: 'app-ct-request-hcp',
@@ -9,9 +16,10 @@ import { DAYS } from '../global-variables';
   styleUrls: ['./ct-request-hcp.component.css']
 })
 export class CtRequestHcpComponent implements OnInit {
-  @Input('enabled') enabled!: Array<boolean>;
+  @Input('info') info!: requestInformation;
 
   daysForm: FormGroup;
+  hcps: Array<any> = [];
 
   // get accesssors for days enum
   get SUNDAY() { return DAYS.sunday; };
@@ -22,7 +30,8 @@ export class CtRequestHcpComponent implements OnInit {
   get FRIDAY() { return DAYS.friday; };
   get SATURDAY() { return DAYS.saturday; };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private snackbar: SnackbarModule,
+    private http: HttpClient) {
     this.daysForm = this.fb.group({
       monday:[],
       tuesday:[],
@@ -35,6 +44,35 @@ export class CtRequestHcpComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  }
+
+  getAvailableHCPs() {
+    // create days array
+    var days: Array<number> = [];
+    if(this.daysForm.get("sunday")?.value == true) {days.push(DAYS.sunday)};
+    if(this.daysForm.get("monday")?.value == true) {days.push(DAYS.monday)};
+    if(this.daysForm.get("tuesday")?.value == true) {days.push(DAYS.tuesday)};
+    if(this.daysForm.get("wednesday")?.value == true) {days.push(DAYS.wednesday)};
+    if(this.daysForm.get("thursday")?.value == true) {days.push(DAYS.thursday)};
+    if(this.daysForm.get("friday")?.value == true) {days.push(DAYS.friday)};
+    if(this.daysForm.get("saturday")?.value == true) {days.push(DAYS.saturday)};
+
+    var body = {
+      daysRequested: days
+    }
+
+    this.http.post<any>("api/available_hcp/" + this.info.id + "/", body, { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        console.log("!200", result.body);
+        this.snackbar.openSnackbarErrorCust("Error retrieving hcp: " + result);
+      } else if(result.status == 200) {
+        console.log("200", result);
+        this.hcps = result.body;
+      }
+    }, err => {
+      console.log("err", err);
+      this.snackbar.openSnackbarErrorCust(err.error.error);
+    });
   }
 
 }

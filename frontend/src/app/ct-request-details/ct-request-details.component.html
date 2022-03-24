@@ -30,7 +30,7 @@
             <br>
             <div class="d-flex flex-column align-items-center">
                 <div class="width-80">
-                    <app-ct-request-hcp [enabled]="enabled" *ngFor="let picker of hcpPickers"></app-ct-request-hcp>
+                    <app-ct-request-hcp *ngFor="let pickerInfo of hcpPickers" [info]="pickerInfo"></app-ct-request-hcp>
                 </div>
                 <button mat-icon-button color="primary" (click)="add()">
                     <mat-icon>add_circle</mat-icon>
