@@ -141,7 +141,7 @@ export class CtRequestHcpComponent implements OnInit {
 
     console.log(this.timeForm.invalid, this.timeForm.pristine);
 
-    if(this.timeForm.invalid || this.timeForm.pristine) {
+    if(this.info.isFlex && (this.timeForm.invalid || this.timeForm.pristine)) {
       result = false;
     }
 
