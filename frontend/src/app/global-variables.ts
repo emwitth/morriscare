@@ -9,6 +9,19 @@ export const enum Roles {
 };
 
 /**
+ * Variable for days while logged in
+ */
+export const enum DAYS {
+    sunday,
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday
+}
+
+/**
  * These are the choices for hiring requirement dropdowns
  */
 export const HIRING_REQUIREMENTS: Array<string> = [

@@ -4,7 +4,7 @@
 
 export interface Requirements {
   serviceType: string,
-  daysRequested: number,
+  daysRequested: Array<number>,
   startDate: string,
   endDate: string,
   [key: string]: any

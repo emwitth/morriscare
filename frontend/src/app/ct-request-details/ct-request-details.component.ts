@@ -4,7 +4,7 @@ import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { ActivatedRoute } from '@angular/router';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { CTRequest, Requirements } from '../interfaces/CTRequest';
-import { Roles } from '../global-variables';
+import { Roles, DAYS } from '../global-variables';
 
 @Component({
   selector: 'app-ct-request-details',
@@ -19,6 +19,8 @@ export class CtRequestDetailsComponent implements OnInit {
   isFlexibleHours: boolean = false;
   wantsGender: boolean = false;
   wantsAge: boolean = false;
+  enabled: Array<boolean> = [false, false, false, false, false, false, false];
+
 
   constructor( private http: HttpClient, private snackbar: SnackbarModule, 
     private route: ActivatedRoute, public format: FormattingModule ) { }
@@ -40,6 +42,30 @@ export class CtRequestDetailsComponent implements OnInit {
         if(this.request.requirements?.gender != null) {
           this.wantsGender = true;
         }
+            // set enabled array
+        this.request.requirements.daysRequested.forEach(day => {
+          if(day == DAYS.sunday) {
+            this.enabled[DAYS.sunday] = true;
+          }
+          if(day == DAYS.monday) {
+            this.enabled[DAYS.monday] = true;
+          }
+          if(day == DAYS.tuesday) {
+            this.enabled[DAYS.tuesday] = true;
+          }
+          if(day == DAYS.wednesday) {
+            this.enabled[DAYS.wednesday] = true;
+          }
+          if(day == DAYS.thursday) {
+            this.enabled[DAYS.thursday] = true;
+          }
+          if(day == DAYS.friday) {
+            this.enabled[DAYS.friday] = true;
+          }
+          if(day == DAYS.saturday) {
+            this.enabled[DAYS.saturday] = true;
+          }
+        });
       }
     }, err => {
       this.snackbar.openSnackbarErrorCust("Failed to fetch request " + this.id + ":" + err.error.error);

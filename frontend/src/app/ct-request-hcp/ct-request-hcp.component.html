@@ -1,1 +1,39 @@
-<p>ct-request-hcp works!</p>
+<mat-card>
+    <!-- Days Row -->
+    <section class="example-section" [formGroup]="daysForm">
+        <div class="d-flex flex-row justify-content-around">
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!enabled[MONDAY]" color="primary" formControlName="monday"></mat-checkbox>
+                <div class="align-self-center">M</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!enabled[TUESDAY]" color="primary" formControlName="tuesday"></mat-checkbox>
+                <div class="align-self-center">T</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!enabled[WEDNESDAY]" color="primary" formControlName="wednesday"></mat-checkbox>
+                <div class="align-self-center">W</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!enabled[THURSDAY]" color="primary" formControlName="thursday"></mat-checkbox>
+                <div class="align-self-center">Th</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!enabled[FRIDAY]" color="primary" formControlName="friday"></mat-checkbox>
+                <div class="align-self-center">F</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!enabled[SATURDAY]" color="primary" formControlName="saturday"></mat-checkbox>
+                <div class="align-self-center">S</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!enabled[SUNDAY]" color="primary" formControlName="sunday"></mat-checkbox>
+                <div class="align-self-center">Su</div>
+            </div>
+        </div>
+    </section>
+    <mat-card-actions>
+        <button mat-raised-button>Check</button>
+    </mat-card-actions>
+</mat-card>
+<br>
