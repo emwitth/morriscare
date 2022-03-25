@@ -82,7 +82,7 @@ export class CtRequestComponent implements OnInit {
   submit() {
 
     var body = {
-      takerID: 1,
+      userID: sessionStorage.getItem("id"),
       patientFirstName: this.patientForm.get("firstName")?.value,
       patientLastName: this.patientForm.get("lastName")?.value,
       sex: this.patientForm.get("sex")?.value,

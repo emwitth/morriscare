@@ -24,15 +24,23 @@ export interface CTRequest {
   locationOfService: string,
   patientPhoneNumber: string,
   patientEmail: string,
-  serviceType: string,
   deleted: boolean,
-  hcpID: number,
   userID: number,
   requirements: Requirements,
   distribution: {
     assigned: Array<AssignmentPair>,
     unassigned: Array<number>
   }
+}
+
+export interface Caretaker {
+  userID: number,
+  username: string,
+  lastName: string,
+  firstName: string,
+  phoneNumber: string,
+  postalAddress: string,
+  email: string
 }
 
 /**

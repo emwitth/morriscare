@@ -154,7 +154,8 @@ export class CtRequestHcpComponent implements OnInit {
     var body;
     if(this.info.isFlex) {
       body = {
-        pID: this.info.id,
+        pID: this.hcpForm.get("hcpID")?.value,
+        requestID: this.info.id,
         daysRequested: days,
         startTime: this.timeForm.get("startTime")?.value,
         endTime: this.timeForm.get("endTime")?.value
@@ -181,7 +182,7 @@ export class CtRequestHcpComponent implements OnInit {
       }
     }, err => {
       console.log("err", err);
-      this.snackbar.openSnackbarErrorCust(err.error.error? err.error.error : err.message);
+      this.snackbar.openSnackbarErrorCust(err.error.error ? err.error.error : err.message);
     });
   }
 

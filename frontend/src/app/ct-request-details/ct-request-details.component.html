@@ -15,6 +15,13 @@
                 <p>Email: {{request.patientEmail}}</p>
                 <p>Address: {{request.locationOfService}}</p>
             </div> <br>
+            <div class="container border centered-half-width-rows-container rounded details-box">
+                <h2>Caretaker Information</h2>
+                <p>{{caretaker.firstName | titlecase}} {{caretaker.lastName | titlecase}}</p>
+                <p>Phone: {{format.formatPhone(caretaker.phoneNumber)}}</p>
+                <p>Email: {{caretaker.email}}</p>
+                <p>Address: {{caretaker.postalAddress}}</p>
+            </div>
         </div>
         <div class="flex-fill border-start" style="max-width:50%">
             <div class="container border centered-half-width-rows-container rounded details-box">

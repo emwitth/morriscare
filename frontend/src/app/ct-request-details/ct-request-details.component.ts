@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { ActivatedRoute } from '@angular/router';
 import { FormattingModule } from '../modules/formatting/formatting.module';
-import { CTRequest, requestInformation, AssignmentPair } from '../interfaces/CTRequest';
+import { CTRequest, requestInformation, AssignmentPair, Caretaker } from '../interfaces/CTRequest';
 import { Roles, DAYS, HCP_TYPE } from '../global-variables';
 
 @Component({
@@ -13,7 +13,38 @@ import { Roles, DAYS, HCP_TYPE } from '../global-variables';
 })
 export class CtRequestDetailsComponent implements OnInit {
   hcpPickers: Array<requestInformation> = new Array<requestInformation>()
-  request!: CTRequest;
+  request: CTRequest = {
+    requestID: -1,
+    patientFirstName: "unavailable",
+    patientLastName: "unavailable",
+    sex: "unavailable",
+    dateOfBirth: "1/1/1",
+    locationOfService: "unavailable",
+    patientPhoneNumber: "unavailable",
+    patientEmail: "unavailable",
+    deleted: false,
+    userID: -1,
+    requirements: {
+      serviceType: -1,
+      daysRequested: [],
+      startDate: "1/1/1",
+      endDate: "1/1/1"
+    },
+    distribution: {
+      assigned: [],
+      unassigned: []
+    }
+  };
+  caretaker: Caretaker = {
+    userID: -1,
+    username: "unavailable",
+    lastName: "unavailable",
+    firstName: "unavailable",
+    phoneNumber: "0000000000",
+    postalAddress: "unavailable",
+    email: "unavailable"
+  };
+
   id = this.route.snapshot.params?.id;
   userType: string = "";
   isFlexibleHours: boolean = false;
@@ -71,9 +102,22 @@ export class CtRequestDetailsComponent implements OnInit {
         this.request.distribution.assigned.forEach((pair: AssignmentPair) => {
           this.addPastPicker(pair);
         });
+
+        this.http.get<any>("api/user/" + this.request.userID + "/", { observe: "response" }).subscribe(result => {
+          if (result.status != 200) {
+            console.log("!200", result.body);
+            this.snackbar.openSnackbarErrorCust("Error retrieving caretaker " + this.request.userID + ": " + result);
+          } else if(result.status == 200) {
+            console.log(result);
+            this.caretaker = result.body;
+          }
+        }, err => {
+          console.log("err", err);
+          this.snackbar.openSnackbarErrorCust("Failed to fetch caretaker information: " + (err.error.error? err.error.error : err.message));
+        });
       }
     }, err => {
-      this.snackbar.openSnackbarErrorCust("Failed to fetch request " + this.id + ":" + err.error.error);
+      this.snackbar.openSnackbarErrorCust("Failed to fetch request " + this.id + ":" + (err.error.error? err.error.error : err.message));
     });
 
     // set role of current user for correct navigation back to /role/applications
