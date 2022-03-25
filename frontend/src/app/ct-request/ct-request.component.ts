@@ -112,7 +112,9 @@ export class CtRequestComponent implements OnInit {
     var requirements : flexibleObject = {
       serviceType: this.typeForm.get("type")?.value,
       daysRequested: this.getDaysAsString(),
-      numDaysRequested: this.numberOfDays
+      numDaysRequested: this.numberOfDays,
+      startDate: this.format.parseMomentDateToString(this.dateForm.get("startDate")?.value),
+      endDate: this.format.parseMomentDateToString(this.dateForm.get("endDate")?.value)
     }
 
     if(this.isFlexibleHours) {

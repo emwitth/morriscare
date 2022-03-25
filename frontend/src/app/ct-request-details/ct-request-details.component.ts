@@ -124,7 +124,7 @@ export class CtRequestDetailsComponent implements OnInit {
   add() {
     var info: requestInformation = {
       enabled: this.enabled,
-      checked: [true, false, true, false, true, false, true],
+      checked: [false, false, false, false, false, false, false],
       id: this.id,
       isFlex: this.isFlexibleHours,
       isPastPicker: false,
