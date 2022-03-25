@@ -19,9 +19,10 @@
         <div class="flex-fill border-start" style="max-width:50%">
             <div class="container border centered-half-width-rows-container rounded details-box">
                 <h2>Request Details</h2>
-                <p>Type: {{request.requirements.serviceType}}</p>
+                <p>Type: {{request.requirements.serviceType == nurse ? "nurse" : (request.requirements.serviceType == physiotherapist ? "physiotherapist" : "phychologist") | titlecase}}</p>
                 <p>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</p>
-                <p>{{request.requirements.numDaysRequested}} days: {{request.requirements.daysRequested}}</p>
+                <p>{{request.requirements.numDaysRequested}} days: {{getDaysString(request.requirements.daysRequested)}}</p>
+                <p>Unassigned: {{getDaysString(request.distribution.unassigned)}}</p>
                 <p *ngIf="!isFlexibleHours">Start Time: {{request.requirements.startTime}}, End Time {{request.requirements.endTime}}</p>
                 <p *ngIf="isFlexibleHours">Flexible Hours: wants {{request.requirements.hoursPerDay}} hours</p>
                 <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender}}</p>

@@ -3,15 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { HttpClient } from '@angular/common/http';
 import { DAYS } from '../global-variables';
-
-
-export interface requestInformation {
-  enabled: Array<boolean>,
-  id: number,
-  isFlex: boolean,
-  start: string,
-  end: string
-}
+import { requestInformation } from '../interfaces/CTRequest';
 
 export interface hcpsForDropdown {
     pID: number,
@@ -44,9 +36,10 @@ export interface hcpsForDropdown {
 export class CtRequestHcpComponent implements OnInit {
   @Input('info') info!: requestInformation;
 
-  daysForm: FormGroup;
   hcpForm: FormGroup;
   timeForm: FormGroup;
+
+  daysChecked: Array<boolean> = [false, false, false, false, false, false, false]
 
   hcps: Array<any> = [];
   hasBeenPressed: boolean = false;
@@ -67,15 +60,6 @@ export class CtRequestHcpComponent implements OnInit {
       startTime:['', Validators.required],
       endTime:['', Validators.required]
     }, {validators: startBeforeEnd});
-    this.daysForm = this.fb.group({
-      monday:[],
-      tuesday:[],
-      wednesday:[],
-      thursday:[],
-      friday:[],
-      saturday:[],
-      sunday:[],
-    });
     this.hcpForm = this.fb.group({
       hcpID:['', Validators.required],
     });
@@ -87,13 +71,13 @@ export class CtRequestHcpComponent implements OnInit {
   getAvailableHCPs() {
     // create days array
     var days: Array<number> = [];
-    if(this.daysForm.get("sunday")?.value == true) {days.push(DAYS.sunday)};
-    if(this.daysForm.get("monday")?.value == true) {days.push(DAYS.monday)};
-    if(this.daysForm.get("tuesday")?.value == true) {days.push(DAYS.tuesday)};
-    if(this.daysForm.get("wednesday")?.value == true) {days.push(DAYS.wednesday)};
-    if(this.daysForm.get("thursday")?.value == true) {days.push(DAYS.thursday)};
-    if(this.daysForm.get("friday")?.value == true) {days.push(DAYS.friday)};
-    if(this.daysForm.get("saturday")?.value == true) {days.push(DAYS.saturday)};
+    if(this.daysChecked[this.SUNDAY] == true) {days.push(DAYS.sunday)};
+    if(this.daysChecked[this.MONDAY] == true) {days.push(DAYS.monday)};
+    if(this.daysChecked[this.TUESDAY] == true) {days.push(DAYS.tuesday)};
+    if(this.daysChecked[this.WEDNESDAY] == true) {days.push(DAYS.wednesday)};
+    if(this.daysChecked[this.THURSDAY] == true) {days.push(DAYS.thursday)};
+    if(this.daysChecked[this.FRIDAY] == true) {days.push(DAYS.friday)};
+    if(this.daysChecked[this.SATURDAY] == true) {days.push(DAYS.saturday)};
 
     var body;
     if(this.info.isFlex) {
@@ -132,13 +116,13 @@ export class CtRequestHcpComponent implements OnInit {
   assign() {
     // create days array
     var days: Array<number> = [];
-    if(this.daysForm.get("sunday")?.value == true) {days.push(DAYS.sunday)};
-    if(this.daysForm.get("monday")?.value == true) {days.push(DAYS.monday)};
-    if(this.daysForm.get("tuesday")?.value == true) {days.push(DAYS.tuesday)};
-    if(this.daysForm.get("wednesday")?.value == true) {days.push(DAYS.wednesday)};
-    if(this.daysForm.get("thursday")?.value == true) {days.push(DAYS.thursday)};
-    if(this.daysForm.get("friday")?.value == true) {days.push(DAYS.friday)};
-    if(this.daysForm.get("saturday")?.value == true) {days.push(DAYS.saturday)};
+    if(this.daysChecked[this.SUNDAY] == true) {days.push(DAYS.sunday)};
+    if(this.daysChecked[this.MONDAY] == true) {days.push(DAYS.monday)};
+    if(this.daysChecked[this.TUESDAY] == true) {days.push(DAYS.tuesday)};
+    if(this.daysChecked[this.WEDNESDAY] == true) {days.push(DAYS.wednesday)};
+    if(this.daysChecked[this.THURSDAY] == true) {days.push(DAYS.thursday)};
+    if(this.daysChecked[this.FRIDAY] == true) {days.push(DAYS.friday)};
+    if(this.daysChecked[this.SATURDAY] == true) {days.push(DAYS.saturday)};
 
     var body;
     if(this.info.isFlex) {
@@ -177,13 +161,13 @@ export class CtRequestHcpComponent implements OnInit {
   checkEnabled(): boolean {
     var result: boolean = false;
 
-    result = result || this.daysForm.get("sunday")?.value;
-    result = result || this.daysForm.get("monday")?.value;
-    result = result || this.daysForm.get("tuesday")?.value;
-    result = result || this.daysForm.get("wednesday")?.value;
-    result = result || this.daysForm.get("thursday")?.value;
-    result = result || this.daysForm.get("friday")?.value;
-    result = result || this.daysForm.get("saturday")?.value;
+    result = result || this.daysChecked[this.SUNDAY];
+    result = result || this.daysChecked[this.MONDAY];
+    result = result || this.daysChecked[this.TUESDAY];
+    result = result || this.daysChecked[this.WEDNESDAY];
+    result = result || this.daysChecked[this.THURSDAY];
+    result = result || this.daysChecked[this.FRIDAY];
+    result = result || this.daysChecked[this.SATURDAY];
 
     if(this.info.isFlex && (this.timeForm.invalid || this.timeForm.pristine)) {
       result = false;

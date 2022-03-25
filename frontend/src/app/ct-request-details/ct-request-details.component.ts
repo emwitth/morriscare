@@ -3,16 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { ActivatedRoute } from '@angular/router';
 import { FormattingModule } from '../modules/formatting/formatting.module';
-import { CTRequest, Requirements } from '../interfaces/CTRequest';
-import { Roles, DAYS } from '../global-variables';
-
-export interface requestInformation {
-  enabled: Array<boolean>,
-  id: number,
-  isFlex: boolean,
-  start: string,
-  end: string
-}
+import { CTRequest, requestInformation } from '../interfaces/CTRequest';
+import { Roles, DAYS, HCP_TYPE } from '../global-variables';
 
 @Component({
   selector: 'app-ct-request-details',
@@ -51,7 +43,7 @@ export class CtRequestDetailsComponent implements OnInit {
           this.wantsGender = true;
         }
             // set enabled array
-        this.request.requirements.daysRequested.forEach(day => {
+        this.request.distribution.unassigned.forEach(day => {
           if(day == DAYS.sunday) {
             this.enabled[DAYS.sunday] = true;
           }
@@ -89,6 +81,43 @@ export class CtRequestDetailsComponent implements OnInit {
     else if(Roles.sm == sessionStorage.getItem("role")) {
       this.userType = "staff";
     }
+  }
+
+  get nurse() {return HCP_TYPE.nurse};
+  get physiotherapist() {return HCP_TYPE.physiotherapist};
+  get psychiatrist() {return HCP_TYPE.psychiatrist};
+
+  getDaysString(arr: Array<number>): string {
+    console.log(arr);
+    if(arr.length == 0) {
+      return "none";
+    }
+
+    var daysString: string = '';
+    arr.forEach((element : number) => {
+      if(DAYS.sunday == element) {
+        daysString += "Sunday, "
+      }
+      if(DAYS.monday == element) {
+        daysString += "Monday, "
+      }
+      if(DAYS.tuesday == element) {
+        daysString += "Tuesday, "
+      }
+      if(DAYS.wednesday == element) {
+        daysString += "Wednesday, "
+      }
+      if(DAYS.thursday == element) {
+        daysString += "Thursday, "
+      }
+      if(DAYS.friday == element) {
+        daysString += "Friday, "
+      }
+      if(DAYS.saturday == element) {
+        daysString += "Saturday, "
+      }
+    });
+    return daysString.substring(0, daysString.length-2);
   }
 
   add() {

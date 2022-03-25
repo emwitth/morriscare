@@ -26,34 +26,41 @@
         Start time must be before end time
     </mat-error>
     <!-- Days Row -->
-    <section class="example-section" [formGroup]="daysForm">
+    <section>
         <div class="d-flex flex-row justify-content-around">
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[MONDAY] || isDisabled" color="primary" formControlName="monday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[MONDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[MONDAY]"></mat-checkbox>
                 <div class="align-self-center">M</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[TUESDAY] || isDisabled" color="primary" formControlName="tuesday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[TUESDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[TUESDAY]"></mat-checkbox>
                 <div class="align-self-center">T</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[WEDNESDAY] || isDisabled" color="primary" formControlName="wednesday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[WEDNESDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[WEDNESDAY]"></mat-checkbox>
                 <div class="align-self-center">W</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[THURSDAY] || isDisabled" color="primary" formControlName="thursday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[THURSDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[THURSDAY]"></mat-checkbox>
                 <div class="align-self-center">Th</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[FRIDAY] || isDisabled" color="primary" formControlName="friday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[FRIDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[FRIDAY]"></mat-checkbox>
                 <div class="align-self-center">F</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[SATURDAY] || isDisabled" color="primary" formControlName="saturday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[SATURDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[SATURDAY]"></mat-checkbox>
                 <div class="align-self-center">S</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[SUNDAY] || isDisabled" color="primary" formControlName="sunday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[SUNDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[SUNDAY]"></mat-checkbox>
                 <div class="align-self-center">Su</div>
             </div>
         </div>
