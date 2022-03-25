@@ -22,6 +22,15 @@ export const enum DAYS {
 }
 
 /**
+ * Variable for days while logged in
+ */
+ export const enum HCP_TYPE {
+    nurse,
+    physiotherapist,
+    psychiatrist
+}
+
+/**
  * These are the choices for hiring requirement dropdowns
  */
 export const HIRING_REQUIREMENTS: Array<string> = [
