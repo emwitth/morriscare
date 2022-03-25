@@ -44,6 +44,7 @@ export interface requestInformation {
   id: number,
   isFlex: boolean,
   isPastPicker: boolean,
+  pID: number,
   start: string,
   end: string
 }

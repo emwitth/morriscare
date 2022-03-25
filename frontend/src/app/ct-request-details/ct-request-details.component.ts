@@ -128,6 +128,7 @@ export class CtRequestDetailsComponent implements OnInit {
       id: this.id,
       isFlex: this.isFlexibleHours,
       isPastPicker: false,
+      pID: -1,
       start: this.request.requirements?.startTime,
       end: this.request.requirements?.endTime
     };
@@ -138,11 +139,12 @@ export class CtRequestDetailsComponent implements OnInit {
   addPastPicker(data: AssignmentPair) {
     console.log("DATA: ", data);
     var info: requestInformation = {
-      enabled: this.enabled,
+      enabled: [false, false, false, false, false, false, false],
       checked: [false, false, false, false, false, false, false],
       id: this.id,
       isFlex: this.isFlexibleHours,
       isPastPicker: true,
+      pID: data.pID,
       start: this.request.requirements?.startTime,
       end: this.request.requirements?.endTime
     };

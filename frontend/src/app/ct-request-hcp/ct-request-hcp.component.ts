@@ -69,6 +69,30 @@ export class CtRequestHcpComponent implements OnInit {
     for(var i: number = 0; i < this.daysChecked.length; i++) {
       this.daysChecked[i] = this.info.checked[i];
     }
+
+    // if this picker is coming from past work and
+    // not the add button, this means it is already decided
+    if(this.info.isPastPicker) {
+      // we don't at this time want to change past assignments
+      this.isDisabled = true;
+      // it was pressed in a past viewing of this request
+      this.hasBeenPressed = true;
+      // we want to display who was chosen also, we get them from the pID we passed in from the parent component
+      this.http.get<any>("api/applicant/" + this.info.pID + "/", { observe: "response" }).subscribe(result => {
+        if (result.status != 200) {
+          console.log("!200", result.body);
+          this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + this.info.pID + ": " + result);
+        } else if(result.status == 200) {
+          this.hcps = [];
+          console.log("200", result);
+          this.hcps.push(result.body);
+          this.hasBeenPressed = true;
+        }
+      }, err => {
+        console.log("err", err);
+        this.snackbar.openSnackbarErrorCust(err.error.error? err.error.error : err.message);
+      });
+    }
   }
 
   getAvailableHCPs() {

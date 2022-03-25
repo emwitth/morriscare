@@ -67,14 +67,15 @@
     </section>
     <br>
     <button mat-raised-button color="primary" (click)="getAvailableHCPs()"
-    [disabled]="!checkEnabled() || isDisabled">Find Available HCP's</button>
+    [disabled]="(!checkEnabled() || isDisabled)">Find Available HCP's</button>
     <!-- HCPs Dropdown -->
     <form [formGroup]="hcpForm">
         <br>
         <div *ngIf="hasBeenPressed" class="d-flex flex-row justify-content-around">
             <div>
                 <mat-form-field appearance="fill">
-                    <mat-label>Available HCPS</mat-label>
+                    <mat-label *ngIf="!info.isPastPicker">Available HCPS</mat-label>
+                    <mat-label *ngIf="info.isPastPicker">{{hcps[0].firstName | titlecase}} {{hcps[0].lastName | titlecase}}</mat-label>
                     <mat-select placeholder="Choose one" [disabled]="hcps.length == 0 || isDisabled" formControlName="hcpID">
                         <mat-option *ngFor="let hcp of hcps" value="{{hcp.pID}}"> {{hcp.firstName | titlecase}} {{hcp.lastName | titlecase}}</mat-option>
                     </mat-select>
@@ -86,7 +87,7 @@
                 (click)="assign()">Assign</button>
             </div>
         </div>
-        <mat-error *ngIf="hasBeenPressed && hcps.length == 0">There are no available HCPs for this day and time</mat-error>
+        <mat-error *ngIf="hasBeenPressed && hcps.length == 0 && !info.isPastPicker">There are no available HCPs for this day and time</mat-error>
     </form>
 </mat-card>
 <br>
