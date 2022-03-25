@@ -40,8 +40,10 @@ export interface CTRequest {
  */
 export interface requestInformation {
   enabled: Array<boolean>,
+  checked: Array<boolean>,
   id: number,
   isFlex: boolean,
+  isPastPicker: boolean,
   start: string,
   end: string
 }

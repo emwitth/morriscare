@@ -66,6 +66,9 @@ export class CtRequestHcpComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    for(var i: number = 0; i < this.daysChecked.length; i++) {
+      this.daysChecked[i] = this.info.checked[i];
+    }
   }
 
   getAvailableHCPs() {

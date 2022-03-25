@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { ActivatedRoute } from '@angular/router';
 import { FormattingModule } from '../modules/formatting/formatting.module';
-import { CTRequest, requestInformation } from '../interfaces/CTRequest';
+import { CTRequest, requestInformation, AssignmentPair } from '../interfaces/CTRequest';
 import { Roles, DAYS, HCP_TYPE } from '../global-variables';
 
 @Component({
@@ -67,8 +67,10 @@ export class CtRequestDetailsComponent implements OnInit {
           }
         });
 
-        // add initial hcp picker
-        this.add();
+        // add initial hcp pickers
+        this.request.distribution.assigned.forEach((pair: AssignmentPair) => {
+          this.addPastPicker(pair);
+        });
       }
     }, err => {
       this.snackbar.openSnackbarErrorCust("Failed to fetch request " + this.id + ":" + err.error.error);
@@ -88,7 +90,6 @@ export class CtRequestDetailsComponent implements OnInit {
   get psychiatrist() {return HCP_TYPE.psychiatrist};
 
   getDaysString(arr: Array<number>): string {
-    console.log(arr);
     if(arr.length == 0) {
       return "none";
     }
@@ -123,11 +124,51 @@ export class CtRequestDetailsComponent implements OnInit {
   add() {
     var info: requestInformation = {
       enabled: this.enabled,
+      checked: [true, false, true, false, true, false, true],
       id: this.id,
       isFlex: this.isFlexibleHours,
+      isPastPicker: false,
       start: this.request.requirements?.startTime,
       end: this.request.requirements?.endTime
     };
+    console.log(info);
+    this.hcpPickers.push(info);
+  }
+
+  addPastPicker(data: AssignmentPair) {
+    console.log("DATA: ", data);
+    var info: requestInformation = {
+      enabled: this.enabled,
+      checked: [false, false, false, false, false, false, false],
+      id: this.id,
+      isFlex: this.isFlexibleHours,
+      isPastPicker: true,
+      start: this.request.requirements?.startTime,
+      end: this.request.requirements?.endTime
+    };
+    data.days.forEach(day => {
+      if(day == DAYS.sunday) {
+        info.checked[DAYS.sunday] = true;
+      }
+      if(day == DAYS.monday) {
+        info.checked[DAYS.monday] = true;
+      }
+      if(day == DAYS.tuesday) {
+        info.checked[DAYS.tuesday] = true;
+      }
+      if(day == DAYS.wednesday) {
+        info.checked[DAYS.wednesday] = true;
+      }
+      if(day == DAYS.thursday) {
+        info.checked[DAYS.thursday] = true;
+      }
+      if(day == DAYS.friday) {
+        info.checked[DAYS.friday] = true;
+      }
+      if(day == DAYS.saturday) {
+        info.checked[DAYS.saturday] = true;
+      }
+    });
     console.log(info);
     this.hcpPickers.push(info);
   }
