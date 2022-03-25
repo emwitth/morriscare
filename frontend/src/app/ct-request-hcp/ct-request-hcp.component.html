@@ -5,7 +5,7 @@
             <!-- Start Time -->
             <mat-form-field appearance="fill">
                 <mat-label>Start Time</mat-label>
-                <input matInput type="time" step="1800" formControlName="startTime">
+                <input matInput type="time" step="1800" formControlName="startTime" [disabled]="isDisabled">
                 <mat-error *ngIf="this.timeForm.get('startTime')?.hasError('required')">You must select a value</mat-error>
                 <mat-error *ngIf="this.timeForm.get('startTime')?.hasError('pattern')">
                     Time must be in half hour increments
@@ -14,7 +14,7 @@
             <!-- End Time -->
             <mat-form-field appearance="fill">
                 <mat-label>End Time</mat-label>
-                <input matInput type="time" step="1800" formControlName="endTime">
+                <input matInput type="time" step="1800" formControlName="endTime" [disabled]="isDisabled">
                 <mat-error *ngIf="this.timeForm.get('endTime')?.hasError('required')">You must select a value</mat-error>
                 <mat-error *ngIf="this.timeForm.get('endTime')?.hasError('pattern')">
                     Time must be in half hour increments
@@ -29,38 +29,38 @@
     <section class="example-section" [formGroup]="daysForm">
         <div class="d-flex flex-row justify-content-around">
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[MONDAY]" color="primary" formControlName="monday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[MONDAY] || isDisabled" color="primary" formControlName="monday"></mat-checkbox>
                 <div class="align-self-center">M</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[TUESDAY]" color="primary" formControlName="tuesday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[TUESDAY] || isDisabled" color="primary" formControlName="tuesday"></mat-checkbox>
                 <div class="align-self-center">T</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[WEDNESDAY]" color="primary" formControlName="wednesday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[WEDNESDAY] || isDisabled" color="primary" formControlName="wednesday"></mat-checkbox>
                 <div class="align-self-center">W</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[THURSDAY]" color="primary" formControlName="thursday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[THURSDAY] || isDisabled" color="primary" formControlName="thursday"></mat-checkbox>
                 <div class="align-self-center">Th</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[FRIDAY]" color="primary" formControlName="friday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[FRIDAY] || isDisabled" color="primary" formControlName="friday"></mat-checkbox>
                 <div class="align-self-center">F</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[SATURDAY]" color="primary" formControlName="saturday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[SATURDAY] || isDisabled" color="primary" formControlName="saturday"></mat-checkbox>
                 <div class="align-self-center">S</div>
             </div>
             <div class="d-flex flex-column">
-                <mat-checkbox [disabled]="!info.enabled[SUNDAY]" color="primary" formControlName="sunday"></mat-checkbox>
+                <mat-checkbox [disabled]="!info.enabled[SUNDAY] || isDisabled" color="primary" formControlName="sunday"></mat-checkbox>
                 <div class="align-self-center">Su</div>
             </div>
         </div>
     </section>
     <br>
     <button mat-raised-button color="primary" (click)="getAvailableHCPs()"
-    [disabled]="!checkEnabled()">Find Available HCP's</button>
+    [disabled]="!checkEnabled() || isDisabled">Find Available HCP's</button>
     <!-- HCPs Dropdown -->
     <form [formGroup]="hcpForm">
         <br>
@@ -68,14 +68,15 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Available HCPS</mat-label>
-                    <mat-select placeholder="Choose one" [disabled]="hcps.length == 0" formControlName="hcp">
-                        <mat-option *ngFor="let hcp of hcps" value="m"> {{hcp.firstName | titlecase}} {{hcp.lastName | titlecase}}</mat-option>
+                    <mat-select placeholder="Choose one" [disabled]="hcps.length == 0 || isDisabled" formControlName="hcpID">
+                        <mat-option *ngFor="let hcp of hcps" value="{{hcp.pID}}"> {{hcp.firstName | titlecase}} {{hcp.lastName | titlecase}}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="this.hcpForm.get('hcp')?.hasError('required')">You must select a value</mat-error>
+                    <mat-error *ngIf="this.hcpForm.get('hcpID')?.hasError('required')">You must select a value</mat-error>
                 </mat-form-field>
             </div>
             <div>
-                <button mat-raised-button color="primary">Assign</button>
+                <button mat-raised-button color="primary" [disabled]="this.hcpForm.invalid || this.hcpForm.pristine || isDisabled" 
+                (click)="assign()">Assign</button>
             </div>
         </div>
         <mat-error *ngIf="hasBeenPressed && hcps.length == 0">There are no available HCPs for this day and time</mat-error>

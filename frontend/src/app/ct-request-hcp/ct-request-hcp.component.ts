@@ -49,7 +49,8 @@ export class CtRequestHcpComponent implements OnInit {
   timeForm: FormGroup;
 
   hcps: Array<any> = [];
-  hasBeenPressed = false;
+  hasBeenPressed: boolean = false;
+  isDisabled: boolean = false;
 
   // get accesssors for days enum
   get SUNDAY() { return DAYS.sunday; };
@@ -76,7 +77,7 @@ export class CtRequestHcpComponent implements OnInit {
       sunday:[],
     });
     this.hcpForm = this.fb.group({
-      hcp:['', Validators.required],
+      hcpID:['', Validators.required],
     });
    }
 
@@ -111,7 +112,7 @@ export class CtRequestHcpComponent implements OnInit {
     this.http.post<any>("api/available_hcp/" + this.info.id + "/", body, { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
         console.log("!200", result.body);
-        this.snackbar.openSnackbarErrorCust("Error retrieving hcp: " + result);
+        this.snackbar.openSnackbarErrorCust("Error retrieving hcps: " + result);
       } else if(result.status == 200) {
         this.hcps = [];
         console.log("200", result);
@@ -121,6 +122,51 @@ export class CtRequestHcpComponent implements OnInit {
           }
         });
         this.hasBeenPressed = true;
+      }
+    }, err => {
+      console.log("err", err);
+      this.snackbar.openSnackbarErrorCust(err.error.error? err.error.error : err.message);
+    });
+  }
+
+  assign() {
+    // create days array
+    var days: Array<number> = [];
+    if(this.daysForm.get("sunday")?.value == true) {days.push(DAYS.sunday)};
+    if(this.daysForm.get("monday")?.value == true) {days.push(DAYS.monday)};
+    if(this.daysForm.get("tuesday")?.value == true) {days.push(DAYS.tuesday)};
+    if(this.daysForm.get("wednesday")?.value == true) {days.push(DAYS.wednesday)};
+    if(this.daysForm.get("thursday")?.value == true) {days.push(DAYS.thursday)};
+    if(this.daysForm.get("friday")?.value == true) {days.push(DAYS.friday)};
+    if(this.daysForm.get("saturday")?.value == true) {days.push(DAYS.saturday)};
+
+    var body;
+    if(this.info.isFlex) {
+      body = {
+        pID: this.info.id,
+        daysRequested: days,
+        startTime: this.timeForm.get("startTime")?.value,
+        endTime: this.timeForm.get("endTime")?.value
+      }
+    }
+    else {
+      body = {
+        pID: this.hcpForm.get("hcpID")?.value,
+        requestID: this.info.id,
+        daysRequested: days
+      }
+    }
+
+    console.log(body);
+
+    this.http.post<any>("api/assign/", body, { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        console.log("!200", result.body);
+        this.snackbar.openSnackbarErrorCust("Error assigning hcp: " + result.status);
+      } else if(result.status == 200) {
+        console.log("200", result);
+        this.isDisabled = true;
+        this.snackbar.openSnackbarSuccessCust("Successfully Assigned!");
       }
     }, err => {
       console.log("err", err);
@@ -138,8 +184,6 @@ export class CtRequestHcpComponent implements OnInit {
     result = result || this.daysForm.get("thursday")?.value;
     result = result || this.daysForm.get("friday")?.value;
     result = result || this.daysForm.get("saturday")?.value;
-
-    console.log(this.timeForm.invalid, this.timeForm.pristine);
 
     if(this.info.isFlex && (this.timeForm.invalid || this.timeForm.pristine)) {
       result = false;
