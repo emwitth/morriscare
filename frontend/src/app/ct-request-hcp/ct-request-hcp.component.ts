@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { HttpClient } from '@angular/common/http';
@@ -35,6 +35,7 @@ export interface hcpsForDropdown {
 })
 export class CtRequestHcpComponent implements OnInit {
   @Input('info') info!: requestInformation;
+  @Output() assignmentEvent = new EventEmitter<Array<boolean>>();
 
   hcpForm: FormGroup;
   timeForm: FormGroup;
@@ -179,6 +180,7 @@ export class CtRequestHcpComponent implements OnInit {
         console.log("200", result);
         this.isDisabled = true;
         this.snackbar.openSnackbarSuccessCust("Successfully Assigned!");
+        this.assignmentEvent.emit(this.daysChecked);
       }
     }, err => {
       console.log("err", err);

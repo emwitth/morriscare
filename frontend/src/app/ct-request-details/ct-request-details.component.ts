@@ -219,4 +219,12 @@ export class CtRequestDetailsComponent implements OnInit {
     this.hcpPickers.push(info);
   }
 
+  mergeNewAssigned(arr: Array<boolean>) {
+    for(var i: number = 0; i < arr.length; i++) {
+      if(arr[i]) {
+        this.enabled[i] = false;
+      }
+    }
+  }
+
 }
