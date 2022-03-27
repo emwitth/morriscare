@@ -34,9 +34,13 @@ export const enum DAYS {
  * These are the choices for hiring requirement dropdowns
  */
 export const HIRING_REQUIREMENTS: Array<string> = [
-    "Test qualification",
-    "Another qualification",
-    "A very qualified individual"
+    "Willing to carry a flexible schedule",
+    "Experience doing research at a accredited university",
+    "Background with elderly patients",
+    "Background with children",
+    "Is fluent in Spanish",
+    "Can handle multiple patients at once",
+    "I have no qualifications, don't hire me!"
 ];
 
 /**
