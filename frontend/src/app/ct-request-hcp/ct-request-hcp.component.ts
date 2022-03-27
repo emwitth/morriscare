@@ -159,7 +159,8 @@ export class CtRequestHcpComponent implements OnInit {
         requestID: this.info.id,
         daysRequested: days,
         startTime: this.timeForm.get("startTime")?.value,
-        endTime: this.timeForm.get("endTime")?.value
+        endTime: this.timeForm.get("endTime")?.value,
+        flexibleTime: true
       }
     }
     else {

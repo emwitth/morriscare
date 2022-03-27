@@ -1,11 +1,11 @@
 <mat-card>
     <!--Time Portion  -->
-    <form *ngIf="this.info.isFlex" [formGroup]="timeForm">
+    <form *ngIf="this.info.isFlex && !isDisabled" [formGroup]="timeForm">
         <div class="d-flex flex-row justify-content-around flex-wrap">
             <!-- Start Time -->
             <mat-form-field appearance="fill">
                 <mat-label>Start Time</mat-label>
-                <input matInput type="time" step="1800" formControlName="startTime" [disabled]="isDisabled">
+                <input matInput type="time" step="1800" formControlName="startTime">
                 <mat-error *ngIf="this.timeForm.get('startTime')?.hasError('required')">You must select a value</mat-error>
                 <mat-error *ngIf="this.timeForm.get('startTime')?.hasError('pattern')">
                     Time must be in half hour increments
@@ -14,7 +14,7 @@
             <!-- End Time -->
             <mat-form-field appearance="fill">
                 <mat-label>End Time</mat-label>
-                <input matInput type="time" step="1800" formControlName="endTime" [disabled]="isDisabled">
+                <input matInput type="time" step="1800" formControlName="endTime">
                 <mat-error *ngIf="this.timeForm.get('endTime')?.hasError('required')">You must select a value</mat-error>
                 <mat-error *ngIf="this.timeForm.get('endTime')?.hasError('pattern')">
                     Time must be in half hour increments

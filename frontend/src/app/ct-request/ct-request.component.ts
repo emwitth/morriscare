@@ -118,6 +118,7 @@ export class CtRequestComponent implements OnInit {
     }
 
     if(this.isFlexibleHours) {
+      requirements.flexibleTime = true;
       requirements.hoursPerDay = this.flexibleHoursForm.get("hours")?.value;
     }
     else {
