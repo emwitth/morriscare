@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { FormattingModule } from 'src/app/modules/formatting/formatting.module';
-import { HIRING_REQUIREMENTS, HIRING_EDUCATION } from 'src/app/global-variables';
+import { HIRING_REQUIREMENTS, HIRING_EDUCATION, HCP_TYPE } from 'src/app/global-variables';
 
 @Component({
   selector: 'app-hcp-application',
@@ -50,6 +50,10 @@ export class HcpApplicationComponent implements OnInit {
     this.type = this.route.snapshot.params?.type;
   }
 
+  get nurse() {return HCP_TYPE.nurse};
+  get physiotherapist() {return HCP_TYPE.physiotherapist};
+  get psychiatrist() {return HCP_TYPE.psychiatrist};
+
   submit(){
     // put all form values in an object
     var body = {
@@ -58,9 +62,10 @@ export class HcpApplicationComponent implements OnInit {
       email: this.form.get("email")?.value,
       sex: this.form.get("sex")?.value,
       ssn: this.form.get("ssn")?.value,
-      typeHS: this.type == 'nurse' ? 'n' : (this.type == 'physiotherapist' ? 'p' : 'ps'),
+      typeHS: this.type == 'nurse' ? HCP_TYPE.nurse : (this.type == 'physiotherapist' ? 
+                                    HCP_TYPE.physiotherapist : HCP_TYPE.psychiatrist),
       qualification: this.form.get("education")?.value +  " Degree, I am "
-      + this.form.get("qualifications")?.value.lowercase(),
+      + this.form.get("qualifications")?.value,
       qualificationDate: this.format.parseMomentDateToString(this.form.get("dob")?.value),
       yearOExp: this.form.get("experience")?.value,
       phoneNumber: this.form.get("phone")?.value,

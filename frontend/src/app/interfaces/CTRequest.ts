@@ -1,13 +1,18 @@
 /**
- * Interface describing a single care taker request
+ * Interfaces describing a single care taker request
  */
 
 export interface Requirements {
-  serviceType: string,
-  daysRequested: number,
+  serviceType: number,
+  daysRequested: Array<number>,
   startDate: string,
   endDate: string,
   [key: string]: any
+}
+
+export interface AssignmentPair {
+  pID: number,
+  days: Array<number>
 }
 
 export interface CTRequest {
@@ -19,10 +24,37 @@ export interface CTRequest {
   locationOfService: string,
   patientPhoneNumber: string,
   patientEmail: string,
-  serviceType: string,
   deleted: boolean,
-  hcpID: number,
   userID: number,
-  requirements: Requirements
+  requirements: Requirements,
+  distribution: {
+    assigned: Array<AssignmentPair>,
+    unassigned: Array<number>
+  }
 }
+
+export interface Caretaker {
+  userID: number,
+  username: string,
+  lastName: string,
+  firstName: string,
+  phoneNumber: string,
+  postalAddress: string,
+  email: string
+}
+
+/**
+ * Interfaces for passing information to assignment subcomponent
+ */
+export interface requestInformation {
+  enabled: Array<boolean>,
+  checked: Array<boolean>,
+  id: number,
+  isFlex: boolean,
+  isPastPicker: boolean,
+  pID: number,
+  start: string,
+  end: string
+}
+
   

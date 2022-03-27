@@ -15,18 +15,34 @@
                 <p>Email: {{request.patientEmail}}</p>
                 <p>Address: {{request.locationOfService}}</p>
             </div> <br>
+            <div class="container border centered-half-width-rows-container rounded details-box">
+                <h2>Caretaker Information</h2>
+                <p>{{caretaker.firstName | titlecase}} {{caretaker.lastName | titlecase}}</p>
+                <p>Phone: {{format.formatPhone(caretaker.phoneNumber)}}</p>
+                <p>Email: {{caretaker.email}}</p>
+                <p>Address: {{caretaker.postalAddress}}</p>
+            </div>
         </div>
         <div class="flex-fill border-start" style="max-width:50%">
             <div class="container border centered-half-width-rows-container rounded details-box">
                 <h2>Request Details</h2>
-                <p>Type: {{request.requirements.serviceType}}</p>
+                <p>Type: {{request.requirements.serviceType == nurse ? "Nurse" : (request.requirements.serviceType == physiotherapist ? "Physiotherapist" : "Phychologist") | titlecase}}</p>
                 <p>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</p>
-                <p>{{request.requirements.numDaysRequested}} days: {{request.requirements.daysRequested}}</p>
+                <p>{{request.requirements.numDaysRequested}} days: {{getDaysString(request.requirements.daysRequested)}}</p>
+                <p>Unassigned: {{getDaysString(request.distribution.unassigned)}}</p>
                 <p *ngIf="!isFlexibleHours">Start Time: {{request.requirements.startTime}}, End Time {{request.requirements.endTime}}</p>
                 <p *ngIf="isFlexibleHours">Flexible Hours: wants {{request.requirements.hoursPerDay}} hours</p>
-                <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender}}</p>
+                <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender | titlecase}}</p>
                 <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.minAge}}, maximum {{request.requirements.maxAge}}</p>
             </div>
-        </div>
+            <br>
+            <div class="d-flex flex-column align-items-center">
+                <div class="width-80">
+                    <app-ct-request-hcp *ngFor="let pickerInfo of hcpPickers" [info]="pickerInfo" (assignmentEvent)="mergeNewAssigned($event)"></app-ct-request-hcp>
+                </div>
+                <button mat-icon-button color="primary" (click)="add()">
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+            </div>
     </div>
 </div>

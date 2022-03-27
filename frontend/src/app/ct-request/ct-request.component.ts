@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { FormattingModule } from '../modules/formatting/formatting.module';
+import { SnackbarModule } from '../modules/snackbar/snackbar.module';
+import { HttpClient } from '@angular/common/http';
+import { DAYS, HCP_TYPE } from '../global-variables';
 
 export interface flexibleObject {
   [key: string]: any
@@ -30,7 +33,8 @@ export class CtRequestComponent implements OnInit {
   wantsAge: boolean = false;
   isFlexibleHours: boolean = false;
 
-  constructor(private fb: FormBuilder, private format: FormattingModule) {
+  constructor(private fb: FormBuilder, private format: FormattingModule,
+    private snackbar: SnackbarModule, private http: HttpClient) {
     this.patientForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.pattern("[a-zA-Z]*")]],
       lastName: ['', [Validators.required, Validators.pattern("[a-zA-Z]*")]],
@@ -78,7 +82,7 @@ export class CtRequestComponent implements OnInit {
   submit() {
 
     var body = {
-      takerID: 1,
+      userID: sessionStorage.getItem("id"),
       patientFirstName: this.patientForm.get("firstName")?.value,
       patientLastName: this.patientForm.get("lastName")?.value,
       sex: this.patientForm.get("sex")?.value,
@@ -90,6 +94,17 @@ export class CtRequestComponent implements OnInit {
     }
 
     console.log("submitted: ", body);
+
+    this.http.post<any>("api/requests/", body, { observe: "response" }).subscribe(result => {
+      console.log(result);
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to submit request " + ": status " + result.status);
+      } else if(result.status == 200) {
+        this.snackbar.openSnackbarSuccessCust("Successfully submitted request!");
+      }
+    }, err => {
+      this.snackbar.openSnackbarErrorCust("Failed to submit request: " + err /*? err.error.error : err.message*/);
+    });
   }
 
   createRequirementsObject(): flexibleObject {
@@ -97,10 +112,13 @@ export class CtRequestComponent implements OnInit {
     var requirements : flexibleObject = {
       serviceType: this.typeForm.get("type")?.value,
       daysRequested: this.getDaysAsString(),
-      numDaysRequested: this.numberOfDays
+      numDaysRequested: this.numberOfDays,
+      startDate: this.format.parseMomentDateToString(this.dateForm.get("startDate")?.value),
+      endDate: this.format.parseMomentDateToString(this.dateForm.get("endDate")?.value)
     }
 
     if(this.isFlexibleHours) {
+      requirements.flexibleTime = true;
       requirements.hoursPerDay = this.flexibleHoursForm.get("hours")?.value;
     }
     else {
@@ -120,31 +138,31 @@ export class CtRequestComponent implements OnInit {
     return requirements;
   }
 
-  getDaysAsString(): string {
+  getDaysAsString(): Array<number> {
     var daysArray = this.daysForm.value;
-    var days: string = "";
+    var days: Array<number> = [];
     if(daysArray.sunday == true) {
-      days += "Sunday, "
+      days.push(DAYS.sunday);
     }
     if(daysArray.monday == true) {
-      days += "Monday, "
+      days.push(DAYS.monday);
     }
     if(daysArray.tuesday == true) {
-      days += "Tuesday, "
+      days.push(DAYS.tuesday);
     }
     if(daysArray.wednesday == true) {
-      days += "Wednesday, "
+      days.push(DAYS.wednesday);
     }
     if(daysArray.thursday == true) {
-      days += "Thursday, "
+      days.push(DAYS.thursday);
     }
     if(daysArray.friday == true) {
-      days += "Friday, "
+      days.push(DAYS.friday);
     }
     if(daysArray.saturday == true) {
-      days += "Saturday, "
+      days.push(DAYS.saturday);
     }
-    return days.substring(0, days.length-2);
+    return days;
   }
 
   checkDisabledButton(): boolean {    
@@ -242,6 +260,10 @@ export class CtRequestComponent implements OnInit {
       return 0;
     }
   }
+
+  get nurse() {return HCP_TYPE.nurse};
+  get physiotherapist() {return HCP_TYPE.physiotherapist};
+  get psychiatrist() {return HCP_TYPE.psychiatrist};
 
 }
 

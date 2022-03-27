@@ -1,0 +1,93 @@
+<mat-card>
+    <!--Time Portion  -->
+    <form *ngIf="this.info.isFlex && !isDisabled" [formGroup]="timeForm">
+        <div class="d-flex flex-row justify-content-around flex-wrap">
+            <!-- Start Time -->
+            <mat-form-field appearance="fill">
+                <mat-label>Start Time</mat-label>
+                <input matInput type="time" step="1800" formControlName="startTime">
+                <mat-error *ngIf="this.timeForm.get('startTime')?.hasError('required')">You must select a value</mat-error>
+                <mat-error *ngIf="this.timeForm.get('startTime')?.hasError('pattern')">
+                    Time must be in half hour increments
+                </mat-error>
+            </mat-form-field>
+            <!-- End Time -->
+            <mat-form-field appearance="fill">
+                <mat-label>End Time</mat-label>
+                <input matInput type="time" step="1800" formControlName="endTime">
+                <mat-error *ngIf="this.timeForm.get('endTime')?.hasError('required')">You must select a value</mat-error>
+                <mat-error *ngIf="this.timeForm.get('endTime')?.hasError('pattern')">
+                    Time must be in half hour increments
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+    <mat-error *ngIf="this.timeForm.errors?.startAfterEnd && this.timeForm.get('endTime')?.dirty && this.info.isFlex">
+        Start time must be before end time
+    </mat-error>
+    <!-- Days Row -->
+    <section>
+        <div class="d-flex flex-row justify-content-around">
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!info.enabled[MONDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[MONDAY]"></mat-checkbox>
+                <div class="align-self-center">M</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!info.enabled[TUESDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[TUESDAY]"></mat-checkbox>
+                <div class="align-self-center">T</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!info.enabled[WEDNESDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[WEDNESDAY]"></mat-checkbox>
+                <div class="align-self-center">W</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!info.enabled[THURSDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[THURSDAY]"></mat-checkbox>
+                <div class="align-self-center">Th</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!info.enabled[FRIDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[FRIDAY]"></mat-checkbox>
+                <div class="align-self-center">F</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!info.enabled[SATURDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[SATURDAY]"></mat-checkbox>
+                <div class="align-self-center">S</div>
+            </div>
+            <div class="d-flex flex-column">
+                <mat-checkbox [disabled]="!info.enabled[SUNDAY] || isDisabled" 
+                color="primary" [(ngModel)]="daysChecked[SUNDAY]"></mat-checkbox>
+                <div class="align-self-center">Su</div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <button mat-raised-button color="primary" (click)="getAvailableHCPs()"
+    [disabled]="(!checkEnabled() || isDisabled)">Find Available HCP's</button>
+    <!-- HCPs Dropdown -->
+    <form [formGroup]="hcpForm">
+        <br>
+        <div *ngIf="hasBeenPressed" class="d-flex flex-row justify-content-around">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label *ngIf="!info.isPastPicker">Available HCPS</mat-label>
+                    <mat-label *ngIf="info.isPastPicker">{{hcps.length != 0 ? hcps[0].firstName : "unavailable" | titlecase}} {{hcps.length != 0 ? hcps[0].lastName : "unavailable" | titlecase}}</mat-label>
+                    <mat-select placeholder="Choose one" [disabled]="hcps.length == 0 || isDisabled" formControlName="hcpID">
+                        <mat-option *ngFor="let hcp of hcps" value="{{hcp.pID}}"> {{hcp.firstName | titlecase}} {{hcp.lastName | titlecase}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="this.hcpForm.get('hcpID')?.hasError('required')">You must select a value</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" [disabled]="this.hcpForm.invalid || this.hcpForm.pristine || isDisabled" 
+                (click)="assign()">Assign</button>
+            </div>
+        </div>
+        <mat-error *ngIf="hasBeenPressed && hcps.length == 0 && !info.isPastPicker">There are no available HCPs for this day and time</mat-error>
+    </form>
+</mat-card>
+<br>

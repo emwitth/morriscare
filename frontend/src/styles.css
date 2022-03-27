@@ -32,6 +32,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     max-width: 50%;
 }
 
+.mad-width-quarter {
+    max-width:25%;
+}
+
+.max-width-three-quarter {
+    max-width:75%;
+}
+
+.max-width-whole {
+    max-width:100%;
+}
+
+.width-80 {
+    width:80%;
+}
+
 .details-box {
     background-color:rgb(163, 163, 163);
     color: white;
