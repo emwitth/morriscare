@@ -93,7 +93,42 @@ The changes should now appear when visiting `138.49.101.87`.
 
 ### Server Options
 
-TODO
+There is a redirect for http requests within the file `/etc/httpd/conf/httpd.conf`. The code for the redirect takes the form of a proxy pass and proxy pass reverse line.
+
+```
+ProxyPass /api http://localhost:8080/api
+ProxyPassReverse /api http://localhost:8080/api
+```
+
+These both do the same thing. Namely, pass any requests going to /api to the port 8080 where the backend is running on the server. 
+
+Another important setting is the redirection of all routes to the index.html file generated in the build, which resides in the `/var/www/html` folder.
+In `/etc/httml/conf/httpd.conf` there is code set for an override preceded with the following comments which achieves this:
+
+```
+    # AllowOverride controls what directives may be placed in .htaccess files.
+    # It can be "All", "None", or any combination of the keywords:
+    #   Options FileInfo AuthConfig Limit
+    #
+    AllowOverride All
+```
+
+This allong with the following code in the `/var/www/html/.htaccess` file allows for the redirection to index.html:
+
+```
+RewriteEngine On RewriteCond %{REQUEST_FILENAME} !-d RewriteCond %{REQUEST_FILENAME} !-f RewriteRule ^ index.html [L]
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+```
+
+I'll be perfectly honest and admit that it is possible some of the .htaccess code is unneccesary but I have been to busy to test it and find out which parts.
 
 ## Style
 
