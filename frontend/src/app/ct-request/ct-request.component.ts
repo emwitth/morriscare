@@ -4,10 +4,7 @@ import { FormattingModule } from '../modules/formatting/formatting.module';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { HttpClient } from '@angular/common/http';
 import { DAYS, HCP_TYPE, HCP_LABELS } from '../global-variables';
-
-export interface flexibleObject {
-  [key: string]: any
-}
+import { Requirements } from '../interfaces/CTRequest';
 
 @Component({
   selector: 'app-ct-request',
@@ -113,9 +110,9 @@ export class CtRequestComponent implements OnInit {
     });
   }
 
-  createRequirementsObject(): flexibleObject {
+  createRequirementsObject(): Requirements {
 
-    var requirements : flexibleObject = {
+    var requirements : Requirements = {
       serviceType: this.typeForm.get("type")?.value,
       daysRequested: this.getDaysAsString(),
       numDaysRequested: this.numberOfDays,
@@ -133,8 +130,8 @@ export class CtRequestComponent implements OnInit {
     }
 
     if(this.wantsAge) {
-      requirements.minAge = this.ageForm.get("min")?.value;
-      requirements.maxAge = this.ageForm.get("max")?.value;
+      requirements.age_min = this.ageForm.get("min")?.value;
+      requirements.age_max = this.ageForm.get("max")?.value;
     }
 
     if(this.wantsGender) {
@@ -240,6 +237,14 @@ export class CtRequestComponent implements OnInit {
     this.numberOfDays = count;
   }
 
+  /**
+   * 
+   * Returns the number with which to increase the counter by
+   * at each day of the week. To be used in a loop above.
+   * 
+   * @param day a number representing the day of the week
+   * @returns the number whith which to increase the counter by
+   */
   incrementIfDay(day: number): number {
     if(day == 0 && this.daysForm.get("sunday")?.value == true ) {
       return 1;

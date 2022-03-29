@@ -33,7 +33,7 @@
                 <p *ngIf="!isFlexibleHours">Start Time: {{request.requirements.startTime}}, End Time {{request.requirements.endTime}}</p>
                 <p *ngIf="isFlexibleHours">Flexible Hours: wants {{request.requirements.hoursPerDay}} hours</p>
                 <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender | titlecase}}</p>
-                <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.minAge}}, maximum {{request.requirements.maxAge}}</p>
+                <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.age_min}}, maximum {{request.requirements.age_max}}</p>
             </div>
             <br>
             <div class="d-flex flex-column align-items-center">

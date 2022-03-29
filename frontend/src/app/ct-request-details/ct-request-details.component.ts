@@ -70,8 +70,8 @@ export class CtRequestDetailsComponent implements OnInit {
         if(this.request.requirements?.hoursPerDay != null) {
           this.isFlexibleHours = true;
         }
-        if(this.request.requirements?.minAge != null 
-        && this.request.requirements?.maxage != null) {
+        if(this.request.requirements?.age_min != null 
+        && this.request.requirements?.age_max != null) {
           this.wantsAge = true;
         }
         if(this.request.requirements?.gender != null) {
