@@ -26,7 +26,7 @@
         <div class="flex-fill border-start" style="max-width:50%">
             <div class="container border centered-half-width-rows-container rounded details-box">
                 <h2>Request Details</h2>
-                <p>Type: {{request.requirements.serviceType == nurse ? "Nurse" : (request.requirements.serviceType == physiotherapist ? "Physiotherapist" : "Phychologist") | titlecase}}</p>
+                <p>Type: {{request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label) | titlecase}}</p>
                 <p>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</p>
                 <p>{{request.requirements.numDaysRequested}} days: {{getDaysString(request.requirements.daysRequested)}}</p>
                 <p>Unassigned: {{getDaysString(request.distribution.unassigned)}}</p>

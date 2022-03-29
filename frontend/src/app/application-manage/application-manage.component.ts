@@ -4,6 +4,7 @@ import { AddPostingDialogComponent } from '../dialog-components/add-posting-dial
 import { Application } from './../interfaces/application';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
+import { HCP_LABELS } from '../global-variables';
 
 @Component({
   selector: 'app-application-manage',
@@ -13,6 +14,8 @@ import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 export class ApplicationManageComponent implements OnInit {
   // a list of all the applications
   applications: Array<Application> = new Array<Application>();
+
+  get hcpLabels() {return HCP_LABELS};
 
   constructor(public dialog: MatDialog, private http: HttpClient, private snackbar: SnackbarModule) { }
 

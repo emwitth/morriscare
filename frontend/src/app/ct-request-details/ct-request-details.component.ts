@@ -4,7 +4,7 @@ import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { ActivatedRoute } from '@angular/router';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { CTRequest, requestInformation, AssignmentPair, Caretaker } from '../interfaces/CTRequest';
-import { Roles, DAYS, HCP_TYPE } from '../global-variables';
+import { Roles, DAYS, HCP_TYPE, HCP_LABELS } from '../global-variables';
 
 @Component({
   selector: 'app-ct-request-details',
@@ -52,6 +52,10 @@ export class CtRequestDetailsComponent implements OnInit {
   wantsAge: boolean = false;
   enabled: Array<boolean> = [false, false, false, false, false, false, false];
 
+  get nurse() {return HCP_TYPE.nurse};
+  get physiotherapist() {return HCP_TYPE.physiotherapist};
+  get psychiatrist() {return HCP_TYPE.psychiatrist};
+  get hcpLabels() {return HCP_LABELS};
 
   constructor( private http: HttpClient, private snackbar: SnackbarModule, 
     private route: ActivatedRoute, public format: FormattingModule ) { }
@@ -128,10 +132,6 @@ export class CtRequestDetailsComponent implements OnInit {
       this.userType = "staff";
     }
   }
-
-  get nurse() {return HCP_TYPE.nurse};
-  get physiotherapist() {return HCP_TYPE.physiotherapist};
-  get psychiatrist() {return HCP_TYPE.psychiatrist};
 
   getDaysString(arr: Array<number>): string {
     if(arr.length == 0) {

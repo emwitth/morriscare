@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { HttpClient } from '@angular/common/http';
-import { DAYS, HCP_TYPE } from '../global-variables';
+import { DAYS, HCP_TYPE, HCP_LABELS } from '../global-variables';
 
 export interface flexibleObject {
   [key: string]: any
@@ -75,6 +75,12 @@ export class CtRequestComponent implements OnInit {
       max: ['', [Validators.required, Validators.min(18)]]
     }, {validators: minLTmax});
   }
+
+  
+  get nurse() {return HCP_TYPE.nurse};
+  get physiotherapist() {return HCP_TYPE.physiotherapist};
+  get psychiatrist() {return HCP_TYPE.psychiatrist};
+  get hcpLabels() {return HCP_LABELS};
 
   ngOnInit(): void {
   }
@@ -260,10 +266,6 @@ export class CtRequestComponent implements OnInit {
       return 0;
     }
   }
-
-  get nurse() {return HCP_TYPE.nurse};
-  get physiotherapist() {return HCP_TYPE.physiotherapist};
-  get psychiatrist() {return HCP_TYPE.psychiatrist};
 
 }
 

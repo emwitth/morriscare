@@ -24,10 +24,19 @@ export const enum DAYS {
 /**
  * Variable for days while logged in
  */
- export const enum HCP_TYPE {
+export const enum HCP_TYPE {
     nurse,
     physiotherapist,
     psychiatrist
+}
+
+/**
+ * Variable for consistency in labels and no more mistakes
+ */
+export const HCP_LABELS = {
+    nurse: {type: HCP_TYPE.nurse, label: "nurse"},
+    physiotherapist: {type: HCP_TYPE.physiotherapist, label: "physiotherapist"},
+    psychiatrist: {type: HCP_TYPE.psychiatrist, label: "psychiatrist"}
 }
 
 /**

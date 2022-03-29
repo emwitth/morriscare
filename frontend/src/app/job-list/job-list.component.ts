@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { HttpClient } from '@angular/common/http';
+import { HCP_LABELS } from '../global-variables';
 
 @Component({
   selector: 'app-job-list',
@@ -27,7 +28,7 @@ export class JobListComponent implements OnInit {
         this.snackbar.openSnackbarErrorCust("Failed to fetch job postings for " + this.type);
       } else if(result.status == 200) {
         result.body.forEach((element: Application) => {
-          if(element.typeHS == (this.type == 'nurse' ? 'n' : (this.type == 'physiotherapist'? 'p' : 'ps'))) {
+          if(element.typeHS == (this.type == HCP_LABELS.nurse.label ? HCP_LABELS.nurse.type : (this.type == HCP_LABELS.physiotherapist.label ? HCP_LABELS.physiotherapist.type : HCP_LABELS.psychiatrist.type))) {
             this.postings.push(element);
           }
         });

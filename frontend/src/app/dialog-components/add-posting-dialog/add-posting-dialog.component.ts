@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from 'src/app/modules/snackbar/snackbar.module';
-import { HIRING_REQUIREMENTS, HIRING_EDUCATION } from 'src/app/global-variables';
+import { HIRING_REQUIREMENTS, HIRING_EDUCATION, HCP_LABELS } from 'src/app/global-variables';
 
 @Component({
   selector: 'app-add-posting-dialog',
@@ -17,6 +17,7 @@ export class AddPostingDialogComponent implements OnInit {
   // getters for global lists for dropdowns
   get hiringRequirements() { return HIRING_REQUIREMENTS; }
   get hiringEducation() { return HIRING_EDUCATION; }
+  get hcpLabels() {return HCP_LABELS};
   
 
   // form for dialog
