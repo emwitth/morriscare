@@ -46,13 +46,7 @@ export class RegisterCtDialogComponent implements OnInit {
    * account request goes through.
    */
   register() { 
-    console.log(this.form.get('firstName')?.value);
-    console.log(this.form.get('lastName')?.value);
-    console.log(this.form.get('email')?.value);
-    console.log(this.form.get('address')?.value);
-    console.log(this.form.get('phone')?.value);
-    console.log(this.format.formatPhone(this.form.get('phone')?.value));
-     
+    
     var body = {
       firstName: this.form.get('firstName')?.value,
       lastName: this.form.get('lastName')?.value,
