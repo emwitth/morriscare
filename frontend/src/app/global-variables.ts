@@ -44,7 +44,7 @@ export const HCP_LABELS = {
  */
 export const HIRING_REQUIREMENTS: Array<string> = [
     "Willing to carry a flexible schedule",
-    "Experience doing research at a accredited university",
+    "Experience doing research at an accredited university",
     "Background with elderly patients",
     "Background with children",
     "Is fluent in Spanish",
