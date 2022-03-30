@@ -30,7 +30,7 @@
                     <div style="padding-bottom: 5vw;">
                         <mat-divider></mat-divider>
                         <h2>Additional Information</h2>
-                        <p>SSN: {{applicant.ssn}}</p>
+                        <p>SSN: {{this.format.formatSSN(applicant.ssn)}}</p>
                         <p>Address: {{applicant.postalAddress}}</p>
                         <p>Phone Number: {{this.format.formatPhone(applicant.phoneNumber)}}</p>
                         <p>Email: {{applicant.email}}</p>

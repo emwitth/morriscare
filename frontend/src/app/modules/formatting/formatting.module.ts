@@ -27,7 +27,7 @@ export class FormattingModule {
    * @returns a social security number in the format 555-55-5555
    */
   formatSSN(ssn: string): string {
-    return ssn.substring(0,3) + '-' + ssn.substring(3,4) + '-' + ssn.substring(4,8);
+    return ssn.substring(0,3) + '-' + ssn.substring(3,5) + '-' + ssn.substring(5,9);
   }
 
   /**
