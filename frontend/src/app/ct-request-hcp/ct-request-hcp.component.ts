@@ -43,8 +43,9 @@ export class CtRequestHcpComponent implements OnInit {
   daysChecked: Array<boolean> = [false, false, false, false, false, false, false]
 
   hcps: Array<any> = [];
-  hasBeenPressed: boolean = false;
-  isDisabled: boolean = false;
+  hasBeenPressed: boolean = false; // indicates whether the dropdown filling button has been filled at least once
+  isDisabled: boolean = false; // indicates whether this whole thing is disabled
+  // TODO: figure out how to disable the stupid time inputs. They don't want to cooperate
 
   // get accesssors for days enum
   get SUNDAY() { return DAYS.sunday; };
@@ -107,6 +108,7 @@ export class CtRequestHcpComponent implements OnInit {
     if(this.daysChecked[this.FRIDAY] == true) {days.push(DAYS.friday)};
     if(this.daysChecked[this.SATURDAY] == true) {days.push(DAYS.saturday)};
 
+    // the body varies depending on what kind of request this was
     var body;
     if(this.info.isFlex) {
       body = {
@@ -121,6 +123,7 @@ export class CtRequestHcpComponent implements OnInit {
       }
     }
 
+    // post information querying and recieve a list of available and qualifying hcps back
     this.http.post<any>("api/available_hcp/" + this.info.id + "/", body, { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
         console.log("!200", result.body);
@@ -152,6 +155,7 @@ export class CtRequestHcpComponent implements OnInit {
     if(this.daysChecked[this.FRIDAY] == true) {days.push(DAYS.friday)};
     if(this.daysChecked[this.SATURDAY] == true) {days.push(DAYS.saturday)};
 
+    // changes depending on what type of request this is
     var body;
     if(this.info.isFlex) {
       body = {
@@ -171,8 +175,7 @@ export class CtRequestHcpComponent implements OnInit {
       }
     }
 
-    console.log(body);
-
+    // post assignment request to backend
     this.http.post<any>("api/assign/", body, { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
         console.log("!200", result.body);
@@ -189,6 +192,11 @@ export class CtRequestHcpComponent implements OnInit {
     });
   }
 
+  /**
+   * Returns a boolean value indicating whether hcp fetching button is disabled or not...
+   * 
+   * @returns a boolean value indicating whether hcp fetching button is disabled or not
+   */
   checkEnabled(): boolean {
     var result: boolean = false;
 

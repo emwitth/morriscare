@@ -13,6 +13,7 @@ import { Roles, DAYS, HCP_TYPE, HCP_LABELS } from '../global-variables';
 })
 export class CtRequestDetailsComponent implements OnInit {
   hcpPickers: Array<requestInformation> = new Array<requestInformation>()
+  // these have default values in case an error occurs when fetching them
   request: CTRequest = {
     requestID: -1,
     patientFirstName: "unavailable",
@@ -52,6 +53,7 @@ export class CtRequestDetailsComponent implements OnInit {
   wantsAge: boolean = false;
   enabled: Array<boolean> = [false, false, false, false, false, false, false];
 
+  // the getters for access to global variables in html
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
   get psychiatrist() {return HCP_TYPE.psychiatrist};
@@ -77,7 +79,7 @@ export class CtRequestDetailsComponent implements OnInit {
         if(this.request.requirements?.gender != null) {
           this.wantsGender = true;
         }
-            // set enabled array
+        // set enabled array
         this.request.distribution.unassigned.forEach(day => {
           if(day == DAYS.sunday) {
             this.enabled[DAYS.sunday] = true;
@@ -107,6 +109,7 @@ export class CtRequestDetailsComponent implements OnInit {
           this.addPastPicker(pair);
         });
 
+        // get the information for the caretaker associated with this request
         this.http.get<any>("api/user/" + this.request.userID + "/", { observe: "response" }).subscribe(result => {
           if (result.status != 200) {
             console.log("!200", result.body);
@@ -133,6 +136,14 @@ export class CtRequestDetailsComponent implements OnInit {
     }
   }
 
+  // TODO::: move following method to formatting module
+
+  /**
+   * Creates a string containing days from an array of them as numbers
+   * 
+   * @param arr weekdays listed as numbers
+   * @returns a string of days instead
+   */
   getDaysString(arr: Array<number>): string {
     if(arr.length == 0) {
       return "none";
@@ -165,6 +176,9 @@ export class CtRequestDetailsComponent implements OnInit {
     return daysString.substring(0, daysString.length-2);
   }
 
+  /**
+   * Adds a picker that hasn't been used yet
+   */
   add() {
     var info: requestInformation = {
       enabled: this.enabled,
@@ -180,6 +194,11 @@ export class CtRequestDetailsComponent implements OnInit {
     this.hcpPickers.push(info);
   }
 
+  /**
+   * Adds a picker that came from past use of the page
+   * 
+   * @param data the old data
+   */
   addPastPicker(data: AssignmentPair) {
     console.log("DATA: ", data);
     var info: requestInformation = {
@@ -219,6 +238,11 @@ export class CtRequestDetailsComponent implements OnInit {
     this.hcpPickers.push(info);
   }
 
+  /**
+   * Marks just assigned days as unavailable for subsequent booleans
+   * 
+   * @param arr the array indicating what days were just assigned
+   */
   mergeNewAssigned(arr: Array<boolean>) {
     for(var i: number = 0; i < arr.length; i++) {
       if(arr[i]) {

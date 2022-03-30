@@ -5,7 +5,9 @@
     <!-- title of page -->
     <h1 class="blockquote">Manage Request {{id}}</h1>
     <div class="d-flex">
+        <!-- left half of page -->
         <div class="flex-fill border-end" style="max-width:50%">
+            <!-- information about the patient -->
             <div class="container border centered-half-width-rows-container rounded details-box">
                 <h2>Patient Information</h2>
                 <p>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</p>
@@ -15,6 +17,7 @@
                 <p>Email: {{request.patientEmail}}</p>
                 <p>Address: {{request.locationOfService}}</p>
             </div> <br>
+            <!-- information about the caretaker -->
             <div class="container border centered-half-width-rows-container rounded details-box">
                 <h2>Caretaker Information</h2>
                 <p>{{caretaker.firstName | titlecase}} {{caretaker.lastName | titlecase}}</p>
@@ -23,7 +26,9 @@
                 <p>Address: {{caretaker.postalAddress}}</p>
             </div>
         </div>
+        <!-- right half of page -->
         <div class="flex-fill border-start" style="max-width:50%">
+            <!-- information about the request itself - some fields might not be included -->
             <div class="container border centered-half-width-rows-container rounded details-box">
                 <h2>Request Details</h2>
                 <p>Type: {{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</p>
@@ -36,6 +41,7 @@
                 <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.age_min}}, maximum {{request.requirements.age_max}}</p>
             </div>
             <br>
+            <!-- all of the pickers -->
             <div class="d-flex flex-column align-items-center">
                 <div class="width-80">
                     <app-ct-request-hcp *ngFor="let pickerInfo of hcpPickers" [info]="pickerInfo" (assignmentEvent)="mergeNewAssigned($event)"></app-ct-request-hcp>

@@ -82,6 +82,7 @@
                     <mat-error *ngIf="this.hcpForm.get('hcpID')?.hasError('required')">You must select a value</mat-error>
                 </mat-form-field>
             </div>
+            <!-- Assign button -->
             <div>
                 <button mat-raised-button color="primary" [disabled]="this.hcpForm.invalid || this.hcpForm.pristine || isDisabled" 
                 (click)="assign()">Assign</button>
