@@ -3,7 +3,7 @@
  */
 
 export interface Application {
-  typeHS: string,
+  typeHS: number,
   yearOExp: number,
   qualification: string,
   education: string,

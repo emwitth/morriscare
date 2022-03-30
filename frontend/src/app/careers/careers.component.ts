@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HCP_LABELS } from '../global-variables';
 
 @Component({
   selector: 'app-careers',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./careers.component.css']
 })
 export class CareersComponent implements OnInit {
+
+  get hcpLabels() {return HCP_LABELS};
 
   constructor() { }
 

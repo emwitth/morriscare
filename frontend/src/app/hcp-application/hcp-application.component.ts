@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { FormattingModule } from 'src/app/modules/formatting/formatting.module';
-import { HIRING_REQUIREMENTS, HIRING_EDUCATION, HCP_TYPE } from 'src/app/global-variables';
+import { HIRING_REQUIREMENTS, HIRING_EDUCATION, HCP_TYPE, HCP_LABELS } from 'src/app/global-variables';
 
 @Component({
   selector: 'app-hcp-application',
@@ -62,7 +62,7 @@ export class HcpApplicationComponent implements OnInit {
       email: this.form.get("email")?.value,
       sex: this.form.get("sex")?.value,
       ssn: this.form.get("ssn")?.value,
-      typeHS: this.type == 'nurse' ? HCP_TYPE.nurse : (this.type == 'physiotherapist' ? 
+      typeHS: this.type == HCP_LABELS.nurse.label ? HCP_TYPE.nurse : (this.type == HCP_LABELS.physiotherapist.label ? 
                                     HCP_TYPE.physiotherapist : HCP_TYPE.psychiatrist),
       qualification: this.form.get("education")?.value +  " Degree, I am "
       + this.form.get("qualifications")?.value,

@@ -4,7 +4,7 @@
         <mat-card routerLink="request/{{request.requestID}}">
             <mat-card-title>Request {{request.requestID}}: {{request.patientFirstName | titlecase}}
                 {{request.patientLastName | titlecase}}</mat-card-title>
-            <p>Type: {{request.requirements.serviceType == nurse ? "Nurse" : (request.requirements.serviceType == physiotherapist ? "Physiotherapist" : "Phychologist")}}</p>
+            <p>Type: {{request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)}}</p>
             <p>Born {{request.dateOfBirth | date:"MM/dd/yyyy"}}, {{request.sex | titlecase}}</p>
             <p>{{request.requirements.locationOfService}}</p>
         </mat-card><br>

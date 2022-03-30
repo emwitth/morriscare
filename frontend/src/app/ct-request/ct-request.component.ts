@@ -3,11 +3,8 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { HttpClient } from '@angular/common/http';
-import { DAYS, HCP_TYPE } from '../global-variables';
-
-export interface flexibleObject {
-  [key: string]: any
-}
+import { DAYS, HCP_TYPE, HCP_LABELS } from '../global-variables';
+import { Requirements } from '../interfaces/CTRequest';
 
 @Component({
   selector: 'app-ct-request',
@@ -16,6 +13,7 @@ export interface flexibleObject {
 })
 export class CtRequestComponent implements OnInit {
 
+  // forms that compose the whole page's form
   patientForm: FormGroup;
   typeForm: FormGroup;
   dateForm: FormGroup;
@@ -27,11 +25,19 @@ export class CtRequestComponent implements OnInit {
 
   today: Date = new Date();
 
+  // the number of days they requested, gets calculated later
   numberOfDays:number = 0;
 
+  // indicates whether the user specifies certain things
   wantsGender: boolean = false;
   wantsAge: boolean = false;
   isFlexibleHours: boolean = false;
+
+  // the getters for access to global variables in html
+  get nurse() {return HCP_TYPE.nurse};
+  get physiotherapist() {return HCP_TYPE.physiotherapist};
+  get psychiatrist() {return HCP_TYPE.psychiatrist};
+  get hcpLabels() {return HCP_LABELS};
 
   constructor(private fb: FormBuilder, private format: FormattingModule,
     private snackbar: SnackbarModule, private http: HttpClient) {
@@ -81,6 +87,7 @@ export class CtRequestComponent implements OnInit {
 
   submit() {
 
+    // the body with information for a request sumission
     var body = {
       userID: sessionStorage.getItem("id"),
       patientFirstName: this.patientForm.get("firstName")?.value,
@@ -90,11 +97,10 @@ export class CtRequestComponent implements OnInit {
       locationOfService: this.patientForm.get("location")?.value,
       patientPhoneNumber: this.patientForm.get("phone")?.value,
       patientEmail: this.patientForm.get("email")?.value,
-      requirements: this.createRequirementsObject()
+      requirements: this.createRequirementsObject() // the actual values included here vary
     }
 
-    console.log("submitted: ", body);
-
+    // post the body
     this.http.post<any>("api/requests/", body, { observe: "response" }).subscribe(result => {
       console.log(result);
       if (result.status != 200) {
@@ -107,30 +113,40 @@ export class CtRequestComponent implements OnInit {
     });
   }
 
-  createRequirementsObject(): flexibleObject {
+  /**
+   * Returns an object with the fields specified in the form
+   * 
+   * @returns the appropriate requirements object
+   */
+  createRequirementsObject(): Requirements {
 
-    var requirements : flexibleObject = {
+    // these things are in all versions of the requirements object
+    var requirements : Requirements = {
       serviceType: this.typeForm.get("type")?.value,
-      daysRequested: this.getDaysAsString(),
+      daysRequested: this.getDaysAsArray(),
       numDaysRequested: this.numberOfDays,
       startDate: this.format.parseMomentDateToString(this.dateForm.get("startDate")?.value),
       endDate: this.format.parseMomentDateToString(this.dateForm.get("endDate")?.value)
     }
 
+    // if flexible hours, store number of hours wanted
     if(this.isFlexibleHours) {
       requirements.flexibleTime = true;
       requirements.hoursPerDay = this.flexibleHoursForm.get("hours")?.value;
     }
+    // if not flexible hours, store times indicated
     else {
       requirements.startTime = this.specificHoursForm.get("startTime")?.value;
       requirements.endTime = this.specificHoursForm.get("endTime")?.value;
     }
 
+    // if age values specified, include them
     if(this.wantsAge) {
-      requirements.minAge = this.ageForm.get("min")?.value;
-      requirements.maxAge = this.ageForm.get("max")?.value;
+      requirements.age_min = this.ageForm.get("min")?.value;
+      requirements.age_max = this.ageForm.get("max")?.value;
     }
 
+    // if gender specified, include it
     if(this.wantsGender) {
       requirements.gender = this.genderForm.get("gender")?.value;
     }
@@ -138,7 +154,12 @@ export class CtRequestComponent implements OnInit {
     return requirements;
   }
 
-  getDaysAsString(): Array<number> {
+  /**
+   * Creates an array to store the wanted weekdays
+   * 
+   * @returns an array containing the weekdays as numbers
+   */
+  getDaysAsArray(): Array<number> {
     var daysArray = this.daysForm.value;
     var days: Array<number> = [];
     if(daysArray.sunday == true) {
@@ -165,6 +186,11 @@ export class CtRequestComponent implements OnInit {
     return days;
   }
 
+  /**
+   * Used to disable the button if the form is not filled out entirely
+   * 
+   * @returns boolean indicating the button should be enabled
+   */
   checkDisabledButton(): boolean {    
     // disable if patient form is not filled out
     if(this.patientForm.pristine || this.patientForm.invalid) {
@@ -219,21 +245,31 @@ export class CtRequestComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Calculates the number of days specified, puts this value in the numberOfDays
+   * global variable above. This is displayed in the html.
+   */
   figureDays() {
     var count = 0;
     var currentDate: Date = new Date(this.dateForm.get("startDate")?.value);
     var endDate: Date = new Date(this.dateForm.get("endDate")?.value);
-    console.log(currentDate);
-    console.log(endDate);
+    // loop through all days and add one to each day that is the same as one marked
     while(currentDate <= endDate) {
       console.log(currentDate.getDay(), currentDate);
       count += this.incrementIfDay(currentDate.getDay());
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    console.log("count: ", count);
     this.numberOfDays = count;
   }
 
+  /**
+   * 
+   * Returns the number with which to increase the counter by
+   * at each day of the week. To be used in a loop above.
+   * 
+   * @param day a number representing the day of the week
+   * @returns the number whith which to increase the counter by
+   */
   incrementIfDay(day: number): number {
     if(day == 0 && this.daysForm.get("sunday")?.value == true ) {
       return 1;
@@ -260,10 +296,6 @@ export class CtRequestComponent implements OnInit {
       return 0;
     }
   }
-
-  get nurse() {return HCP_TYPE.nurse};
-  get physiotherapist() {return HCP_TYPE.physiotherapist};
-  get psychiatrist() {return HCP_TYPE.psychiatrist};
 
 }
 

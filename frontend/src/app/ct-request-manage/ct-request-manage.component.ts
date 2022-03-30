@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { CTRequest } from '../interfaces/CTRequest';
-import { HCP_TYPE } from '../global-variables';
+import { HCP_TYPE, HCP_LABELS } from '../global-variables';
 
 @Component({
   selector: 'app-ct-request-manage',
@@ -33,5 +33,6 @@ export class CtRequestManageComponent implements OnInit {
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
   get psychiatrist() {return HCP_TYPE.psychiatrist};
+  get hcpLabels() {return HCP_LABELS};
 
 }
