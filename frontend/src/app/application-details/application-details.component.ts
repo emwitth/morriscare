@@ -1,5 +1,6 @@
+import { HCP_TYPE } from 'src/app/global-variables';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { Roles } from '../global-variables';
+import { Roles, HCP_LABELS } from '../global-variables';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
@@ -40,10 +41,25 @@ export class ApplicationDetailsComponent implements OnInit {
     this.id = this.route.snapshot.params?.id;
 
     // get information passed on navigation
-    this.qualifications = history.state.data.qual;
-    this.education = history.state.data.ed;
-    this.experience = history.state.data.exp;
-    this.type = (history.state.data.type == 'p' ? 'Physiotherapist' : 'Nurse');
+    // this.qualifications = history.state.data.qual;
+    // this.education = history.state.data.ed;
+    // this.experience = history.state.data.exp;
+    // this.type = (history.state.data.type == 'p' ? 'Physiotherapist' : 'Nurse');
+    this.http.get<any>("api/application/" + this.id + "/", { observe: "response" }).subscribe(result => {
+      // console.log(result);
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch posting details: " + result.status);
+      } else if(result.status == 200) {
+        console.log(result);
+        this.qualifications = result.body.qualification;
+        this.education = result.body.education;
+        this.experience = result.body.yearOExp;
+        this.type = (result.body.typeHS == HCP_LABELS.nurse.type ? HCP_LABELS.nurse.label : 
+          (result.body.typeHS == HCP_LABELS.psychiatrist.type ? HCP_LABELS.psychiatrist.label : HCP_LABELS.physiotherapist.label));
+      }
+    }, err => {
+      this.snackbar.openSnackbarErrorCust("Failed to fetch posting details: " + err.error.error ? err.error.error : err.message);
+    });
 
     // set role of current user for correct navigation back to /role/applications
     if(Roles.admin == sessionStorage.getItem("role")) {
