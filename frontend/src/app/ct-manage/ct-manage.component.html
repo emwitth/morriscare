@@ -11,7 +11,9 @@
             </tr>
         </thead>
         <tbody>
-            <h3 style="color: var(--mainColor);">Unregistered Care Takers</h3>
+            <h3 style="color: var(--mainColor);">
+                Unregistered Care Takers <mat-error *ngIf="unapprovedCareTakers.length == 0">There are no unapproved caretakers</mat-error>
+            </h3>
             <tr *ngFor="let careTaker of unapprovedCareTakers;">
                 <td>{{careTaker.firstName}} {{careTaker.lastName}}</td>
                 <td>{{careTaker.email}}</td>
@@ -22,7 +24,9 @@
                     (click)="openApproveDialog(careTaker.firstName, careTaker.lastName, careTaker.takerID)">Approve</button>
                 </td>
             </tr>
-            <h3 style="color: var(--mainColor);">Registered Care Takers</h3>
+            <h3 style="color: var(--mainColor);">
+                Registered Care Takers <mat-error *ngIf="approvedCareTakers.length == 0">There are no caretakers</mat-error>
+            </h3>
             <tr *ngFor="let careTaker of approvedCareTakers;">
                 <td>{{careTaker.firstName}} {{careTaker.lastName}}</td>
                 <td>{{careTaker.email}}</td>

@@ -1,5 +1,6 @@
 <div class="container p-2 my-5 border">
     <h1 class="blockquote">Health Care Professionals</h1>
+    <mat-error *ngIf="hcps.length == 0">There are no health care professionals! Post a job and hire them in the applications window</mat-error>
     <table class="table table-striped table-hover">
         <thead>
             <tr>

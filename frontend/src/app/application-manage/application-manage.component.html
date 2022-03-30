@@ -4,6 +4,7 @@
         <h1 class="blockquote">Manage Applications</h1>
         <button mat-raised-button color="primary" (click)="openAddApplicationDialog()">New Applications</button>
     </div>
+    <mat-error *ngIf="applications.length == 0">There are no job postings live at this time</mat-error>
     <!-- list of applications -->
     <div *ngFor="let application of applications" class="container centered-partial-width-rows-container">
         <mat-card 
