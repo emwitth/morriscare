@@ -305,6 +305,25 @@ invoking Angular Material snackbars. A custom style has also been applied to bet
 `openSnackbarError`, `openSnackbarSuccessCust`, and `openSnackbarErrorCust`. The custom versions of the functions take a string to use as the message.
 The default messages are `Success` for success and `An Error Occured, please try again`for an error.
 
+I have tried to use the snackbar to display robust messages when empoling http requests. An example can be seen in the code within the dialogs box, but a more
+robust version is the following:
+
+```
+ this.http.get<any>("api/user/" + this.request.userID + "/", { observe: "response" }).subscribe(result => {
+    if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Error retrieving caretaker " + this.request.userID + ": " + result);
+    } else if(result.status == 200) {
+        this.caretaker = result.body;
+    }
+}, err => {
+    this.snackbar.openSnackbarErrorCust("Failed to fetch caretaker information: " + (err.error.error? err.error.error : err.message));
+});
+```
+
+This is ideal because sometimes custom information is included in err.error.error from the backend, sometimes it is not. If there is special information provided
+it is best to display that, but if there is not any for this particular error, the err.message is the most helpful. Likewise, the status of a non-error result that
+isn't 200 success would also be helpful to know if this option is ever hit.
+
 ### styles.css
 
 The folder `styles.css` contains many css classes and some global variables used throughout the project. Notably the classes `centered-full-width-rows-container` and
