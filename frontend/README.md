@@ -291,6 +291,13 @@ for display or format items in the way the database expects for storage within i
 - parseMomentDateToString(date: Date): string
   - parses a date object into a string representing a date as YYYY-MM-DD
 
+**Important Note** - The parsing of the date string to universal time is necessary because this is how the backend expects the date to be stored.
+Generally, people don't write dates in this way unless they are masochists. Fortunately, this is something that can be easily rectified when displaying
+dates in the frontend. To do this, you use the datepipe. A simple use would be `{{<date-object> | date}}`. This use shows the date as if it were written
+in American English. Namely, '2001-01-01' would be written 'January 1st, 2001'. Very good for some uses. If this isn't ideal for every situation of display.
+Do display in month, day, year syntax, use the datepipe with a format string: `{{<date-object> | date:"MM/dd/yyyy"}}`. Month is capitalized because the datepipe also
+allows for minute with lowercase m. More on this can be seen [here](https://angular.io/api/common/DatePipe).
+
 ### Modules - snackbar
 
 The snackbar module is used to display an alert at the bottom of the screen. Methods for displaying the alert can be called directly abstracting the overhead for
@@ -309,4 +316,38 @@ named `hover-class`. This file is also where the snackbar styles are found.
 
 ### global-variables.ts
 
-This file contains the enum containing the internal values indicating a type of user. This should be used whenever a role is consitered for consistency.
+This file contains the enum containing the internal values indicating a type of user when logged in. This should be used whenever a role is consitered for consistency.
+Likewise, there is an enum for weekdays labeled `DAYS`. Along with this, there are several constant lists used for education and qualifications dropdowns indended for
+posting a job application as well as applying for one. There is also an `HCP_TYPE` enum which enumerates the types of HCP worker. This goes along with the constant
+variable `HCP_LABELS`. HCP_LABELS contains the HCP_TYPE enum values as well as a label value with each type. Best practice is to use this whenever the label for
+types is used in the project to combat spelling and consistantly use the same values when indicating the type of HCP worker. The object is set up as follows:
+
+```
+export const HCP_LABELS = {
+    nurse: {type: HCP_TYPE.nurse, label: "nurse"},
+    physiotherapist: {type: HCP_TYPE.physiotherapist, label: "physiotherapist"},
+    psychiatrist: {type: HCP_TYPE.psychiatrist, label: "psychiatrist"}
+}
+```
+
+When using global variables in typescript, they must simply be imported as `import { HCP_LABELS } from 'src/app/global-variables';` They can then be accessed directly.
+In order to use these variables in html, they must be imported into a components typescript above but they must also be put in a getter within the typescript or they
+will not be available. For example, `get hcpLabels() {return HCP_LABELS};`. Then, the global variable can be accessed using the name used in the get request. A good
+example of this is shown below:
+
+```
+<mat-select placeholder="Choose one" formControlName="Type">
+  <mat-option value="{{hcpLabels.nurse.type}}"> {{hcpLabels.nurse.label | titlecase}} </mat-option>
+  <mat-option value="{{hcpLabels.physiotherapist.type}}"> {{hcpLabels.physiotherapist.label | titlecase}} </mat-option>
+  <mat-option value="{{hcpLabels.psychiatrist.type}}"> {{hcpLabels.psychiatrist.label | titlecase}} </mat-option>
+</mat-select>
+```
+
+The pipe option of `titlecase` caplitalizes the first letter of the variable. This is very userful for styling nicely.
+
+The `HCP_LABELS` global variables is often used in ternary statements to translate from the type stored in the database to the label used for display. An example
+is below (the 'application' is an object returned from the backend):
+
+```
+{{(application.typeHS == hcpLabels.physiotherapist.type ? hcpLabels.physiotherapist.label : (application.typeHS == hcpLabels.psychiatrist.type ? hcpLabels.psychiatrist.label : hcpLabels.nurse.label)) | titlecase}}
+```
