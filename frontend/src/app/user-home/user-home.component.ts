@@ -31,7 +31,8 @@ export class UserHomeComponent implements OnInit {
   ];
 
   ctFunctions = [
-    {title: "Submit a Request", link:"request-care"}
+    {title: "Submit a Request", link:"request-care"},
+    {title: "View Requests", link:"request-view"},
   ];
 
   hcpFunctions = [

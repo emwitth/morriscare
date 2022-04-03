@@ -68,6 +68,7 @@ import { CtRequestComponent } from './ct-request/ct-request.component';
 import { CtRequestManageComponent } from './ct-request-manage/ct-request-manage.component';
 import { CtRequestDetailsComponent } from './ct-request-details/ct-request-details.component';
 import { CtRequestHcpComponent } from './ct-request-hcp/ct-request-hcp.component';
+import { CtRequestCtViewComponent } from './ct-request-ct-view/ct-request-ct-view.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { CtRequestHcpComponent } from './ct-request-hcp/ct-request-hcp.component
     CtRequestManageComponent,
     CtRequestDetailsComponent,
     CtRequestHcpComponent,
+    CtRequestCtViewComponent,
   ],
   imports: [
     BrowserModule,
