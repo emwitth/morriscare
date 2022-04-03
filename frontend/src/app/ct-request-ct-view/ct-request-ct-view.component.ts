@@ -16,7 +16,7 @@ export class CtRequestCtViewComponent implements OnInit {
   pendingRequests: Array<CTRequest> = [];
   terminatedRequests: Array<CTRequest> = [];
 
-  show: boolean = false;
+  isShown: boolean = false;
   selected: CTRequest = {
     requestID: -1,
     patientFirstName: "unavailable",
@@ -49,28 +49,33 @@ export class CtRequestCtViewComponent implements OnInit {
     public format: FormattingModule) { }
 
   ngOnInit(): void {
-       // retrieve all the requests
-       this.http.get<any>("api/requests/", { observe: "response" }).subscribe(result => {
-        if (result.status != 200) {
-          this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
-        } else if(result.status == 200) {
-          result.body.forEach((element: CTRequest) => {
-            if(element.userID == parseInt(sessionStorage.getItem("id") + "")) {
-              if(element.distribution.assigned.length == 0) {
-                this.pendingRequests.push(element);
-              }
-              else if(element.deleted == true) {
-                this.terminatedRequests.push(element);
-              }
-              else {
-                this.requests.push(element);
-              }
-            }
-          });
+    // retrieve all the requests
+    this.http.get<any>("api/requests/", { observe: "response" }).subscribe(result => {
+    if (result.status != 200) {
+      this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
+    } else if(result.status == 200) {
+      result.body.forEach((element: CTRequest) => {
+        if(element.userID == parseInt(sessionStorage.getItem("id") + "")) {
+          if(element.distribution.assigned.length == 0) {
+            this.pendingRequests.push(element);
+          }
+          else if(element.deleted == true) {
+            this.terminatedRequests.push(element);
+          }
+          else {
+            this.requests.push(element);
+          }
         }
-      }, err => {
-        this.snackbar.openSnackbarErrorCust("Failed to fetch requests: " + err.error.error);
       });
+    }
+    }, err => {
+      this.snackbar.openSnackbarErrorCust("Failed to fetch requests: " + err.error.error);
+    });
+  }
+
+  selectTab(request: CTRequest) {
+    this.selected = request;
+    this.isShown = true;
   }
 
 }

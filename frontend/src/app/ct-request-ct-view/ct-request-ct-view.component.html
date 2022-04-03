@@ -1,6 +1,6 @@
 <div class="container p-2 my-5 border">
     <h1 class="blockquote">Service Requests</h1>
-    <mat-tab-group mat-align-tabs="center">
+    <mat-tab-group mat-align-tabs="center" class="tab-group-area">
         <mat-tab label="In Service">
             <table class="table table-striped table-hover">
                 <thead>
@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                     <mat-error *ngIf="requests.length == 0">You have no terminated requests at this time</mat-error>
-                    <tr *ngFor="let request of requests;">
+                    <tr *ngFor="let request of requests;" (click)="selectTab(request)">
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                     <mat-error *ngIf="pendingRequests.length == 0">You have no terminated requests at this time</mat-error>
-                    <tr *ngFor="let request of pendingRequests;">
+                    <tr *ngFor="let request of pendingRequests;" (click)="selectTab(request)">
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
@@ -75,7 +75,7 @@
                 </thead>
                 <tbody>
                     <mat-error *ngIf="terminatedRequests.length == 0">You have no terminated requests at this time</mat-error>
-                    <tr *ngFor="let request of terminatedRequests;">
+                    <tr *ngFor="let request of terminatedRequests;" (click)="selectTab(request)">
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
@@ -90,6 +90,27 @@
         </mat-tab>
     </mat-tab-group>
     <div class="container p-2 my-2 border">
-                
+        <h2>Details</h2>
+        <h3 *ngIf="!isShown">Select a request to view details</h3>
+        <div *ngIf="isShown" class="d-flex justify-content-around">
+            <mat-card>
+                <h4 class="color-main">Patient Details</h4>
+                <p>{{selected.patientFirstName | titlecase}} {{selected.patientLastName | titlecase}}, {{selected.sex | titlecase}}</p>
+                <p>{{selected.dateOfBirth | date:"MM/dd/yyyy"}}</p>
+                <p>{{selected.patientEmail}}</p>
+                <p>{{selected.locationOfService}}</p>
+                <p>{{format.formatPhone(selected.patientPhoneNumber)}}</p>
+                </mat-card>
+            <mat-card>
+                <h4 class="color-main">Request Details</h4>
+                <p>{{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</p>
+                <p>Start: {{selected.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{selected.requirements.endDate | date:"MM/dd/yyyy"}}</p>
+                <p>{{selected.requirements.numDaysRequested}} days: {{format.getDaysString(selected.requirements.daysRequested)}}</p>
+                <p>Unassigned: {{format.getDaysString(selected.distribution.unassigned)}}</p>
+            </mat-card>
+            <mat-card>
+                <h4 class="color-main">Actions</h4>
+            </mat-card>
+        </div>
     </div>
 </div>
