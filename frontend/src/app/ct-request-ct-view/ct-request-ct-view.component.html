@@ -16,6 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <mat-error *ngIf="requests.length == 0">You have no terminated requests at this time</mat-error>
                     <tr *ngFor="let request of requests;">
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
@@ -44,6 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <mat-error *ngIf="pendingRequests.length == 0">You have no terminated requests at this time</mat-error>
                     <tr *ngFor="let request of pendingRequests;">
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
@@ -72,6 +74,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <mat-error *ngIf="terminatedRequests.length == 0">You have no terminated requests at this time</mat-error>
                     <tr *ngFor="let request of terminatedRequests;">
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
