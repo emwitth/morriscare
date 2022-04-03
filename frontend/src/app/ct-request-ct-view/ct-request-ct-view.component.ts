@@ -16,6 +16,30 @@ export class CtRequestCtViewComponent implements OnInit {
   pendingRequests: Array<CTRequest> = [];
   terminatedRequests: Array<CTRequest> = [];
 
+  show: boolean = false;
+  selected: CTRequest = {
+    requestID: -1,
+    patientFirstName: "unavailable",
+    patientLastName: "unavailable",
+    sex: "unavailable",
+    dateOfBirth: "0/0/0",
+    locationOfService: "unavailable",
+    patientPhoneNumber: "0000000000",
+    patientEmail: "unavailable",
+    deleted: false,
+    userID: -1,
+    requirements: {
+      serviceType: -1,
+      daysRequested: [],
+      startDate: "0/0/0",
+      endDate: "0/0/0",
+    },
+    distribution: {
+      assigned: [],
+      unassigned: []
+    }
+  };
+
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
   get psychiatrist() {return HCP_TYPE.psychiatrist};
