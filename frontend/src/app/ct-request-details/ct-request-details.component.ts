@@ -136,46 +136,6 @@ export class CtRequestDetailsComponent implements OnInit {
     }
   }
 
-  // TODO::: move following method to formatting module
-
-  /**
-   * Creates a string containing days from an array of them as numbers
-   * 
-   * @param arr weekdays listed as numbers
-   * @returns a string of days instead
-   */
-  getDaysString(arr: Array<number>): string {
-    if(arr.length == 0) {
-      return "none";
-    }
-
-    var daysString: string = '';
-    arr.forEach((element : number) => {
-      if(DAYS.sunday == element) {
-        daysString += "Sunday, "
-      }
-      if(DAYS.monday == element) {
-        daysString += "Monday, "
-      }
-      if(DAYS.tuesday == element) {
-        daysString += "Tuesday, "
-      }
-      if(DAYS.wednesday == element) {
-        daysString += "Wednesday, "
-      }
-      if(DAYS.thursday == element) {
-        daysString += "Thursday, "
-      }
-      if(DAYS.friday == element) {
-        daysString += "Friday, "
-      }
-      if(DAYS.saturday == element) {
-        daysString += "Saturday, "
-      }
-    });
-    return daysString.substring(0, daysString.length-2);
-  }
-
   /**
    * Adds a picker that hasn't been used yet
    */

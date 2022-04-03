@@ -33,8 +33,8 @@
                 <h2>Request Details</h2>
                 <p>Type: {{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</p>
                 <p>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</p>
-                <p>{{request.requirements.numDaysRequested}} days: {{getDaysString(request.requirements.daysRequested)}}</p>
-                <p>Unassigned: {{getDaysString(request.distribution.unassigned)}}</p>
+                <p>{{request.requirements.numDaysRequested}} days: {{format.getDaysString(request.requirements.daysRequested)}}</p>
+                <p>Unassigned: {{format.getDaysString(request.distribution.unassigned)}}</p>
                 <p *ngIf="!isFlexibleHours">Start Time: {{request.requirements.startTime}}, End Time {{request.requirements.endTime}}</p>
                 <p *ngIf="isFlexibleHours">Flexible Hours: wants {{request.requirements.hoursPerDay}} hours</p>
                 <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender | titlecase}}</p>
