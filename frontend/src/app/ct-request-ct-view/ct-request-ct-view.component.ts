@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from './../modules/snackbar/snackbar.module';
 import { CTRequest } from '../interfaces/CTRequest';
 import { FormattingModule } from '../modules/formatting/formatting.module';
+import { HCP_LABELS, HCP_TYPE } from '../global-variables';
 
 @Component({
   selector: 'app-ct-request-ct-view',
@@ -15,6 +16,11 @@ export class CtRequestCtViewComponent implements OnInit {
   pendingRequests: Array<CTRequest> = [];
   terminatedRequests: Array<CTRequest> = [];
 
+  get nurse() {return HCP_TYPE.nurse};
+  get physiotherapist() {return HCP_TYPE.physiotherapist};
+  get psychiatrist() {return HCP_TYPE.psychiatrist};
+  get hcpLabels() {return HCP_LABELS};
+
   constructor(private http: HttpClient, private snackbar: SnackbarModule,
     public format: FormattingModule) { }
 
@@ -26,7 +32,6 @@ export class CtRequestCtViewComponent implements OnInit {
         } else if(result.status == 200) {
           result.body.forEach((element: CTRequest) => {
             if(element.userID == parseInt(sessionStorage.getItem("id") + "")) {
-              console.log(element.distribution.assigned.length);
               if(element.distribution.assigned.length == 0) {
                 this.pendingRequests.push(element);
               }
