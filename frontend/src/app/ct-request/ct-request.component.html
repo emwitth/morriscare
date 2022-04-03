@@ -72,7 +72,7 @@
                         <mat-select placeholder="Choose one" formControlName="type">
                             <mat-option value="{{nurse}}"> {{hcpLabels.nurse.label | titlecase}} </mat-option>
                             <mat-option value="{{physiotherapist}}"> {{hcpLabels.physiotherapist.label | titlecase}} </mat-option>
-                            <mat-option value="{{psychiatrist}}"> {{hcpLabels.physiotherapist.label | titlecase}} </mat-option>
+                            <mat-option value="{{psychiatrist}}"> {{hcpLabels.psychiatrist.label | titlecase}} </mat-option>
                         </mat-select>
                         <mat-error *ngIf="this.typeForm.get('type')?.hasError('required')">You must select a value</mat-error>
                     </mat-form-field>
