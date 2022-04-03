@@ -38,6 +38,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // Components
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -133,7 +134,8 @@ import { CtRequestCtViewComponent } from './ct-request-ct-view/ct-request-ct-vie
     MatNativeDateModule,
     SnackbarModule,
     MatSlideToggleModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

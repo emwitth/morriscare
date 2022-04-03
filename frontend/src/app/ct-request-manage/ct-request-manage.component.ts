@@ -16,7 +16,7 @@ export class CtRequestManageComponent implements OnInit {
   constructor(private http: HttpClient, private snackbar: SnackbarModule) { }
 
   ngOnInit(): void {
-    // retrieve all the pending requests
+    // retrieve all the requests
     this.http.get<any>("api/requests/", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
         this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
