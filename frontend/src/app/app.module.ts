@@ -38,6 +38,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // Components
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -68,6 +69,7 @@ import { CtRequestComponent } from './ct-request/ct-request.component';
 import { CtRequestManageComponent } from './ct-request-manage/ct-request-manage.component';
 import { CtRequestDetailsComponent } from './ct-request-details/ct-request-details.component';
 import { CtRequestHcpComponent } from './ct-request-hcp/ct-request-hcp.component';
+import { CtRequestCtViewComponent } from './ct-request-ct-view/ct-request-ct-view.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +102,7 @@ import { CtRequestHcpComponent } from './ct-request-hcp/ct-request-hcp.component
     CtRequestManageComponent,
     CtRequestDetailsComponent,
     CtRequestHcpComponent,
+    CtRequestCtViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -131,7 +134,8 @@ import { CtRequestHcpComponent } from './ct-request-hcp/ct-request-hcp.component
     MatNativeDateModule,
     SnackbarModule,
     MatSlideToggleModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

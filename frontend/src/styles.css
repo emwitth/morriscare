@@ -4,10 +4,14 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Global Variables */
-:root{
+:root {
     --navbarHeight: 50px;
     --mainColor: #3f51b5;
     --indicationColor: #29305c;
+}
+
+.color-main {
+    color: var(--mainColor)
 }
 
 .navWhiteText {

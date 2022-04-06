@@ -20,6 +20,7 @@ import { HcpManageComponent } from './hcp-manage/hcp-manage.component';
 import { CtRequestComponent } from './ct-request/ct-request.component';
 import { CtRequestManageComponent } from './ct-request-manage/ct-request-manage.component';
 import { CtRequestDetailsComponent } from './ct-request-details/ct-request-details.component';
+import { CtRequestCtViewComponent } from './ct-request-ct-view/ct-request-ct-view.component';
 
 const routes: Routes = [
   /* default path */
@@ -151,6 +152,10 @@ const routes: Routes = [
       {
         path: 'request-care',
         component: CtRequestComponent
+      },
+      {
+        path: 'request-view',
+        component: CtRequestCtViewComponent
       },
       { 
         path: 'settings', 
