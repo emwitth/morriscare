@@ -93,7 +93,7 @@
         <h2>Details</h2>
         <h3 *ngIf="!isShown">Select a request to view details</h3>
         <div *ngIf="isShown" class="d-flex">
-            <mat-card>
+            <mat-card class="flex-fill">
                 <h4 class="color-main">Patient Details</h4>
                 <p>{{selected.patientFirstName | titlecase}} {{selected.patientLastName | titlecase}}, {{selected.sex | titlecase}}</p>
                 <p>{{selected.dateOfBirth | date:"MM/dd/yyyy"}}</p>
@@ -101,17 +101,20 @@
                 <p>{{selected.locationOfService}}</p>
                 <p>{{format.formatPhone(selected.patientPhoneNumber)}}</p>
                 </mat-card>
-            <mat-card>
+            <mat-card class="flex-fill ms-2">
                 <h4 class="color-main">Request Details</h4>
                 <p>{{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</p>
                 <p>Start: {{selected.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{selected.requirements.endDate | date:"MM/dd/yyyy"}}</p>
                 <p>{{selected.requirements.numDaysRequested}} days: {{format.getDaysString(selected.requirements.daysRequested)}}</p>
                 <p>Unassigned: {{format.getDaysString(selected.distribution.unassigned)}}</p>
             </mat-card>
-            <mat-card class="flex-fill">
+            <mat-card class="flex-fill ms-2">
                 <h4 class="color-main">Assigned Caretakers</h4>
+                <div *ngFor="let assignment of selected.distribution.assigned; let i = index">
+                    <p>{{names[i] | titlecase}} - {{format.getDaysString(assignment.days)}}</p>
+                </div>
             </mat-card>
-            <mat-card>
+            <mat-card class="flex-fill ms-2">
                 <h4 class="color-main">Actions</h4>
                 <button mat-raised-button color="primary">Cancel Request</button>
                 <br><br>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from './../modules/snackbar/snackbar.module';
-import { CTRequest } from '../interfaces/CTRequest';
+import { CTRequest, AssignmentPair } from '../interfaces/CTRequest';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { HCP_LABELS, HCP_TYPE } from '../global-variables';
 
@@ -39,6 +39,7 @@ export class CtRequestCtViewComponent implements OnInit {
       unassigned: []
     }
   };
+  names: Array<string> = [];
 
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
@@ -76,6 +77,21 @@ export class CtRequestCtViewComponent implements OnInit {
   selectTab(request: CTRequest) {
     this.selected = request;
     this.isShown = true;
+
+    this.names = [];
+    this.selected.distribution.assigned.forEach((element: AssignmentPair) => {
+      this.http.get<any>("api/applicant/" + element.pID + "/", { observe: "response" }).subscribe(result => {
+        if (result.status != 200) {
+          console.log("!200", result.body);
+          this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + element.pID + ": " + result);
+        } else if(result.status == 200) {
+          this.names.push(result.body.firstName + " " + result.body.lastName);
+        }
+      }, err => {
+        console.log("err", err);
+        this.snackbar.openSnackbarErrorCust(err.error.error? err.error.error : err.message);
+      });
+    });
   }
 
 }
