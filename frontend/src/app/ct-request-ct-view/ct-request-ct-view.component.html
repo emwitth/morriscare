@@ -92,7 +92,7 @@
     <div class="container p-2 my-2 border">
         <h2>Details</h2>
         <h3 *ngIf="!isShown">Select a request to view details</h3>
-        <div *ngIf="isShown" class="d-flex justify-content-around">
+        <div *ngIf="isShown" class="d-flex">
             <mat-card>
                 <h4 class="color-main">Patient Details</h4>
                 <p>{{selected.patientFirstName | titlecase}} {{selected.patientLastName | titlecase}}, {{selected.sex | titlecase}}</p>
@@ -108,8 +108,14 @@
                 <p>{{selected.requirements.numDaysRequested}} days: {{format.getDaysString(selected.requirements.daysRequested)}}</p>
                 <p>Unassigned: {{format.getDaysString(selected.distribution.unassigned)}}</p>
             </mat-card>
+            <mat-card class="flex-fill">
+                <h4 class="color-main">Assigned Caretakers</h4>
+            </mat-card>
             <mat-card>
                 <h4 class="color-main">Actions</h4>
+                <button mat-raised-button color="primary">Cancel Request</button>
+                <br><br>
+                <button mat-raised-button color="primary">View Bill</button>
             </mat-card>
         </div>
     </div>
