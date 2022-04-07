@@ -21,6 +21,7 @@ import { CtRequestComponent } from './ct-request/ct-request.component';
 import { CtRequestManageComponent } from './ct-request-manage/ct-request-manage.component';
 import { CtRequestDetailsComponent } from './ct-request-details/ct-request-details.component';
 import { CtRequestCtViewComponent } from './ct-request-ct-view/ct-request-ct-view.component';
+import { HcpScheduleComponent } from './hcp-schedule/hcp-schedule.component';
 
 const routes: Routes = [
   /* default path */
@@ -137,6 +138,10 @@ const routes: Routes = [
     component: UserHomeComponent,
     children:
     [
+      {
+        path: 'schedule', 
+        component: HcpScheduleComponent
+      },
       { 
         path: 'settings', 
         component: SettingsComponent

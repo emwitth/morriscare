@@ -36,7 +36,7 @@ export class UserHomeComponent implements OnInit {
   ];
 
   hcpFunctions = [
-    {title: "Home", link:"home"}
+    {title: "My Schedule", link:"schedule"}
   ];
 
 
