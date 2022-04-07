@@ -105,9 +105,17 @@
                 <h4 class="color-main">Request Details</h4>
                 <p>{{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</p>
                 <p>Start: {{selected.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{selected.requirements.endDate | date:"MM/dd/yyyy"}}</p>
-                <p>{{selected.requirements.numDaysRequested}} days:</p>
+                <div class="d-flex flex-row">
+                    <p *ngIf="wantsGender">Sex: {{selected.requirements.gender | titlecase}}</p>
+                    <p *ngIf="wantsAge && wantsGender" class="ms-4">min age: {{selected.requirements.age_min}}, max age: {{selected.requirements.age_max}}</p>
+                    <p *ngIf="wantsAge && !wantsGender">min age: {{selected.requirements.age_min}}, max age: {{selected.requirements.age_max}}</p>
+                    <p *ngIf="wantsAge || wantsGender" class="ms-4">{{selected.requirements.numDaysRequested}} days:</p>
+                    <p *ngIf="!(wantsAge || wantsGender)">{{selected.requirements.numDaysRequested}} days:</p>
+                </div>
                 <p>{{format.getDaysString(selected.requirements.daysRequested)}}</p>
                 <p>Unassigned: {{format.getDaysString(selected.distribution.unassigned)}}</p>
+                <p *ngIf="!isFlexibleHours">Start Time: {{selected.requirements.startTime}}, End Time {{selected.requirements.endTime}}</p>
+                <p *ngIf="isFlexibleHours">Flexible Hours: {{selected.requirements.hoursPerDay}} hours wanted</p>
             </mat-card>
             <mat-card class="flex-fill ms-2">
                 <h4 class="color-main">Assigned Caretakers</h4>
@@ -117,9 +125,9 @@
             </mat-card>
             <mat-card class="ms-2">
                 <h4 class="color-main">Actions</h4>
-                <button mat-raised-button color="primary">Cancel Request</button>
+                <button mat-raised-button color="primary" [disabled]="selected.distribution.assigned.length > 0">Cancel Request</button>
                 <br><br>
-                <button mat-raised-button color="primary">View Bill</button>
+                <button mat-raised-button color="primary" [disabled]="selected.distribution.assigned.length == 0">View Bill</button>
             </mat-card>
         </div>
     </div>
