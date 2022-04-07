@@ -78,4 +78,18 @@ export class FormattingModule {
     });
     return daysString.substring(0, daysString.length-2);
   }
+
+  parseDate(date: string): Date {
+    // var d: Date = new Date(date.substring(5,10) + "-" + date.substring(0,4));
+    // for(var i = 0; i < 100; i++) {
+    //   console.log(d);
+    //   console.log(d.getDate(), d.getDay(), d.getFullYear());
+    //   d.setDate(d.getDate() + 1);
+    // }
+    return new Date(date.substring(5,10) + "-" + date.substring(0,4) + " ");
+  }
+
+  parseDateTime(date: string, time: string): Date {
+    return new Date(date.substring(5,10) + "-" + date.substring(0,4) + " " + time);
+  }
 }

@@ -8,6 +8,7 @@
             <mat-card class="flex-fill mb-2">
                 <h3 class="color-main">Assigned Work</h3>
                 <p>Selected date: {{selected}}</p>
+                <p *ngFor="let date of datesEndTime">{{date}}</p>
             </mat-card>
             <mat-card class="flex-fill">
                 <h3 class="color-main">Log Work</h3>
