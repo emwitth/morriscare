@@ -40,6 +40,9 @@ export class CtRequestCtViewComponent implements OnInit {
     }
   };
   names: Array<string> = [];
+  isFlexibleHours: boolean = false;
+  wantsGender: boolean = false;
+  wantsAge: boolean = false;
 
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
@@ -77,6 +80,21 @@ export class CtRequestCtViewComponent implements OnInit {
   selectTab(request: CTRequest) {
     this.selected = request;
     this.isShown = true;
+
+    this.wantsAge = false;
+    this.wantsGender = false;
+    this.isFlexibleHours = false;
+
+    if(this.selected.requirements?.hoursPerDay != null) {
+      this.isFlexibleHours = true;
+    }
+    if(this.selected.requirements?.age_min != null 
+    && this.selected.requirements?.age_max != null) {
+      this.wantsAge = true;
+    }
+    if(this.selected.requirements?.gender != null) {
+      this.wantsGender = true;
+    }
 
     this.names = [];
     this.selected.distribution.assigned.forEach((element: AssignmentPair) => {
