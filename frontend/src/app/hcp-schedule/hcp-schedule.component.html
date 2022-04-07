@@ -1,1 +1,17 @@
-<p>hcp-schedule works!</p>
+<div class="container p-2 my-5 border">
+    <h1 class="blockquote">My Schedule</h1>
+    <div class="d-flex">
+        <mat-card class="w-50">
+            <mat-calendar [(selected)]="selected"></mat-calendar>
+        </mat-card>
+        <div class="flex-fill ms-2 d-flex flex-column">
+            <mat-card class="flex-fill mb-2">
+                <h3 class="color-main">Assigned Work</h3>
+                <p>Selected date: {{selected}}</p>
+            </mat-card>
+            <mat-card class="flex-fill">
+                <h3 class="color-main">Log Work</h3>
+            </mat-card>
+        </div>
+    </div>
+</div>

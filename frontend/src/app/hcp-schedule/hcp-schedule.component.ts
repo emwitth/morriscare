@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HcpScheduleComponent implements OnInit {
 
+  selected!: Date | null;
+
   constructor() { }
 
   ngOnInit(): void {
