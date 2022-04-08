@@ -10,6 +10,12 @@ export interface times {
   end: string
 }
 
+export interface info {
+  start: string,
+  end: string,
+  request: CTRequest
+}
+
 @Component({
   selector: 'app-hcp-schedule',
   templateUrl: './hcp-schedule.component.html',
@@ -23,7 +29,7 @@ export class HcpScheduleComponent implements OnInit {
 
   dataIn: boolean = false;
 
-  dates : Map<String, Array<times>> = new Map<String, Array<times>>();
+  dates : Map<String, Array<info>> = new Map<String, Array<info>>();
   loggedTimes : Map<String, Array<times>> = new Map<String, Array<times>>();
 
   constructor(private format: FormattingModule, private http: HttpClient,
@@ -51,7 +57,8 @@ export class HcpScheduleComponent implements OnInit {
               element.schedule.numDaysRequested,
               element.schedule.daysRequested,
               element.schedule.startTime, 
-              element.schedule.endTime
+              element.schedule.endTime,
+              request
             );
           });
         });
@@ -66,17 +73,18 @@ export class HcpScheduleComponent implements OnInit {
     // this.addAllDateElements("2022-04-03", 8, [2,4], "16:00", "18:00");
   }
 
-  addAllDateElements(startDate: string, numDays: number, daysOfWeek: Array<number>, start: string, end: string ) {
+  addAllDateElements(startDate: string, numDays: number, daysOfWeek: Array<number>, start: string, end: string, request: CTRequest) {
     var count: number = 0;
     var stepDate: Date = this.format.parseDate(startDate);
-    var times: times = {
+    var info: info = {
       start: start,
-      end: end
+      end: end,
+      request: request
     }
     while(count < numDays) {
       if(daysOfWeek.includes(stepDate.getDay())) {
-        var currentTimes = this.dates.has(stepDate.toString()) ? this.dates.get(stepDate.toString()) : new Array<times>();
-        currentTimes?.push(times);
+        var currentTimes = this.dates.has(stepDate.toString()) ? this.dates.get(stepDate.toString()) : new Array<info>();
+        currentTimes?.push(info);
         if(currentTimes != undefined)
           this.dates.set(stepDate.toString(), currentTimes);
         count++;

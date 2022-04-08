@@ -19,12 +19,16 @@
                             <tr>
                                 <th>Start</th>
                                 <th>End</th>
+                                <th>Patient</th>
+                                <th>Address</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let shift of dates.get(selectedDate != null ? selectedDate.toString() : '')">
                                 <td>{{shift.start}}</td>
                                 <td>{{shift.end}}</td>
+                                <td>{{shift.request.patientFirstName}} {{shift.request.patientLastName}}</td>
+                                <td>{{shift.request.locationOfService}}</td>
                             </tr>
                         </tbody>
                     </table>
