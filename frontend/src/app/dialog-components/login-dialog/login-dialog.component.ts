@@ -91,7 +91,13 @@ export class LoginDialogComponent implements OnInit {
         this.info.push(result.body?.lastName);
         this.info.push(result.body?.username);
         this.info.push(result.body?.userID.toString());
-        this.info.push(result.body?.role);
+        if(result.body?.role.type == null) {
+          this.info.push(result.body?.role);
+        }
+        else {
+          this.info.push(result.body?.role.type);
+          this.info.push(result.body?.role.pID)
+        }
         console.log(this.info);
 
         // setup security questions
@@ -117,6 +123,9 @@ export class LoginDialogComponent implements OnInit {
           sessionStorage.setItem("id", this.info[3]);
           sessionStorage.setItem("role", this.info[4]);
           sessionStorage.setItem("login", 'true');
+          if(this.info.length > 4) {
+            sessionStorage.setItem("pID", this.info[5]);
+          }
           if(this.info[4] == Roles.admin) {this.router.navigate(['/admin/settings']);}
           if(this.info[4] == Roles.ct) {this.router.navigate(['/caretaker/settings']);}
           if(this.info[4] == Roles.sm) {this.router.navigate(['/staff/settings']);}
@@ -151,6 +160,9 @@ export class LoginDialogComponent implements OnInit {
       sessionStorage.setItem("username", this.info[2]);
       sessionStorage.setItem("id", this.info[3]);
       sessionStorage.setItem("role", this.info[4]);
+      if(this.info.length > 4) {
+        sessionStorage.setItem("pID", this.info[5]);
+      }
       sessionStorage.setItem("login", 'true');
 
       // close dialogue with true (logged in) state
