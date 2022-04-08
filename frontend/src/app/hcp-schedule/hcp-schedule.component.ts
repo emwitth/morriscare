@@ -17,11 +17,12 @@ export class HcpScheduleComponent implements OnInit {
 
   selectedDate!: Date | null;
 
-  dates : Map<String, times> = new Map<String, times>();
+  dates : Map<String, Array<times>> = new Map<String, Array<times>>();
 
   constructor(private format: FormattingModule) { }
 
   ngOnInit(): void {
+    this.addAllDateElements("2022-04-03", 15, [1,2,3,4,5], "6:00", "10:00");
     this.addAllDateElements("2022-04-03", 8, [2,4], "16:00", "18:00");
   }
 
@@ -34,7 +35,10 @@ export class HcpScheduleComponent implements OnInit {
     }
     while(count < numDays) {
       if(daysOfWeek.includes(stepDate.getDay())) {
-        this.dates.set(stepDate.toString(), times);
+        var currentTimes = this.dates.has(stepDate.toString()) ? this.dates.get(stepDate.toString()) : new Array<times>();
+        currentTimes?.push(times);
+        if(currentTimes != undefined)
+          this.dates.set(stepDate.toString(), currentTimes);
         count++;
       }
       stepDate.setDate(stepDate.getDate() + 1);
