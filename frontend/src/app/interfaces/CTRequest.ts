@@ -1,3 +1,5 @@
+import { scheduleInfo } from "./HCP-Schedule"
+
 /**
  * Interfaces describing a single care taker request
  */
@@ -10,9 +12,10 @@ export interface Requirements {
   [key: string]: any
 }
 
-export interface AssignmentPair {
-  pID: number,
-  days: Array<number>
+export interface AssignmentObject {
+  schedule: scheduleInfo,
+  hcp: number,
+  hcpName: string
 }
 
 export interface CTRequest {
@@ -24,11 +27,12 @@ export interface CTRequest {
   locationOfService: string,
   patientPhoneNumber: string,
   patientEmail: string,
+  hourlyRate: number,
   deleted: boolean,
   userID: number,
   requirements: Requirements,
   distribution: {
-    assigned: Array<AssignmentPair>,
+    assigned: Array<AssignmentObject>,
     unassigned: Array<number>
   }
 }

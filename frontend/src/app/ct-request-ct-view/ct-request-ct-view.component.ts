@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from './../modules/snackbar/snackbar.module';
-import { CTRequest, AssignmentPair } from '../interfaces/CTRequest';
+import { CTRequest, AssignmentObject } from '../interfaces/CTRequest';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { HCP_LABELS, HCP_TYPE } from '../global-variables';
 
@@ -26,6 +26,7 @@ export class CtRequestCtViewComponent implements OnInit {
     locationOfService: "unavailable",
     patientPhoneNumber: "0000000000",
     patientEmail: "unavailable",
+    hourlyRate: 0,
     deleted: false,
     userID: -1,
     requirements: {
@@ -97,11 +98,11 @@ export class CtRequestCtViewComponent implements OnInit {
     }
 
     this.names = [];
-    this.selected.distribution.assigned.forEach((element: AssignmentPair) => {
-      this.http.get<any>("api/applicant/" + element.pID + "/", { observe: "response" }).subscribe(result => {
+    this.selected.distribution.assigned.forEach((element: AssignmentObject) => {
+      this.http.get<any>("api/applicant/" + element.hcp + "/", { observe: "response" }).subscribe(result => {
         if (result.status != 200) {
           console.log("!200", result.body);
-          this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + element.pID + ": " + result);
+          this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + element.hcp + ": " + result);
         } else if(result.status == 200) {
           this.names.push(result.body.firstName + " " + result.body.lastName);
         }

@@ -78,4 +78,12 @@ export class FormattingModule {
     });
     return daysString.substring(0, daysString.length-2);
   }
+
+  parseDate(date: string): Date {
+    return new Date(date.substring(5,10) + "-" + date.substring(0,4) + " ");
+  }
+
+  parseDateTime(date: string, time: string): Date {
+    return new Date(date.substring(5,10) + "-" + date.substring(0,4) + " " + time);
+  }
 }

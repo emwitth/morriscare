@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
           this.router.navigate(['caretaker/request-care']);
         }
         else {
-          this.router.navigate(['hcp']);
+          this.router.navigate(['hcp/schedule']);
         }
         console.log('Logged In!');
       }
