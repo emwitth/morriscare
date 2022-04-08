@@ -120,7 +120,7 @@
             <mat-card class="flex-fill ms-2">
                 <h4 class="color-main">Assigned Caretakers</h4>
                 <div *ngFor="let assignment of selected.distribution.assigned; let i = index">
-                    <p>{{names[i] | titlecase}} - {{format.getDaysString(assignment.days)}}</p>
+                    <p>{{assignment.hcpName | titlecase}} - {{format.getDaysString(assignment.schedule.daysRequested)}}</p>
                 </div>
             </mat-card>
             <mat-card class="ms-2">

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { ActivatedRoute } from '@angular/router';
 import { FormattingModule } from '../modules/formatting/formatting.module';
-import { CTRequest, requestInformation, AssignmentPair, Caretaker } from '../interfaces/CTRequest';
+import { CTRequest, requestInformation, AssignmentObject, Caretaker } from '../interfaces/CTRequest';
 import { Roles, DAYS, HCP_TYPE, HCP_LABELS } from '../global-variables';
 
 @Component({
@@ -23,6 +23,7 @@ export class CtRequestDetailsComponent implements OnInit {
     locationOfService: "unavailable",
     patientPhoneNumber: "unavailable",
     patientEmail: "unavailable",
+    hourlyRate: 0,
     deleted: false,
     userID: -1,
     requirements: {
@@ -105,7 +106,7 @@ export class CtRequestDetailsComponent implements OnInit {
         });
 
         // add initial hcp pickers
-        this.request.distribution.assigned.forEach((pair: AssignmentPair) => {
+        this.request.distribution.assigned.forEach((pair: AssignmentObject) => {
           this.addPastPicker(pair);
         });
 
@@ -159,7 +160,7 @@ export class CtRequestDetailsComponent implements OnInit {
    * 
    * @param data the old data
    */
-  addPastPicker(data: AssignmentPair) {
+  addPastPicker(data: AssignmentObject) {
     console.log("DATA: ", data);
     var info: requestInformation = {
       enabled: [false, false, false, false, false, false, false],
@@ -167,11 +168,11 @@ export class CtRequestDetailsComponent implements OnInit {
       id: this.id,
       isFlex: this.isFlexibleHours,
       isPastPicker: true,
-      pID: data.pID,
+      pID: data.hcp,
       start: this.request.requirements?.startTime,
       end: this.request.requirements?.endTime
     };
-    data.days.forEach(day => {
+    data.schedule.daysRequested.forEach(day => {
       if(day == DAYS.sunday) {
         info.checked[DAYS.sunday] = true;
       }
