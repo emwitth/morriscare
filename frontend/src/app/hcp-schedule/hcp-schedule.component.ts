@@ -3,7 +3,7 @@ import { FormattingModule } from '../modules/formatting/formatting.module';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
-import { hcpSchedule } from '../interfaces/HCP-Schedule';
+import { CTRequest, AssignmentObject } from '../interfaces/CTRequest';
 
 export interface times {
   start: string,
@@ -21,6 +21,8 @@ export class HcpScheduleComponent implements OnInit {
   selectedDate!: Date | null;
   today: Date = new Date();
 
+  dataIn: boolean = false;
+
   dates : Map<String, Array<times>> = new Map<String, Array<times>>();
   loggedTimes : Map<String, Array<times>> = new Map<String, Array<times>>();
 
@@ -35,14 +37,33 @@ export class HcpScheduleComponent implements OnInit {
         this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + pID + ": " + result);
       } else if(result.status == 200) {
         console.log(result.body);
+        result.body.forEach((request: CTRequest) => {
+          request.distribution.assigned.forEach((element: AssignmentObject) => {
+            console.log(
+              element.schedule.startDate, 
+              element.schedule.startTime, 
+              element.schedule.endTime, 
+              element.schedule.numDaysRequested, 
+              element.schedule.daysRequested
+              );
+            this.addAllDateElements(
+              element.schedule.startDate,
+              element.schedule.numDaysRequested,
+              element.schedule.daysRequested,
+              element.schedule.startTime, 
+              element.schedule.endTime
+            );
+          });
+        });
+        this.dataIn = true;
       }
     }, err => {
       console.log("err", err);
       this.snackbar.openSnackbarErrorCust(err.error.error? err.error.error : err.message);
     });
 
-    this.addAllDateElements("2022-04-03", 15, [1,2,3,4,5], "6:00", "10:00");
-    this.addAllDateElements("2022-04-03", 8, [2,4], "16:00", "18:00");
+    // this.addAllDateElements("2022-04-03", 15, [1,2,3,4,5], "6:00", "10:00");
+    // this.addAllDateElements("2022-04-03", 8, [2,4], "16:00", "18:00");
   }
 
   addAllDateElements(startDate: string, numDays: number, daysOfWeek: Array<number>, start: string, end: string ) {

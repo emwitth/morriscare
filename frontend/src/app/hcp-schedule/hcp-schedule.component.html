@@ -3,7 +3,7 @@
     <!-- Calendar Screen -->
     <div class="d-flex">
         <mat-card class="w-50">
-            <mat-calendar [(selected)]="selectedDate" [dateClass]="assignedDays"></mat-calendar>
+            <mat-calendar *ngIf="dataIn" [(selected)]="selectedDate" [dateClass]="assignedDays"></mat-calendar>
         </mat-card>
         <!-- Schedule Assigned to HCP -->
         <div class="w-50 ms-2 d-flex flex-column">
