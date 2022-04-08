@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+import { HttpClient } from '@angular/common/http';
+import { SnackbarModule } from '../modules/snackbar/snackbar.module';
+import { hcpSchedule } from '../interfaces/HCP-Schedule';
 
 export interface times {
   start: string,
@@ -21,9 +24,23 @@ export class HcpScheduleComponent implements OnInit {
   dates : Map<String, Array<times>> = new Map<String, Array<times>>();
   loggedTimes : Map<String, Array<times>> = new Map<String, Array<times>>();
 
-  constructor(private format: FormattingModule) { }
+  constructor(private format: FormattingModule, private http: HttpClient,
+    private snackbar: SnackbarModule) { }
 
   ngOnInit(): void {
+    var pID = sessionStorage.getItem("pID");
+    this.http.get<any>("api/schedule/" + pID + "/", { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        console.log("!200", result.body);
+        this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + pID + ": " + result);
+      } else if(result.status == 200) {
+        console.log(result.body);
+      }
+    }, err => {
+      console.log("err", err);
+      this.snackbar.openSnackbarErrorCust(err.error.error? err.error.error : err.message);
+    });
+
     this.addAllDateElements("2022-04-03", 15, [1,2,3,4,5], "6:00", "10:00");
     this.addAllDateElements("2022-04-03", 8, [2,4], "16:00", "18:00");
   }
