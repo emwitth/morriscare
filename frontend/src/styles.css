@@ -32,6 +32,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: var(--indicationColor);
 }
 
+/* width styles */
 .max-width-half {
     max-width: 50%;
 }
@@ -52,8 +53,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width:80%;
 }
 
+.w-80 {
+    width:80%;
+}
+
 .w-30 {
     width:30%;
+}
+
+/* height styles */
+
+.h-80 {
+    height: 80%;
 }
 
 .details-box {

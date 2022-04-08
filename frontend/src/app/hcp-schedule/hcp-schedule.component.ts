@@ -16,8 +16,10 @@ export interface times {
 export class HcpScheduleComponent implements OnInit {
 
   selectedDate!: Date | null;
+  today: Date = new Date();
 
   dates : Map<String, Array<times>> = new Map<String, Array<times>>();
+  loggedTimes : Map<String, Array<times>> = new Map<String, Array<times>>();
 
   constructor(private format: FormattingModule) { }
 
