@@ -1,17 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormattingModule } from '../modules/formatting/formatting.module';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+
+export interface times {
+  start: string,
+  end: string
+}
 
 @Component({
   selector: 'app-hcp-schedule',
   templateUrl: './hcp-schedule.component.html',
-  styleUrls: ['./hcp-schedule.component.css']
+  styleUrls: ['./hcp-schedule.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HcpScheduleComponent implements OnInit {
 
-  selected!: Date | null;
+  selectedDate!: Date | null;
 
-  datesStartTime : Array<Date> = [];
-  datesEndTime : Array<Date> = [];
+  dates : Map<String, times> = new Map<String, times>();
 
   constructor(private format: FormattingModule) { }
 
@@ -22,22 +28,26 @@ export class HcpScheduleComponent implements OnInit {
   addAllDateElements(startDate: string, numDays: number, daysOfWeek: Array<number>, start: string, end: string ) {
     var count: number = 0;
     var stepDate: Date = this.format.parseDate(startDate);
-    var startHour: number = +start.substring(0,2);
-    var startMinute: number = +start.substring(3,5);
-    var endHour: number = +end.substring(0,2);
-    var endMinute: number = +end.substring(3,5);
+    var times: times = {
+      start: start,
+      end: end
+    }
     while(count < numDays) {
       if(daysOfWeek.includes(stepDate.getDay())) {
-        stepDate.setHours(startHour);
-        stepDate.setMinutes(startMinute);
-        this.datesStartTime.push(new Date(stepDate));
-        stepDate.setHours(endHour);
-        stepDate.setMinutes(endMinute);
-        this.datesEndTime.push(new Date(stepDate));
+        this.dates.set(stepDate.toString(), times);
         count++;
       }
       stepDate.setDate(stepDate.getDate() + 1);
     }
   }
+
+  assignedDays: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    // Only highligh dates inside the month view.
+    if (view === 'month') {
+      return this.dates.has(cellDate.toString()) ? 'example-custom-date-class' : '';
+    }
+
+    return '';
+  };
 
 }
