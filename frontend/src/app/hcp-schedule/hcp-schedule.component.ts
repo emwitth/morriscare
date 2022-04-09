@@ -5,9 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { CTRequest, AssignmentObject } from '../interfaces/CTRequest';
 
-export interface times {
-  start: string,
-  end: string
+export interface punch {
+  in: string,
+  hasIn: boolean,
+  out: string
+  hasOut: boolean
 }
 
 export interface info {
@@ -25,12 +27,16 @@ export interface info {
 export class HcpScheduleComponent implements OnInit {
 
   selectedDate!: Date | null;
-  today: Date = new Date();
+  today: Date = new Date("4-19-22");
 
   dataIn: boolean = false;
 
   dates : Map<String, Array<info>> = new Map<String, Array<info>>();
-  loggedTimes : Map<String, Array<times>> = new Map<String, Array<times>>();
+
+  time: string = "";
+  lastTime: string = "00:00";
+  isLastTimeBefore: boolean = true;
+  loggedTimes : Map<String, Array<punch>> = new Map<String, Array<punch>>();
 
   constructor(private format: FormattingModule, private http: HttpClient,
     private snackbar: SnackbarModule) { }
@@ -68,9 +74,6 @@ export class HcpScheduleComponent implements OnInit {
       console.log("err", err);
       this.snackbar.openSnackbarErrorCust(err.error.error? err.error.error : err.message);
     });
-
-    // this.addAllDateElements("2022-04-03", 15, [1,2,3,4,5], "6:00", "10:00");
-    // this.addAllDateElements("2022-04-03", 8, [2,4], "16:00", "18:00");
   }
 
   addAllDateElements(startDate: string, numDays: number, daysOfWeek: Array<number>, start: string, end: string, request: CTRequest) {
@@ -90,6 +93,71 @@ export class HcpScheduleComponent implements OnInit {
         count++;
       }
       stepDate.setDate(stepDate.getDate() + 1);
+    }
+  }
+  
+  punch() {
+    console.log(this.lastTime, this.time);
+    this.isLastTimeBefore = true;
+    if(!this.isLastTimeSmaller(this.lastTime, this.time)) {
+      this.isLastTimeBefore = false;
+      return;
+    }
+    var day: string = (this.selectedDate != null) ? this.selectedDate.toString() : "";
+    var tempArray = this.loggedTimes.has(day) ? this.loggedTimes.get(day) : undefined;
+    var array = tempArray != undefined ? tempArray : new Array<punch>();
+    console.log(array.length, array);
+    if(array?.length == 0) {
+      array.push({
+        in: this.time,
+        hasIn: true,
+        out: '',
+        hasOut: false
+      });
+    } else {
+      var temp = (array != undefined) ? array.pop() : undefined;
+      console.log(temp);
+      var last: punch = (temp != undefined) ? temp : {in: "", hasIn: false, out: "", hasOut: false};
+      console.log(last);
+      if(!last.hasIn) {
+        last.in = this.time;
+        last.hasIn = true;
+      }
+      else if (!last.hasOut) {
+        last.out = this.time;
+        last.hasOut = true;
+      }
+      else {
+        array?.push(last);
+        last = {
+          in: this.time,
+          hasIn: true,
+          out: '',
+          hasOut: false
+        };
+      }
+      console.log(last);
+      array?.push(last);
+    }
+    this.loggedTimes.set((this.selectedDate != null) ? this.selectedDate.toString() : "", array);
+    this.lastTime = this.time;
+    console.log(array);
+  }
+
+  isLastTimeSmaller(last: string, curr: string): boolean {
+    const lh = parseInt(last.substring(0,2));
+    const lm = parseInt(last.substring(3,5));
+    const ch = parseInt(curr.substring(0,2));
+    const cm = parseInt(curr.substring(3,5));
+
+    if (ch > lh) {
+      return true;
+    }
+    else if ( ch == lh && cm > lm) {
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
