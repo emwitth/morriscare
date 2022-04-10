@@ -37,7 +37,7 @@
             </mat-card>
             <!-- Logged Hours of HCP -->
             <mat-card class="h-50">
-                <div class="d-inline-flex justify-content-between">
+                <div class="d-flex justify-content-between">
                     <h3 class="color-main">Log Work</h3>
                     <mat-error *ngIf="!isLastTimeBefore">Your punch needs to be after your previous punch</mat-error>
                 </div>
@@ -62,6 +62,10 @@
                             <tr class="table-light" *ngFor="let punch of loggedTimes.get(selectedDate != null ? selectedDate.toString() : '')">
                                 <td>{{punch.in}}</td>
                                 <td>{{punch.out}}</td>
+                            </tr>
+                            <tr class="table-active">
+                                <td>Total:</td>
+                                <td>{{totals.get(selectedDate != null ? selectedDate.toString() : '')}}</td>
                             </tr>
                         </tbody>
                     </table>
