@@ -3,7 +3,7 @@
     <!-- Calendar Screen -->
     <div class="d-flex">
         <mat-card class="w-50">
-            <mat-calendar *ngIf="dataIn" [(selected)]="selectedDate" [dateClass]="assignedDays"></mat-calendar>
+            <mat-calendar *ngIf="dataIn" [(selected)]="selectedDate" [dateClass]="assignedDays" (click)="dateChange()"></mat-calendar>
         </mat-card>
         <!-- Schedule Assigned to HCP -->
         <div class="w-50 ms-2 d-flex flex-column">
@@ -25,7 +25,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="table-light" *ngFor="let shift of dates.get(selectedDate != null ? selectedDate.toString() : '')">
+                            <tr class="table-light" *ngFor="let shift of dates.get(selectedDate != null ? selectedDate.toString() : '')"
+                            (click)="selectRequest(shift.request)">
                                 <td>{{shift.start}}</td>
                                 <td>{{shift.end}}</td>
                                 <td>{{shift.request.patientFirstName}} {{shift.request.patientLastName}}</td>
@@ -39,7 +40,14 @@
             <mat-card class="h-50">
                 <div class="d-flex justify-content-between">
                     <h3 class="color-main">Log Work</h3>
-                    <mat-error *ngIf="!isLastTimeBefore">Your punch needs to be after your previous punch</mat-error>
+                    <div>
+                        <div>
+                            <mat-error *ngIf="hasMultipleAssignments.has(selectedDate != null ? selectedDate.toString() : '') && !((selectedDate != null) ? (today.getTime() < selectedDate.getTime()) : false)">
+                                You must select an assignment above to log hours for it.
+                            </mat-error>
+                        </div>
+                        <mat-error *ngIf="!isLastTimeBefore">Your punch needs to be after your previous punch</mat-error>
+                    </div>
                 </div>
                 <p *ngIf="selectedDate == null">Select a date with assigned hours to log your time</p>
                 <p *ngIf="!dates.has(selectedDate != null ? selectedDate.toString() : '') && !(selectedDate == null)">
@@ -75,8 +83,11 @@
                         <mat-form-field appearance="fill">
                             <input matInput type="time" [(ngModel)]="time">
                         </mat-form-field>
-                        <button mat-raised-button class="align-self-center" (click)="punch()"> Punch </button>
-                        <button mat-raised-button class="align-self-center" color="primary"> Submit Hours </button>
+                        <button mat-raised-button class="align-self-center" (click)="punch()"
+                            [disabled]="hasMultipleAssignments.has(selectedDate != null ? selectedDate.toString() : '') && requestID == -1">
+                            Punch 
+                        </button>
+                        <button mat-raised-button class="align-self-center" color="primary" (click)="submitHours()"> Submit Hours </button>
                     </div>
                 </div>
             </mat-card>

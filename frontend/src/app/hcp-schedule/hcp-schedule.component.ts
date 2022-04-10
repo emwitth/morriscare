@@ -6,6 +6,9 @@ import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { CTRequest, AssignmentObject } from '../interfaces/CTRequest';
 
 export interface punch {
+  hasBeenSent: boolean,
+  requestID: number,
+  scheduleID: number,
   in: string,
   inHour: number,
   inMin: number,
@@ -30,10 +33,11 @@ export interface info {
 })
 export class HcpScheduleComponent implements OnInit {
 
+  pID: string = "";
   // for the day selected on the schedule
   selectedDate!: Date | null;
   // today (duh)
-  today: Date = new Date();
+  today: Date = new Date("4-21-22");
   // variable to make sure the calendar doesn't load until we get data from the backend
   dataIn: boolean = false;
   // holds all of the information about the hcp's schedule
@@ -45,17 +49,23 @@ export class HcpScheduleComponent implements OnInit {
   loggedTimes : Map<String, Array<punch>> = new Map<String, Array<punch>>(); // the logs for each day
   totals : Map<string, string> = new Map<string, string>(); // the totals for each day
   lastTimes: Map<string, string> = new Map<string, string>(); // the last times logged for each day
+  hasMultipleAssignments: Set<string> = new Set<string>(); // a day in here has multiple assignments for this hcp
+
+  requestID: number = -1;
+  scheduleID: number = -1;
+  numberLeft: number = 0;
 
   constructor(private format: FormattingModule, private http: HttpClient,
     private snackbar: SnackbarModule) { }
 
   ngOnInit(): void {
     // get the hcp's id from the session
-    var pID = sessionStorage.getItem("pID");
+    var temp = sessionStorage.getItem("pID");
+    this.pID = temp != null ? temp : "";
     // get the schedule of this hcp
-    this.http.get<any>("api/schedule/" + pID + "/", { observe: "response" }).subscribe(result => {
+    this.http.get<any>("api/schedule/" + this.pID + "/", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
-        this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + pID + ": " + result);
+        this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + this.pID + ": " + result);
       } else if(result.status == 200) {
         result.body.forEach((request: CTRequest) => {
           request.distribution.assigned.forEach((element: AssignmentObject) => {
@@ -103,6 +113,9 @@ export class HcpScheduleComponent implements OnInit {
         // (for if assigned to multiple requests on a single day)
         var currentTimes = this.dates.has(stepDate.toString()) ? this.dates.get(stepDate.toString()) : new Array<info>();
         currentTimes?.push(info);
+        if(currentTimes != undefined && currentTimes?.length > 1) {
+          this.hasMultipleAssignments.add(stepDate.toString());
+        }
         // should always happen, but the code wants me to be careful
         if(currentTimes != undefined) {
           // update the data structures 
@@ -116,6 +129,16 @@ export class HcpScheduleComponent implements OnInit {
       // increase the date by one
       stepDate.setDate(stepDate.getDate() + 1);
     }
+  }
+
+  dateChange() {
+    this.requestID = -1;
+    this.scheduleID = -1;
+  }
+
+  selectRequest(request : CTRequest) {
+    this.requestID = request.requestID;
+    this.scheduleID = request.schedule[0].scheduleID;
   }
   
   /**
@@ -150,6 +173,9 @@ export class HcpScheduleComponent implements OnInit {
     // if there is nothing in the array yet, we push the first punch
     if(array.length == 0) {
       array.push({
+        hasBeenSent: false,
+        requestID: this.requestID,
+        scheduleID: this.scheduleID,
         in: this.time,
         inHour: ch,
         inMin: cm,
@@ -168,6 +194,9 @@ export class HcpScheduleComponent implements OnInit {
       // we set a new punch, otherwise we use what we popped
       var last: punch = (temp != undefined) ? temp : 
       {
+        hasBeenSent: false,
+        requestID: this.requestID,
+        scheduleID: this.scheduleID,
         in: "",
         inHour: -1,
         inMin: -1,
@@ -197,6 +226,9 @@ export class HcpScheduleComponent implements OnInit {
       else {
         array?.push(last);
         last = {
+          hasBeenSent: false,
+          requestID: this.requestID,
+          scheduleID: this.scheduleID,
           in: this.time,
           inHour: ch,
           inMin: cm,
@@ -271,6 +303,39 @@ export class HcpScheduleComponent implements OnInit {
     else {
       return false;
     }
+  }
+
+  submitHours() {
+    var day: string = (this.selectedDate != null) ? this.selectedDate.toString() : "";
+    // (undefined shouldn't happen, but the code doesn't know that)
+    var tempArray = this.loggedTimes.has(day) ? this.loggedTimes.get(day) : undefined;
+    // if we got an undefined, we make a new array
+    var array = tempArray != undefined ? tempArray : new Array<punch>();
+
+    array.forEach((punch: punch) => {
+      if(!punch.hasBeenSent && punch.hasIn && punch.hasOut && this.selectedDate != null) {
+        // post punch to backend
+        // var body = {
+        //   requestId: punch.requestID,
+        //   pID: this.pID,
+        //   scheduleID: punch.scheduleID,
+        //   startTime: punch.in,
+        //   endTime: punch.out,
+        //   workDate: this.format.parseMomentDateToString(this.selectedDate)
+        // }
+        // console.log(body);
+        // this.http.post<any>("api/work/", body, { observe: "response" }).subscribe(result => {
+        //   if (result.status != 200) {
+        //     this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " + result);
+        //   } else if(result.status == 200) {
+        //     punch.hasBeenSent = true;
+        //   }
+        // }, err => {
+        //   this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " 
+        //                                                   + (err.error.error? err.error.error : err.message));
+        // });
+      }
+    });
   }
 
   /**

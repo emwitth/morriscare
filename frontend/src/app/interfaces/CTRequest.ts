@@ -34,7 +34,8 @@ export interface CTRequest {
   distribution: {
     assigned: Array<AssignmentObject>,
     unassigned: Array<number>
-  }
+  },
+  schedule: Array<scheduleInfo>
 }
 
 export interface Caretaker {
