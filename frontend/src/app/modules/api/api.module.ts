@@ -1,12 +1,9 @@
 import { SnackbarModule } from './../snackbar/snackbar.module';
-import { Roles } from 'src/app/global-variables';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { StaffMember } from 'src/app/interfaces/StaffMember';
 import { UnappCareTaker } from 'src/app/interfaces/CareTaker';
-import { HCP } from 'src/app/interfaces/HCP';
 import { FormattingModule } from '../formatting/formatting.module';
 import { qIDpair } from 'src/app/interfaces/QIDPair';
 
@@ -103,54 +100,6 @@ export class ApiModule {
     }, err => {
       this.snackbar.openSnackbarErrorCust("Failed to fetch unapproved caretakers. Maybe reload the page or contact an administrator.");
     });
-    return toReturn;
-  }
-
-  /**
-   * Fetches a list of users of a given type and their information
-   * 
-   * @param type the type of the user (types in gloabl variables)
-   * @returns an array of users of type
-   */
-  getListOfUsers(type: string): Array<any> {
-    var toReturn: Array<any> = [];
-    this.http.get<any>("api/users", { observe: "response" }).subscribe(result => {
-      if (result.status != 200) {
-        this.snackbar.openSnackbarErrorCust("Failed to fetch users of type" + type + ". Maybe reload the page or contact an administrator.");
-      } else if(result.status == 200) {
-        result.body.forEach((element: any) => {
-          if(element.role == type) {
-           toReturn.push(this.fillElement(type, element)); 
-          }
-        });
-      }
-    }, err => {
-      this.snackbar.openSnackbarErrorCust("Failed to fetch users of type" + type + ". Maybe reload the page or contact an administrator.");
-    });
-    return toReturn;
-  }
-
-  /**
-   * Returns an element of whatever type is wanted for the given type.
-   * 
-   * @param type returns the element containing the information wanted out of the user list
-   * @param element the element from the post request
-   * @returns a filled element
-   */
-  private fillElement(type: string, element: any): any {
-    var toReturn: StaffMember = {firstName: "string",
-      lastName: "string",
-      postalAddress: "string",
-      email: "string",
-      phoneNumber: "string",
-      userID: "string",
-      username: "string"};
-    toReturn.firstName = element.firstName;
-    toReturn.lastName = element.lastName;
-    toReturn.postalAddress = element.postalAddress;
-    toReturn.email = element.email;
-    toReturn.phoneNumber = this.format.formatPhone(element.phoneNumber);
-    toReturn.userID = element.userID;
     return toReturn;
   }
 }

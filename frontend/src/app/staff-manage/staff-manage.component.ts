@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddSmDialogComponent } from '../dialog-components/add-sm-dialog/add-sm-dialog.component';
 import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 import { ApiModule } from '../modules/api/api.module';
+import { SnackbarModule } from '../modules/snackbar/snackbar.module';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-staff-manage',
@@ -17,7 +19,8 @@ export class StaffManageComponent implements OnInit {
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
-  constructor(public dialog: MatDialog, private api: ApiModule) { }
+  constructor(public dialog: MatDialog, private api: ApiModule,
+    private snackbar: SnackbarModule, private http: HttpClient) { }
 
   openAddDialog() {
     const myCompDialog = this.dialog.open(AddSmDialogComponent, { data: '' });
@@ -42,8 +45,19 @@ export class StaffManageComponent implements OnInit {
 
   ngOnInit(): void {
     // get staff member from back end
-    this.staffMembers = this.api.getListOfUsers(Roles.sm);
+    this.http.get<any>("api/users", { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch Staff Members: " + result);
+      } else if(result.status == 200) {
+        result.body.forEach((element: any) => {
+          if(element.role == Roles.sm) {
+           this.staffMembers.push(element);
+          }
+        });
+      }
+    }, err => {
+      this.snackbar.openSnackbarErrorCust("Failed to fetch Staff Members: " + (err.error.error? err.error.error : err.message));
+    });
     console.log(this.staffMembers);
   }
-
 }

@@ -3,12 +3,13 @@
  */
 
 export interface StaffMember {
-    firstName: string,
-    lastName: string,
-    postalAddress: string,
-    email: string,
-    phoneNumber: string,
-    userID: string,
-    username: string
-  }
+  userID: string,
+  username: string,
+  firstName: string,
+  lastName: string,
+  phoneNumber: string
+  postalAddress: string,
+  email: string,
+  role: string
+}
   
