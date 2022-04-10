@@ -38,7 +38,8 @@ export class CtRequestCtViewComponent implements OnInit {
     distribution: {
       assigned: [],
       unassigned: []
-    }
+    },
+    schedule: []
   };
   names: Array<string> = [];
   isFlexibleHours: boolean = false;

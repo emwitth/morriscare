@@ -35,7 +35,8 @@ export class CtRequestDetailsComponent implements OnInit {
     distribution: {
       assigned: [],
       unassigned: []
-    }
+    },
+    schedule: []
   };
   caretaker: Caretaker = {
     userID: -1,
