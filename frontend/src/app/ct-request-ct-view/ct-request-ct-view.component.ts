@@ -45,6 +45,7 @@ export class CtRequestCtViewComponent implements OnInit {
   isFlexibleHours: boolean = false;
   wantsGender: boolean = false;
   wantsAge: boolean = false;
+  today: Date = new Date();
 
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
@@ -56,21 +57,24 @@ export class CtRequestCtViewComponent implements OnInit {
 
   ngOnInit(): void {
     // retrieve all the requests
-    this.http.get<any>("api/requests/", { observe: "response" }).subscribe(result => {
+    this.http.get<any>("api/requests/?userID=" + sessionStorage.getItem("id"), { observe: "response" }).subscribe(result => {
     if (result.status != 200) {
       this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
     } else if(result.status == 200) {
       result.body.forEach((element: CTRequest) => {
-        if(element.userID == parseInt(sessionStorage.getItem("id") + "")) {
-          if(element.distribution.assigned.length == 0) {
-            this.pendingRequests.push(element);
-          }
-          else if(element.deleted == true) {
-            this.terminatedRequests.push(element);
-          }
-          else {
-            this.requests.push(element);
-          }
+        var startDate: Date = this.format.parseDate(element.requirements.startDate);
+        var endDate: Date = this.format.parseDate(element.requirements.endDate);
+        console.log(startDate, endDate);
+        console.log(startDate.getTime() <= this.today.getTime());
+        console.log(endDate.getTime() >= this.today.getTime());
+        if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
+          this.requests.push(element);
+        }
+        else if(element.deleted == true) {
+          this.terminatedRequests.push(element);
+        }
+        else {
+          this.pendingRequests.push(element);
         }
       });
     }
