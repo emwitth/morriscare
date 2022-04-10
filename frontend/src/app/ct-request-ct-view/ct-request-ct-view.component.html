@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <mat-error *ngIf="requests.length == 0">You have no terminated requests at this time</mat-error>
+                    <mat-error *ngIf="requests.length == 0">You have no requests in service at this time</mat-error>
                     <tr *ngFor="let request of requests;" (click)="selectTab(request)">
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <mat-error *ngIf="pendingRequests.length == 0">You have no terminated requests at this time</mat-error>
+                    <mat-error *ngIf="pendingRequests.length == 0">You have no pending requests at this time</mat-error>
                     <tr *ngFor="let request of pendingRequests;" (click)="selectTab(request)">
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
@@ -118,14 +118,15 @@
                 <p *ngIf="isFlexibleHours">Flexible Hours: {{selected.requirements.hoursPerDay}} hours wanted</p>
             </mat-card>
             <mat-card class="flex-fill ms-2">
-                <h4 class="color-main">Assigned Caretakers</h4>
+                <h4 class="color-main">Assigned {{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}s</h4>
+                <mat-error>No one is assigned to this request at this time</mat-error>
                 <div *ngFor="let assignment of selected.distribution.assigned; let i = index">
                     <p>{{assignment.hcpName | titlecase}} - {{format.getDaysString(assignment.schedule.daysRequested)}}</p>
                 </div>
             </mat-card>
             <mat-card class="ms-2">
                 <h4 class="color-main">Actions</h4>
-                <button mat-raised-button color="primary" [disabled]="selected.distribution.assigned.length > 0">Cancel Request</button>
+                <button mat-raised-button color="primary" [disabled]="selected.distribution.assigned.length > 0">Withdraw Request</button>
                 <br><br>
                 <button mat-raised-button color="primary" [disabled]="selected.distribution.assigned.length == 0">View Bill</button>
             </mat-card>
