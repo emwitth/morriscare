@@ -315,25 +315,25 @@ export class HcpScheduleComponent implements OnInit {
     array.forEach((punch: punch) => {
       if(!punch.hasBeenSent && punch.hasIn && punch.hasOut && this.selectedDate != null) {
         // post punch to backend
-        // var body = {
-        //   requestId: punch.requestID,
-        //   pID: this.pID,
-        //   scheduleID: punch.scheduleID,
-        //   startTime: punch.in,
-        //   endTime: punch.out,
-        //   workDate: this.format.parseMomentDateToString(this.selectedDate)
-        // }
-        // console.log(body);
-        // this.http.post<any>("api/work/", body, { observe: "response" }).subscribe(result => {
-        //   if (result.status != 200) {
-        //     this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " + result);
-        //   } else if(result.status == 200) {
-        //     punch.hasBeenSent = true;
-        //   }
-        // }, err => {
-        //   this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " 
-        //                                                   + (err.error.error? err.error.error : err.message));
-        // });
+        var body = {
+          requestID: punch.requestID,
+          pID: this.pID,
+          scheduleID: punch.scheduleID,
+          startTime: punch.in,
+          endTime: punch.out,
+          workDate: this.format.parseMomentDateToString(this.selectedDate)
+        }
+        console.log(body);
+        this.http.post<any>("api/work/", body, { observe: "response" }).subscribe(result => {
+          if (result.status != 200) {
+            this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " + result);
+          } else if(result.status == 200) {
+            punch.hasBeenSent = true;
+          }
+        }, err => {
+          this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " 
+                                                          + (err.error.error? err.error.error : err.message));
+        });
       }
     });
   }
