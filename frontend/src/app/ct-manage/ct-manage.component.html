@@ -31,7 +31,7 @@
                 <td>{{careTaker.firstName}} {{careTaker.lastName}}</td>
                 <td>{{careTaker.email}}</td>
                 <td>{{careTaker.postalAddress}}</td>
-                <td>{{careTaker.phoneNumber}}</td>
+                <td>{{format.formatPhone(careTaker.phoneNumber)}}</td>
                 <td>
                     <button mat-raised-button color="primary" style="float: right" 
                     (click)="openRemoveDialog(careTaker.firstName, careTaker.lastName, careTaker.userID)">Remove</button>

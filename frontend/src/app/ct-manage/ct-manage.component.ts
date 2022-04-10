@@ -5,7 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiModule } from '../modules/api/api.module';
 import { ApproveCtDialogComponent } from '../dialog-components/approve-ct-dialog/approve-ct-dialog.component';
 import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/remove-sm-dialog.component';
-
+import { HttpClient } from '@angular/common/http';
+import { SnackbarModule } from '../modules/snackbar/snackbar.module';
+import { FormattingModule } from '../modules/formatting/formatting.module';
 @Component({
   selector: 'app-ct-manage',
   templateUrl: './ct-manage.component.html',
@@ -15,13 +17,27 @@ export class CtManageComponent implements OnInit {
   unapprovedCareTakers: Array<UnappCareTaker> = new Array<UnappCareTaker>();
   approvedCareTakers: Array<CareTaker> = new Array<CareTaker>();
 
-  constructor(private api: ApiModule, private dialog: MatDialog) { }
+  constructor(private api: ApiModule, private dialog: MatDialog,
+    private snackbar: SnackbarModule, private http: HttpClient,
+    public format: FormattingModule) { }
 
   ngOnInit(): void {
     // get care takers from back end
     this.unapprovedCareTakers = this.api.getUnapprovedCTs();
     console.log(this.unapprovedCareTakers);
-    this.approvedCareTakers = this.api.getListOfUsers(Roles.ct);
+    this.http.get<any>("api/users", { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch Approved CTs: " + result);
+      } else if(result.status == 200) {
+        result.body.forEach((element: any) => {
+          if(element.role.type == Roles.ct) {
+           this.approvedCareTakers.push(element);
+          }
+        });
+      }
+    }, err => {
+      this.snackbar.openSnackbarErrorCust("Failed to fetch Approved CTs: " + (err.error.error? err.error.error : err.message));
+    });
     console.log(this.approvedCareTakers);
   }
 
