@@ -23,6 +23,8 @@ export class LoginDialogComponent implements OnInit {
 
   // array of personal information once password and username is entered
   info: Array<string> = [];
+  pID!: string;
+  ctID!: string;
 
   // forms
   loginForm: FormGroup;
@@ -96,7 +98,12 @@ export class LoginDialogComponent implements OnInit {
         }
         else {
           this.info.push(result.body?.role.type);
-          this.info.push(result.body?.role.pID)
+          if(result.body?.role.pID != null) {
+            this.pID = result.body?.role.pID;
+          }
+          if(result.body?.role.takerID != null) {
+            this.ctID = result.body?.role.takerID;
+          }
         }
         console.log(this.info);
 
@@ -123,8 +130,11 @@ export class LoginDialogComponent implements OnInit {
           sessionStorage.setItem("id", this.info[3]);
           sessionStorage.setItem("role", this.info[4]);
           sessionStorage.setItem("login", 'true');
-          if(this.info.length > 4) {
-            sessionStorage.setItem("pID", this.info[5]);
+          if(this.pID  != null) {
+            sessionStorage.setItem("pID", this.pID);
+          }
+          if(this.ctID != null) {
+            sessionStorage.setItem("ctID", this.ctID);
           }
           if(this.info[4] == Roles.admin) {this.router.navigate(['/admin/settings']);}
           if(this.info[4] == Roles.ct) {this.router.navigate(['/caretaker/settings']);}
@@ -160,8 +170,11 @@ export class LoginDialogComponent implements OnInit {
       sessionStorage.setItem("username", this.info[2]);
       sessionStorage.setItem("id", this.info[3]);
       sessionStorage.setItem("role", this.info[4]);
-      if(this.info.length > 4) {
-        sessionStorage.setItem("pID", this.info[5]);
+      if(this.pID  != null) {
+        sessionStorage.setItem("pID", this.pID);
+      }
+      if(this.ctID != null) {
+        sessionStorage.setItem("ctID", this.ctID);
       }
       sessionStorage.setItem("login", 'true');
 
