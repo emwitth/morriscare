@@ -119,7 +119,7 @@
             </mat-card>
             <mat-card class="flex-fill ms-2">
                 <h4 class="color-main">Assigned {{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}s</h4>
-                <mat-error>No one is assigned to this request at this time</mat-error>
+                <mat-error *ngIf="selected.distribution.assigned.length == 0">No one is assigned to this request at this time</mat-error>
                 <div *ngFor="let assignment of selected.distribution.assigned; let i = index">
                     <p>{{assignment.hcpName | titlecase}} - {{format.getDaysString(assignment.schedule.daysRequested)}}</p>
                 </div>
