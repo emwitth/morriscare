@@ -3,9 +3,9 @@ import { Roles } from 'src/app/global-variables';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/remove-sm-dialog.component';
-import { ApiModule } from '../modules/api/api.module';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
+import { FormattingModule } from '../modules/formatting/formatting.module';
 
 @Component({
   selector: 'app-hcp-manage',
@@ -18,7 +18,7 @@ export class HcpManageComponent implements OnInit {
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
-  constructor(public dialog: MatDialog, private api: ApiModule,
+  constructor(public dialog: MatDialog, public format: FormattingModule,
     private snackbar: SnackbarModule, private http: HttpClient) { }
 
   /**

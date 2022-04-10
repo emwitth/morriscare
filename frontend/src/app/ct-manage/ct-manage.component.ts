@@ -7,6 +7,7 @@ import { ApproveCtDialogComponent } from '../dialog-components/approve-ct-dialog
 import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/remove-sm-dialog.component';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
+import { FormattingModule } from '../modules/formatting/formatting.module';
 @Component({
   selector: 'app-ct-manage',
   templateUrl: './ct-manage.component.html',
@@ -17,7 +18,8 @@ export class CtManageComponent implements OnInit {
   approvedCareTakers: Array<CareTaker> = new Array<CareTaker>();
 
   constructor(private api: ApiModule, private dialog: MatDialog,
-    private snackbar: SnackbarModule, private http: HttpClient) { }
+    private snackbar: SnackbarModule, private http: HttpClient,
+    public format: FormattingModule) { }
 
   ngOnInit(): void {
     // get care takers from back end

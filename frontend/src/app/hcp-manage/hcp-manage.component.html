@@ -16,7 +16,7 @@
                 <td>{{hcp.firstName}} {{hcp.lastName}}</td>
                 <td>{{hcp.email}}</td>
                 <td>{{hcp.postalAddress}}</td>
-                <td>{{hcp.phoneNumber}}</td>
+                <td>{{format.formatPhone(hcp.phoneNumber)}}</td>
                 <td>
                     <button mat-raised-button color="primary" style="float: right" 
                     (click)="openRemoveDialog(hcp.firstName, hcp.lastName, hcp.userID)">Remove</button>
