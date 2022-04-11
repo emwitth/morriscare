@@ -58,6 +58,7 @@ export interface requestInformation {
   isFlex: boolean,
   isPastPicker: boolean,
   pID: number,
+  scheduleId: number,
   start: string,
   end: string
 }

@@ -79,13 +79,13 @@
                     <mat-select placeholder="Choose one" [disabled]="hcps.length == 0 || isDisabled" formControlName="hcpID">
                         <mat-option *ngFor="let hcp of hcps" value="{{hcp.pID}}"> {{hcp.firstName | titlecase}} {{hcp.lastName | titlecase}}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="this.hcpForm.get('hcpID')?.hasError('required')">You must select a value</mat-error>
+                    <mat-error *ngIf="this.hcpForm.get('hcpID')?.hasError('required') && !isDisabled">You must select a value</mat-error>
                 </mat-form-field>
             </div>
             <!-- Assign button -->
             <div>
-                <button mat-raised-button color="primary" [disabled]="this.hcpForm.invalid || this.hcpForm.pristine || isDisabled" 
-                (click)="assign()">Assign</button>
+                <button mat-raised-button *ngIf="!isDisabled" color="primary" (click)="assign()">Assign</button>
+                <button mat-raised-button *ngIf="isDisabled" color="primary" (click)="unassign()">Unassign</button>
             </div>
         </div>
         <mat-error *ngIf="hasBeenPressed && hcps.length == 0 && !info.isPastPicker">There are no available HCPs for this day and time</mat-error>

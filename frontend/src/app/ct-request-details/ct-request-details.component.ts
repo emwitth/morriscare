@@ -149,6 +149,7 @@ export class CtRequestDetailsComponent implements OnInit {
       isFlex: this.isFlexibleHours,
       isPastPicker: false,
       pID: -1,
+      scheduleId: -1,
       start: this.request.requirements?.startTime,
       end: this.request.requirements?.endTime
     };
@@ -170,6 +171,7 @@ export class CtRequestDetailsComponent implements OnInit {
       isFlex: this.isFlexibleHours,
       isPastPicker: true,
       pID: data.hcp,
+      scheduleId: data.schedule.scheduleID,
       start: this.request.requirements?.startTime,
       end: this.request.requirements?.endTime
     };

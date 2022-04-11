@@ -122,7 +122,7 @@ export class CtRequestHcpComponent implements OnInit {
         daysRequested: days
       }
     }
-
+    console.log(body);
     // post information querying and recieve a list of available and qualifying hcps back
     this.http.post<any>("api/available_hcp/" + this.info.id + "/", body, { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
@@ -132,9 +132,9 @@ export class CtRequestHcpComponent implements OnInit {
         this.hcps = [];
         console.log("200", result);
         result.body.forEach((hcp: hcpsForDropdown) => {
-          if(hcp.schedule.available == true) {
+          // if(hcp.schedule.available == true) {
             this.hcps.push(hcp);
-          }
+          // }
         });
         this.hasBeenPressed = true;
       }
@@ -181,15 +181,60 @@ export class CtRequestHcpComponent implements OnInit {
         console.log("!200", result.body);
         this.snackbar.openSnackbarErrorCust("Error assigning hcp: " + result.status);
       } else if(result.status == 200) {
-        console.log("200", result);
+        console.log("200 : Assigned Request : ", result);
         this.isDisabled = true;
         this.snackbar.openSnackbarSuccessCust("Successfully Assigned!");
         this.assignmentEvent.emit(this.daysChecked);
+        this.info.pID = this.hcpForm.get("hcpID")?.value;
+        this.info.scheduleId = result.body.schedule.scheduleID;
       }
     }, err => {
       console.log("err", err);
       this.snackbar.openSnackbarErrorCust(err.error.error ? err.error.error : err.message);
     });
+  }
+
+  //Unassigns an hcp from a request
+  unassign() {
+
+    console.log("Unassign HCP from request");
+
+    var body: any = {
+      pID: this.info.pID,
+      requestID: this.info.id,
+      scheduleID: this.info.scheduleId
+    }
+
+    console.log("Body : ", body);
+
+    this.http.post<any>("api/unassign/", body, {observe: 'response'}).subscribe(result => {
+      
+      if (result.status != 200) {
+
+        this.snackbar.openSnackbarErrorCust("Error unassigning hcp: " + result.status);
+
+      } else if(result.status == 200) {
+
+        this.isDisabled = false;
+        this.snackbar.openSnackbarSuccessCust("Successfully Unassigned!");
+
+        if(this.daysChecked[this.SUNDAY]) { this.info.enabled[this.SUNDAY] = true; };
+        if(this.daysChecked[this.MONDAY]) { this.info.enabled[this.MONDAY] = true; };
+        if(this.daysChecked[this.TUESDAY]) { this.info.enabled[this.TUESDAY] = true; };
+        if(this.daysChecked[this.WEDNESDAY]) { this.info.enabled[this.WEDNESDAY] = true; };
+        if(this.daysChecked[this.THURSDAY]) { this.info.enabled[this.THURSDAY] = true; };
+        if(this.daysChecked[this.FRIDAY]) { this.info.enabled[this.FRIDAY] = true; };
+        if(this.daysChecked[this.SATURDAY]) { this.info.enabled[this.SATURDAY] = true; };
+
+        this.info.isPastPicker = false;
+
+        //TODO: Do I need this?
+        this.assignmentEvent.emit(this.daysChecked);
+
+      }
+    });
+
+    return;
   }
 
   /**
