@@ -16,6 +16,7 @@ export class CtRequestDetailsComponent implements OnInit {
   // these have default values in case an error occurs when fetching them
   request: CTRequest = {
     requestID: -1,
+    terminate: false,
     patientFirstName: "unavailable",
     patientLastName: "unavailable",
     sex: "unavailable",
@@ -24,8 +25,6 @@ export class CtRequestDetailsComponent implements OnInit {
     patientPhoneNumber: "unavailable",
     patientEmail: "unavailable",
     hourlyRate: 0,
-    deleted: false,
-    userID: -1,
     requirements: {
       serviceType: -1,
       daysRequested: [],
@@ -36,7 +35,15 @@ export class CtRequestDetailsComponent implements OnInit {
       assigned: [],
       unassigned: []
     },
-    schedule: []
+    deleted: false,
+    updateTime: "unavailable",
+    billingAccount: {
+      total: -1,
+      unPaidTotal: -1,
+      paidTotal: -1,
+      records: []
+    },
+    userID: -1
   };
   caretaker: Caretaker = {
     userID: -1,

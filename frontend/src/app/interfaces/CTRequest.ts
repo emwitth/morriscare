@@ -18,8 +18,14 @@ export interface AssignmentObject {
   hcpName: string
 }
 
+export interface Record {
+  amount: number,
+  datetime: string
+}
+
 export interface CTRequest {
   requestID: number,
+  terminate: boolean,
   patientFirstName: string,
   patientLastName: string,
   sex: string,
@@ -28,14 +34,20 @@ export interface CTRequest {
   patientPhoneNumber: string,
   patientEmail: string,
   hourlyRate: number,
-  deleted: boolean,
-  userID: number,
   requirements: Requirements,
   distribution: {
     assigned: Array<AssignmentObject>,
     unassigned: Array<number>
   },
-  schedule: Array<scheduleInfo>
+  deleted: boolean,
+  updateTime: string,
+  billingAccount: {
+    total: number,
+    unPaidTotal: number,
+    paidTotal: number,
+    records: Array<Record>
+  }
+  userID: number,
 }
 
 export interface Caretaker {

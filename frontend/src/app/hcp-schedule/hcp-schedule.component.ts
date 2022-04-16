@@ -3,7 +3,8 @@ import { FormattingModule } from '../modules/formatting/formatting.module';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
-import { CTRequest, AssignmentObject } from '../interfaces/CTRequest';
+import { AssignmentObject } from './../interfaces/CTRequest';
+import { hcpSchedule } from '../interfaces/HCP-Schedule';
 
 export interface punch {
   hasBeenSent: boolean,
@@ -22,7 +23,7 @@ export interface punch {
 export interface info {
   start: string,
   end: string,
-  request: CTRequest
+  request: hcpSchedule
 }
 
 @Component({
@@ -67,7 +68,7 @@ export class HcpScheduleComponent implements OnInit {
       if (result.status != 200) {
         this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + this.pID + ": " + result);
       } else if(result.status == 200) {
-        result.body.forEach((request: CTRequest) => {
+        result.body.forEach((request: hcpSchedule) => {
           request.distribution.assigned.forEach((element: AssignmentObject) => {
             this.addAllDateElements(
               element.schedule.startDate,
@@ -96,7 +97,7 @@ export class HcpScheduleComponent implements OnInit {
    * @param end the end time of the request
    * @param request the whole request because I am lazy and am putting it here for easy access later
    */
-  addAllDateElements(startDate: string, numDays: number, daysOfWeek: Array<number>, start: string, end: string, request: CTRequest) {
+  addAllDateElements(startDate: string, numDays: number, daysOfWeek: Array<number>, start: string, end: string, request: hcpSchedule) {
     // cariables to keep track of things
     var count: number = 0;
     var stepDate: Date = this.format.parseDate(startDate);
@@ -136,7 +137,7 @@ export class HcpScheduleComponent implements OnInit {
     this.scheduleID = -1;
   }
 
-  selectRequest(request : CTRequest) {
+  selectRequest(request : hcpSchedule) {
     this.requestID = request.requestID;
     this.scheduleID = request.schedule[0].scheduleID;
   }

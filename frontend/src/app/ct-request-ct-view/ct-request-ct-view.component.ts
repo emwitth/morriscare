@@ -19,6 +19,7 @@ export class CtRequestCtViewComponent implements OnInit {
   isShown: boolean = false;
   selected: CTRequest = {
     requestID: -1,
+    terminate: false,
     patientFirstName: "unavailable",
     patientLastName: "unavailable",
     sex: "unavailable",
@@ -27,19 +28,25 @@ export class CtRequestCtViewComponent implements OnInit {
     patientPhoneNumber: "0000000000",
     patientEmail: "unavailable",
     hourlyRate: 0,
-    deleted: false,
-    userID: -1,
     requirements: {
       serviceType: -1,
       daysRequested: [],
       startDate: "0/0/0",
-      endDate: "0/0/0",
+      endDate: "0/0/0"
     },
     distribution: {
       assigned: [],
       unassigned: []
     },
-    schedule: []
+    deleted: false,
+    updateTime: "unavailable",
+    billingAccount: {
+      total: -1,
+      unPaidTotal: -1,
+      paidTotal: -1,
+      records: []
+    },
+    userID: -1
   };
   names: Array<string> = [];
   isFlexibleHours: boolean = false;
