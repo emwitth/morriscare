@@ -1,4 +1,4 @@
-<div class="container p-2 my-5 border">
+<div class="container p-2 ms-5 me-5 mt-5 border">
     <button mat-icon-button color="primary" style="font-size:large" routerLink="/{{userType}}/manage-ct-request">
         <mat-icon>navigate_before</mat-icon>
     </button>
@@ -46,10 +46,10 @@
             </div>
         </div>
         <!-- right half of page -->
-        <div class="w-50 ms-2">
+        <div class="w-50 ms-2 scroll">
             <!-- all of the pickers -->
             <div class="d-flex flex-column">
-                <app-ct-request-hcp class="mb-2" *ngFor="let pickerInfo of hcpPickers" [info]="pickerInfo" (assignmentEvent)="mergeNewAssigned($event)"></app-ct-request-hcp>
+                <app-ct-request-hcp class="mb-2 me-2" *ngFor="let pickerInfo of hcpPickers" [info]="pickerInfo" (assignmentEvent)="mergeNewAssigned($event)"></app-ct-request-hcp>
                 <button mat-icon-button class="align-self-center" color="primary" (click)="add()">
                     <mat-icon>add_circle</mat-icon>
                 </button>
