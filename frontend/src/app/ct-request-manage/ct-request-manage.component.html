@@ -16,8 +16,8 @@
                 </thead>
                 <tbody>
                     <tr></tr>
-                    <tr *ngFor="let request of requests;" routerLink="request/{{request.requestID}}">
-                        <td>{{request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label) | titlecase}}</td>
+                    <tr *ngFor="let request of requests;" (click)="selectTab(request)">
+                        <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
                         <td>{{request.sex | titlecase}}</td>
@@ -35,14 +35,47 @@
 
         </mat-tab>
     </mat-tab-group>
-    <!-- <mat-error *ngIf="requests.length == 0">There are no requests yet! Care Takers must insert them</mat-error>
-    <div *ngFor="let request of requests" class="container centered-partial-width-rows-container">
-        <mat-card routerLink="request/{{request.requestID}}">
-            <mat-card-title>Request {{request.requestID}}: {{request.patientFirstName | titlecase}}
-                {{request.patientLastName | titlecase}}</mat-card-title>
-            <p>Type: {{request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)}}</p>
-            <p>Born {{request.dateOfBirth | date:"MM/dd/yyyy"}}, {{request.sex | titlecase}}</p>
-            <p>{{request.requirements.locationOfService}}</p>
-        </mat-card><br>
-    </div> -->
+    <div class="container p-2 my-2 border">
+        <h2>Details</h2>
+        <h3 *ngIf="!isShown">Select a request to view details</h3>
+        <div *ngIf="isShown" class="d-flex">
+            <mat-card>
+                <h4 class="color-main">Patient Details</h4>
+                <p>{{selected.patientFirstName | titlecase}} {{selected.patientLastName | titlecase}}, {{selected.sex | titlecase}}</p>
+                <p>{{selected.dateOfBirth | date:"MM/dd/yyyy"}}</p>
+                <p>{{selected.patientEmail}}</p>
+                <p>{{selected.locationOfService}}</p>
+                <p>{{format.formatPhone(selected.patientPhoneNumber)}}</p>
+                </mat-card>
+            <mat-card class="ms-2 w-30">
+                <h4 class="color-main">Request Details</h4>
+                <p>{{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</p>
+                <p>Start: {{selected.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{selected.requirements.endDate | date:"MM/dd/yyyy"}}</p>
+                <div class="d-flex flex-row">
+                    <p *ngIf="wantsGender">Sex: {{selected.requirements.gender | titlecase}}</p>
+                    <p *ngIf="wantsAge && wantsGender" class="ms-4">min age: {{selected.requirements.age_min}}, max age: {{selected.requirements.age_max}}</p>
+                    <p *ngIf="wantsAge && !wantsGender">min age: {{selected.requirements.age_min}}, max age: {{selected.requirements.age_max}}</p>
+                    <p *ngIf="wantsAge || wantsGender" class="ms-4">{{selected.requirements.numDaysRequested}} days:</p>
+                    <p *ngIf="!(wantsAge || wantsGender)">{{selected.requirements.numDaysRequested}} days:</p>
+                </div>
+                <p>{{format.getDaysString(selected.requirements.daysRequested)}}</p>
+                <p>Unassigned: {{format.getDaysString(selected.distribution.unassigned)}}</p>
+                <p *ngIf="!isFlexibleHours">Start Time: {{selected.requirements.startTime}}, End Time {{selected.requirements.endTime}}</p>
+                <p *ngIf="isFlexibleHours">Flexible Hours: {{selected.requirements.hoursPerDay}} hours wanted</p>
+            </mat-card>
+            <mat-card class="flex-fill ms-2">
+                <h4 class="color-main">Assigned {{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}s</h4>
+                <mat-error *ngIf="selected.distribution.assigned.length == 0">No one is assigned to this request at this time</mat-error>
+                <div *ngFor="let assignment of selected.distribution.assigned; let i = index">
+                    <p>{{assignment.hcpName | titlecase}} - {{format.getDaysString(assignment.schedule.daysRequested)}}</p>
+                </div>
+            </mat-card>
+            <mat-card class="ms-2">
+                <h4 class="color-main">Actions</h4>
+                <button mat-raised-button color="primary" routerLink="request/{{selected.requestID}}">Assign HCP's</button>
+                <br><br>
+                <button mat-raised-button color="primary">View Billing Info</button>
+            </mat-card>
+        </div>
+    </div>
 </div>
