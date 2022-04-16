@@ -1,6 +1,41 @@
 <div class="container p-2 my-5 border">
     <h1 class="blockquote">Manage Requests</h1>
-    <mat-error *ngIf="requests.length == 0">There are no requests yet! Care Takers must insert them</mat-error>
+    <mat-tab-group mat-align-tabs="center" class="tab-group-area">
+        <mat-tab label="In Service">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Patient</th>
+                        <th>Request Dates</th>
+                        <th>Sex</th>
+                        <th>Care Taker</th>
+                        <th>Assigned</th>
+                        <th>Payed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr></tr>
+                    <tr *ngFor="let request of requests;" routerLink="request/{{request.requestID}}">
+                        <td>{{request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label) | titlecase}}</td>
+                        <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
+                        <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
+                        <td>{{request.sex | titlecase}}</td>
+                        <td>todo</td>
+                        <td>{{(request.distribution.unassigned.length) == 0 ? "Full" : ((request.distribution.assigned.length != 0) ? "Partial" : "None")}}</td>
+                        <td>Next Commit</td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-tab>
+        <mat-tab label="Completed">
+
+        </mat-tab>
+        <mat-tab label="Terminated">
+
+        </mat-tab>
+    </mat-tab-group>
+    <!-- <mat-error *ngIf="requests.length == 0">There are no requests yet! Care Takers must insert them</mat-error>
     <div *ngFor="let request of requests" class="container centered-partial-width-rows-container">
         <mat-card routerLink="request/{{request.requestID}}">
             <mat-card-title>Request {{request.requestID}}: {{request.patientFirstName | titlecase}}
@@ -9,5 +44,5 @@
             <p>Born {{request.dateOfBirth | date:"MM/dd/yyyy"}}, {{request.sex | titlecase}}</p>
             <p>{{request.requirements.locationOfService}}</p>
         </mat-card><br>
-    </div>
+    </div> -->
 </div>
