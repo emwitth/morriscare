@@ -3,8 +3,7 @@ import { FormattingModule } from '../modules/formatting/formatting.module';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
-import { AssignmentObject } from './../interfaces/CTRequest';
-import { hcpSchedule } from '../interfaces/HCP-Schedule';
+import { hcpSchedule,scheduleInfo } from '../interfaces/HCP-Schedule';
 
 export interface punch {
   hasBeenSent: boolean,
@@ -69,13 +68,13 @@ export class HcpScheduleComponent implements OnInit {
         this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + this.pID + ": " + result);
       } else if(result.status == 200) {
         result.body.forEach((request: hcpSchedule) => {
-          request.distribution.assigned.forEach((element: AssignmentObject) => {
+          request.schedule.forEach((element: scheduleInfo) => {
             this.addAllDateElements(
-              element.schedule.startDate,
-              element.schedule.numDaysRequested,
-              element.schedule.daysRequested,
-              element.schedule.startTime, 
-              element.schedule.endTime,
+              element.startDate,
+              element.numDaysRequested,
+              element.daysRequested,
+              element.startTime, 
+              element.endTime,
               request
             );
           });
@@ -107,7 +106,7 @@ export class HcpScheduleComponent implements OnInit {
       request: request
     }
     // loop through all days from the start until we find all of the days enumerated
-    while(count < numDays) {
+    while(count < numDays-1) {
       // only do anything if the day we are at is one of the days of the week specified
       if(daysOfWeek.includes(stepDate.getDay())) {
         // get the array which holds any request data that was already on this day
