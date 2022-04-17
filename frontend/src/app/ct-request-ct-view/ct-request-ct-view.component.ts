@@ -77,7 +77,7 @@ export class CtRequestCtViewComponent implements OnInit {
         if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
           this.requests.push(element);
         }
-        else if(element.deleted == true) {
+        else if(element.terminate == true) {
           this.terminatedRequests.push(element);
         }
         else {

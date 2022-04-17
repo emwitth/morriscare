@@ -12,7 +12,9 @@ import { FormattingModule } from '../modules/formatting/formatting.module';
 })
 export class CtRequestManageComponent implements OnInit {
 
-  requests: Array<CTRequest> = new Array<CTRequest>();
+  current: Array<CTRequest> = new Array<CTRequest>();
+  pending: Array<CTRequest> = new Array<CTRequest>();
+  terminated: Array<CTRequest> = new Array<CTRequest>();
 
   isShown: boolean = false;
   selected: CTRequest = {
@@ -67,7 +69,17 @@ export class CtRequestManageComponent implements OnInit {
         this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
       } else if(result.status == 200) {
         result.body.forEach((element: CTRequest) => {
-          this.requests.push(element);
+          var startDate: Date = this.format.parseDate(element.requirements.startDate);
+          var endDate: Date = this.format.parseDate(element.requirements.endDate);
+          if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
+            this.current.push(element);
+          }
+          else if(element.terminate == true) {
+            this.terminated.push(element);
+          }
+          else {
+            this.pending.push(element);
+          }
         });
       }
     }, err => {
