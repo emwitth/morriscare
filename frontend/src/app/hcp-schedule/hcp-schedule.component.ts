@@ -8,7 +8,6 @@ import { hcpSchedule,scheduleInfo } from '../interfaces/HCP-Schedule';
 export interface punch {
   hasBeenSent: boolean,
   requestID: number,
-  scheduleID: number,
   in: string,
   inHour: number,
   inMin: number,
@@ -37,7 +36,7 @@ export class HcpScheduleComponent implements OnInit {
   // for the day selected on the schedule
   selectedDate!: Date | null;
   // today (duh)
-  today: Date = new Date("4-21-22");
+  today: Date = new Date("5/5/24");
   // variable to make sure the calendar doesn't load until we get data from the backend
   dataIn: boolean = false;
   // holds all of the information about the hcp's schedule
@@ -52,7 +51,6 @@ export class HcpScheduleComponent implements OnInit {
   hasMultipleAssignments: Set<string> = new Set<string>(); // a day in here has multiple assignments for this hcp
 
   requestID: number = -1;
-  scheduleID: number = -1;
   numberLeft: number = 0;
 
   constructor(private format: FormattingModule, private http: HttpClient,
@@ -133,12 +131,13 @@ export class HcpScheduleComponent implements OnInit {
 
   dateChange() {
     this.requestID = -1;
-    this.scheduleID = -1;
+    console.log(this.requestID);
   }
 
   selectRequest(request : hcpSchedule) {
+    console.log(request.requestID);
     this.requestID = request.requestID;
-    this.scheduleID = request.schedule[0].scheduleID;
+    console.log(this.requestID);
   }
   
   /**
@@ -175,7 +174,6 @@ export class HcpScheduleComponent implements OnInit {
       array.push({
         hasBeenSent: false,
         requestID: this.requestID,
-        scheduleID: this.scheduleID,
         in: this.time,
         inHour: ch,
         inMin: cm,
@@ -196,7 +194,6 @@ export class HcpScheduleComponent implements OnInit {
       {
         hasBeenSent: false,
         requestID: this.requestID,
-        scheduleID: this.scheduleID,
         in: "",
         inHour: -1,
         inMin: -1,
@@ -228,7 +225,6 @@ export class HcpScheduleComponent implements OnInit {
         last = {
           hasBeenSent: false,
           requestID: this.requestID,
-          scheduleID: this.scheduleID,
           in: this.time,
           inHour: ch,
           inMin: cm,
@@ -318,7 +314,6 @@ export class HcpScheduleComponent implements OnInit {
         var body = {
           requestID: punch.requestID,
           pID: this.pID,
-          scheduleID: punch.scheduleID,
           startTime: punch.in,
           endTime: punch.out,
           workDate: this.format.parseMomentDateToString(this.selectedDate)
@@ -326,11 +321,14 @@ export class HcpScheduleComponent implements OnInit {
         console.log(body);
         this.http.post<any>("api/work/", body, { observe: "response" }).subscribe(result => {
           if (result.status != 200) {
+            console.log("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " + result);
             this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " + result);
           } else if(result.status == 200) {
             punch.hasBeenSent = true;
           }
         }, err => {
+          console.log("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " 
+          + (err.error.error? err.error.error : err.message));
           this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " 
                                                           + (err.error.error? err.error.error : err.message));
         });

@@ -42,7 +42,7 @@
                     <h3 class="color-main">Log Work</h3>
                     <div>
                         <div>
-                            <mat-error *ngIf="hasMultipleAssignments.has(selectedDate != null ? selectedDate.toString() : '') && !((selectedDate != null) ? (today.getTime() < selectedDate.getTime()) : false)">
+                            <mat-error *ngIf="((selectedDate != null) ? (requestID == -1) : false)">
                                 You must select an assignment above to log hours for it.
                             </mat-error>
                         </div>
@@ -84,7 +84,7 @@
                             <input matInput type="time" [(ngModel)]="time">
                         </mat-form-field>
                         <button mat-raised-button class="align-self-center" (click)="punch()"
-                            [disabled]="hasMultipleAssignments.has(selectedDate != null ? selectedDate.toString() : '') && requestID == -1">
+                            [disabled]="requestID == -1">
                             Punch 
                         </button>
                         <button mat-raised-button class="align-self-center" color="primary" (click)="submitHours()"> Submit Hours </button>
