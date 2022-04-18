@@ -1,0 +1,44 @@
+<div class="container p-2 my-5 border">
+    <h2>Patient Name: {{info.patientName | titlecase}}</h2>
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th>Healthcare-Worker's Name</th>
+                <th>Date of Service</th>
+                <th>Start Time of Service</th>
+                <th>End Time of Service</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of records">
+                <td>{{record.hcpName}}</td>
+                <td>{{record.workDate}}</td>
+                <td>{{record.startTime}}</td>
+                <td>{{record.endTime}}</td>
+                <td>{{record.amount}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th style="text-align: right">Total:</th>
+                <td>{{info.total}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th style="text-align: right">Paid:</th>
+                <td>{{info.paidTotal}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th style="text-align: right">Unpaid:</th>
+                <td>{{info.unPaidTotal}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
