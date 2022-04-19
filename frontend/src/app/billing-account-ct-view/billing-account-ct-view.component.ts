@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { BillingAccount, Detail, Record } from '../interfaces/BillingAccount';
 import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 export interface SingleRecord {
   hcpName: string,
@@ -29,9 +30,16 @@ export class BillingAccountCtViewComponent implements OnInit {
   }
 
   records: Array<SingleRecord> = [];
+  form: FormGroup;
+
 
   constructor(private http: HttpClient, private snackbar: SnackbarModule,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute, private fb: FormBuilder) { 
+      this.form = this.fb.group({
+        dollars: ['', [Validators.required, Validators.pattern("[0-9]+")]],
+        cents: ['', [Validators.required, Validators.pattern("[0-9]{2}")]]
+      });
+    }
 
   ngOnInit(): void {
     this.http.get<any>("api/billing/" + this.route.snapshot.params?.id + "/", { observe: "response" }).subscribe(result => {
@@ -40,7 +48,9 @@ export class BillingAccountCtViewComponent implements OnInit {
       } else if(result.status == 200) {
         this.info = result.body;
         this.info.detail.forEach((element : Detail) => {
+          var i = 0;
           element.records.forEach((record: Record) => {
+            var name = i == 0 ? "element.hcpName" : "";
             this.records.push({
               hcpName: element.hcpName,
               workDate: record.workDate,
@@ -48,6 +58,7 @@ export class BillingAccountCtViewComponent implements OnInit {
               endTime: record.endTime,
               amount: record.amount
             });
+            i++;
           });
         });
       }

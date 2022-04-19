@@ -1,0 +1,4 @@
+::ng-deep .mat-form-field-appearance-fill
+.mat-form-field-flex {
+    padding: 0em 0em 0 0em !important;
+}
