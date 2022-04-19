@@ -67,4 +67,20 @@ export class BillingAccountCtViewComponent implements OnInit {
       });
   }
 
+  pay() {
+    var body = {
+      amount: Number(this.form.get("dollars")?.value + "." + this.form.get("cents")?.value)
+    }
+    console.log(body);
+    this.http.post<any>("api/pay/" + this.info.requestID + "/", body, { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to pay " + body.amount + ": " + result.status);
+      } else if(result.status == 200) {
+          window.location.reload();
+      }
+      }, err => {
+        this.snackbar.openSnackbarErrorCust("Failed to pay " + body.amount + ": " + err.error.error);
+      });
+  }
+
 }

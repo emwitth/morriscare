@@ -70,7 +70,7 @@
                     <input matInput prefix="." mask="00" formControlName="cents">
                 </mat-form-field>
                 <button mat-raised-button color="primary" class="align-self-start ms-2"
-                [disabled]="form.pristine || form.invalid">
+                [disabled]="form.pristine || form.invalid" (click)="pay()">
                     Pay
                 </button>
             </div>
