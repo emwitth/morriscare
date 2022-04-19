@@ -62,14 +62,15 @@
             </tbody>
         </table>
         <form [formGroup]="form">
+
             <div class="d-flex justify-content-center">
-                <mat-form-field appearance="fill" class="w-25">
+                <mat-form-field appearance="fill" class="wem-5">
                     <input matInput prefix="$" mask="99990" style="text-align: right" formControlName="dollars">
                 </mat-form-field>
-                <mat-form-field appearance="fill" class="w-25">
+                <mat-form-field appearance="fill" class="wem-3">
                     <input matInput prefix="." mask="00" formControlName="cents">
                 </mat-form-field>
-                <button mat-raised-button color="primary" class="align-self-start ms-2"
+                <button mat-raised-button color="primary" class="align-self-start ms-2 mt-2"
                 [disabled]="form.pristine || form.invalid" (click)="pay()">
                     Pay
                 </button>

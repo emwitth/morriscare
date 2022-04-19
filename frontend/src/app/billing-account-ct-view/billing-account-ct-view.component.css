@@ -1,4 +1,21 @@
-.mat-form-field-appearance-fill
+/* .mat-form-field-appearance-fill
 .mat-form-field-flex {
-    padding: 0em 0em 0 0em !important;
+    padding: 0.2em 0.2em 0.2em 0.2em;
+} */
+
+/* .mat-form-field-appearance-fill
+.mat-form-field-flex .test-class {
+    padding: 0em 0em 0 0em !important; 
+} */
+
+/* #test-selector {
+    padding: 0em 0em 0 0em !important; 
+} */
+
+/* .mat-form-field-appearance-fill.mat-form-field-flex.test-class {
+    padding: 0em 0em 0 0em !important; 
+} */
+
+.test-class.mat-form-field-appearance-fill.mat-form-field-flex {
+    padding: 0em 0em 0 0em !important; 
 }

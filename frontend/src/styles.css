@@ -61,6 +61,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width:30%;
 }
 
+.w-20 {
+    width:20%;
+}
+
+.w-15 {
+    width:15%;
+}
+
+.w-10 {
+    width:10%;
+}
+
+.wem-5 {
+    width:5em;
+}
+
+.wem-3 {
+    width:3em;
+}
+
 /* height styles */
 
 .h-80 {

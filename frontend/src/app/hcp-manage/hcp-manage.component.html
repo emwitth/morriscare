@@ -30,7 +30,7 @@
         <h2>Details</h2>
         <h3 *ngIf="!isShown">Select a request to view details</h3>
         <div *ngIf="isShown" class="d-flex">
-            <mat-card>
+            <mat-card class="w-25">
                 <h4 class="color-main">{{selected.firstName | titlecase}} {{selected.lastName | titlecase}}</h4>
                 <p>
                     {{(selectedInfo.typeHS == nurse ? hcpLabels.nurse.label : (selectedInfo.typeHS == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}
@@ -44,9 +44,9 @@
                 <p>Address: {{selectedInfo.postalAddress}}</p>
                 <p>Email: {{selectedInfo.email}}</p>
             </mat-card>
-            <mat-card>
+            <mat-card class="ms-2 w-25">
                 <h4 class="color-main">Salary Payment</h4>
-                <table class="table table-sm table-hover table-borderless w-75 mx-auto">
+                <table class="table table-sm table-hover table-borderless w-auto">
                     <tbody>
                         <tr>
                             <th>Total:</th>
@@ -63,14 +63,14 @@
                     </tbody>
                 </table>
                 <form [formGroup]="form">
-                    <div class="d-flex justify-content-center">
-                        <mat-form-field appearance="fill" class="w-25">
+                    <div class="d-flex justify-content-start">
+                        <mat-form-field appearance="fill" class="wem-5">
                             <input matInput prefix="$" mask="99990" style="text-align: right" formControlName="dollars">
                         </mat-form-field>
-                        <mat-form-field appearance="fill" class="w-25">
+                        <mat-form-field appearance="fill" class="wem-3">
                             <input matInput prefix="." mask="00" formControlName="cents">
                         </mat-form-field>
-                        <button mat-raised-button color="primary" class="align-self-start ms-2"
+                        <button mat-raised-button color="primary" class="align-self-start ms-2 mt-2"
                         [disabled]="form.pristine || form.invalid" (click)="pay()">
                             Pay
                         </button>
@@ -79,7 +79,7 @@
                         You must enter some dollar amount
                     </mat-error>
                     <mat-error *ngIf="this.form.get('cents')?.touched && this.form.get('cents')?.hasError('required')">
-                        You must enter some amount after the decimal
+                        You must enter something after the decimal
                     </mat-error>
                     <mat-error *ngIf="this.form.get('cents')?.touched && this.form.get('cents')?.hasError('pattern')">
                         You must enter cents to two decimal places
