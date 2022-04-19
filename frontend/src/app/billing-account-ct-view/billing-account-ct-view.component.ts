@@ -50,9 +50,9 @@ export class BillingAccountCtViewComponent implements OnInit {
         this.info.detail.forEach((element : Detail) => {
           var i = 0;
           element.records.forEach((record: Record) => {
-            var name = i == 0 ? "element.hcpName" : "";
+            var name = i == 0 ? element.hcpName : "";
             this.records.push({
-              hcpName: element.hcpName,
+              hcpName: name,
               workDate: record.workDate,
               startTime: record.startTime,
               endTime: record.endTime,
