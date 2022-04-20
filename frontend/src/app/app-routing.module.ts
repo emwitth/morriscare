@@ -85,9 +85,14 @@ const routes: Routes = [
         path: 'manage-ct-request',
         component: CtRequestManageComponent,
       },
+      
       {
         path: 'manage-ct-request/request/:id',
         component: CtRequestDetailsComponent,
+      },
+      {
+        path: 'manage-ct-request/:id/billing-info',
+        component: BillingAccountCtViewComponent
       },
       { 
         path: 'settings', 
@@ -127,6 +132,10 @@ const routes: Routes = [
       {
         path: 'manage-ct-request/request/:id',
         component: CtRequestDetailsComponent,
+      },
+      {
+        path: 'manage-ct-request/:id/billing-info',
+        component: BillingAccountCtViewComponent
       },
       { 
         path: 'settings', 

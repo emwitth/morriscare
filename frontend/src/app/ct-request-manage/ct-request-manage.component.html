@@ -124,7 +124,7 @@
                     Assign {{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}s
                 </button>
                 <br><br>
-                <button mat-raised-button color="primary">View Billing Info</button>
+                <button mat-raised-button color="primary" routerLink="{{selected.requestID}}/billing-info">View Billing Info</button>
             </mat-card>
         </div>
     </div>
