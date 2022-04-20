@@ -82,7 +82,7 @@
             <div class="centered-full-width-rows-container">
                 <mat-form-field appearance="fill">
                     <mat-label>Enter your desired start and end date</mat-label>
-                    <mat-date-range-input [min]="today" [formGroup]="dateForm" [rangePicker]="startEndRange">
+                    <mat-date-range-input [formGroup]="dateForm" [rangePicker]="startEndRange">
                         <input matStartDate (dateInput)="figureDays()" (dateChange)="figureDays()" formControlName="startDate">
                         <input matEndDate (dateInput)="figureDays()" (dateChange)="figureDays()" formControlName="endDate">
                     </mat-date-range-input>
