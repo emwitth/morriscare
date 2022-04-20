@@ -73,6 +73,7 @@ import { CtRequestCtViewComponent } from './ct-request-ct-view/ct-request-ct-vie
 import { HcpScheduleComponent } from './hcp-schedule/hcp-schedule.component';
 import { BillingAccountSmViewComponent } from './billing-account-sm-view/billing-account-sm-view.component';
 import { BillingAccountCtViewComponent } from './billing-account-ct-view/billing-account-ct-view.component';
+import { HcpWageViewComponent } from './hcp-wage-view/hcp-wage-view.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { BillingAccountCtViewComponent } from './billing-account-ct-view/billing
     HcpScheduleComponent,
     BillingAccountSmViewComponent,
     BillingAccountCtViewComponent,
+    HcpWageViewComponent,
   ],
   imports: [
     BrowserModule,

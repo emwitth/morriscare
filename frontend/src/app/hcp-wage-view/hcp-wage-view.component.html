@@ -1,0 +1,45 @@
+<div class="container border-width p-2 mt-5 d-flex border">
+    <!-- <div class="flex-fill"></div> -->
+    <div class="pt-3 me-2 d-inline">
+        <h1>Pay History</h1>
+        <table class="table table-sm table-hover table-borderless w-auto">
+            <tbody>
+                <tr>
+                    <th>Salary:</th>
+                    <td style="text-align: right">{{info.salary | currency}}</td>
+                    <td>/h</td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <th>Paid:</th>
+                    <td style="text-align: right">{{info.billingAccount.paidTotal | currency}}</td>
+                </tr>
+                <tr>
+                    <th>Due:</th>
+                    <td style="text-align: right">{{info.billingAccount.unPaidTotal | currency}}</td>
+                </tr>
+                <tr>
+                    <th>Total:</th>
+                    <td style="text-align: right">{{info.billingAccount.total | currency}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container p-2 border">
+        <table class="table table-hover w-auto">
+            <thead>
+                <tr>
+                    <th>Amount Payed</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of info.billingAccount.records">
+                    <td style="text-align: right">{{record.amount | currency}}</td>
+                    <td>{{record.datetime | date:'MM/dd/yyyy, hh:mm'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="flex-fill"></div> -->
+</div>

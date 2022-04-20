@@ -36,7 +36,8 @@ export class UserHomeComponent implements OnInit {
   ];
 
   hcpFunctions = [
-    {title: "My Schedule", link:"schedule"}
+    {title: "My Schedule", link:"schedule"},
+    {title: "Pay History", link:"wages"},
   ];
 
 

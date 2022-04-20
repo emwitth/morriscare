@@ -23,7 +23,7 @@ import { CtRequestDetailsComponent } from './ct-request-details/ct-request-detai
 import { CtRequestCtViewComponent } from './ct-request-ct-view/ct-request-ct-view.component';
 import { HcpScheduleComponent } from './hcp-schedule/hcp-schedule.component';
 import { BillingAccountCtViewComponent } from './billing-account-ct-view/billing-account-ct-view.component';
-import { BillingAccountSmViewComponent } from './billing-account-sm-view/billing-account-sm-view.component';
+import { HcpWageViewComponent } from './hcp-wage-view/hcp-wage-view.component';
 
 const routes: Routes = [
   /* default path */
@@ -152,6 +152,10 @@ const routes: Routes = [
       {
         path: 'schedule', 
         component: HcpScheduleComponent
+      },
+      {
+        path: 'wages', 
+        component: HcpWageViewComponent
       },
       { 
         path: 'settings', 
