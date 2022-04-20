@@ -9,7 +9,6 @@
                     <th>Email</th>
                     <th>Address</th>
                     <th>Phone</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -18,10 +17,6 @@
                     <td>{{hcp.email}}</td>
                     <td>{{hcp.postalAddress}}</td>
                     <td>{{format.formatPhone(hcp.phoneNumber)}}</td>
-                    <td>
-                        <button mat-raised-button color="primary" style="float: right" 
-                        (click)="openRemoveDialog(hcp.firstName, hcp.lastName, hcp.userID)">Remove</button>
-                    </td>
                 </tr>
             </tbody>
         </table>
@@ -32,17 +27,20 @@
         <div *ngIf="isShown" class="d-flex">
             <mat-card class="w-25">
                 <h4 class="color-main">{{selected.firstName | titlecase}} {{selected.lastName | titlecase}}</h4>
+                <p>SSN: {{format.formatSSN(selectedInfo.ssn)}}</p>
+                <p>Email: {{selectedInfo.email}}</p>
+                <p>Address: {{selectedInfo.postalAddress}}</p>
+                <p>Phone: {{format.formatPhone(selectedInfo.phoneNumber)}}</p>
+            </mat-card>
+            <mat-card class="ms-2 w-25">
+                <h4 class="color-main">Qualification Details</h4>
                 <p>
                     {{(selectedInfo.typeHS == nurse ? hcpLabels.nurse.label : (selectedInfo.typeHS == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}
                     - {{selectedInfo.sex | titlecase}}
                 </p>
                 <p>DOB: {{selectedInfo.dateOfBirth}}</p>
-                <p>SSN: {{format.formatSSN(selectedInfo.ssn)}}</p>
                 <p>Degree: {{selectedInfo.qualification}}</p>
                 <p>Experience: {{selectedInfo.yearOExp}} years</p>
-                <p>Phone: {{format.formatPhone(selectedInfo.phoneNumber)}}</p>
-                <p>Address: {{selectedInfo.postalAddress}}</p>
-                <p>Email: {{selectedInfo.email}}</p>
             </mat-card>
             <mat-card class="ms-2 w-25">
                 <h4 class="color-main">Salary Payment</h4>
@@ -85,6 +83,13 @@
                         You must enter cents to two decimal places
                     </mat-error>
                 </form>
+            </mat-card>
+            <mat-card class="ms-2 w-25">
+                <h4 class="color-main">Actions</h4>
+                <button mat-raised-button color="primary" [disabled]=""
+                (click)="openRemoveDialog(selected.firstName, selected.lastName, selected.userID)">
+                    Delete
+                </button>
             </mat-card>
         </div>
     </div>
