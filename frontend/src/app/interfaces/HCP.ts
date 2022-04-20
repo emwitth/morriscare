@@ -1,4 +1,3 @@
-import { hcpSchedule } from "./HCP-Schedule"
 /**
  * Interface describing a single health care professional
  */
@@ -10,7 +9,7 @@ export interface hcpApplicant {
   sex: string,
   ssn: string,
   salary: number,
-  typeHS: string,
+  typeHS: number,
   qualification: string,
   qualificationDate: string,
   yearOExp: number,
@@ -19,14 +18,32 @@ export interface hcpApplicant {
   dateOfBirth: string,
   email: string,
   enroll: boolean,
-  schedule: hcpSchedule,
+  schedule: StupidSchedule,
+  billingAccount: HCPBillingAccount,
   deleted: boolean,
+  updateTime: string,
   advertiseID: number,
   userID: number
 }
 
+export interface StupidSchedule {
+  [key: string]: any
+}
+
+export interface HCPBillingAccount {
+  total: number,
+  unPaidTotal: number,
+  paidTotal: number,
+  records: Array<HCPPaymentRecord>
+}
+
+export interface HCPPaymentRecord {
+  amount: number,
+  datetime: string
+}
+
 export interface HCP {
-  userID: string,
+  userID: number,
   username: string,
   firstName: string,
   lastName: string,
@@ -38,5 +55,5 @@ export interface HCP {
 
 export interface hcpRole {
   type: string,
-  takerID: number
+  pID: number
 }

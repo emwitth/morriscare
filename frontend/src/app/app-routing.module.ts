@@ -22,6 +22,8 @@ import { CtRequestManageComponent } from './ct-request-manage/ct-request-manage.
 import { CtRequestDetailsComponent } from './ct-request-details/ct-request-details.component';
 import { CtRequestCtViewComponent } from './ct-request-ct-view/ct-request-ct-view.component';
 import { HcpScheduleComponent } from './hcp-schedule/hcp-schedule.component';
+import { BillingAccountCtViewComponent } from './billing-account-ct-view/billing-account-ct-view.component';
+import { HcpWageViewComponent } from './hcp-wage-view/hcp-wage-view.component';
 
 const routes: Routes = [
   /* default path */
@@ -83,9 +85,14 @@ const routes: Routes = [
         path: 'manage-ct-request',
         component: CtRequestManageComponent,
       },
+      
       {
         path: 'manage-ct-request/request/:id',
         component: CtRequestDetailsComponent,
+      },
+      {
+        path: 'manage-ct-request/:id/billing-info',
+        component: BillingAccountCtViewComponent
       },
       { 
         path: 'settings', 
@@ -126,6 +133,10 @@ const routes: Routes = [
         path: 'manage-ct-request/request/:id',
         component: CtRequestDetailsComponent,
       },
+      {
+        path: 'manage-ct-request/:id/billing-info',
+        component: BillingAccountCtViewComponent
+      },
       { 
         path: 'settings', 
         component: SettingsComponent
@@ -141,6 +152,10 @@ const routes: Routes = [
       {
         path: 'schedule', 
         component: HcpScheduleComponent
+      },
+      {
+        path: 'wages', 
+        component: HcpWageViewComponent
       },
       { 
         path: 'settings', 
@@ -161,6 +176,10 @@ const routes: Routes = [
       {
         path: 'request-view',
         component: CtRequestCtViewComponent
+      },
+      {
+        path: 'request-view/:id/billing-info',
+        component: BillingAccountCtViewComponent
       },
       { 
         path: 'settings', 

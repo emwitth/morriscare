@@ -1,4 +1,4 @@
-<div class="container p-2 my-5 border">
+<div class="container p-2 mt-5 border">
     <h1 class="blockquote">Request Service</h1>
     <div class="d-flex flex-row">
         <div class="p-2 flex-fill border-end max-width-half">
@@ -82,7 +82,7 @@
             <div class="centered-full-width-rows-container">
                 <mat-form-field appearance="fill">
                     <mat-label>Enter your desired start and end date</mat-label>
-                    <mat-date-range-input [min]="today" [formGroup]="dateForm" [rangePicker]="startEndRange">
+                    <mat-date-range-input [formGroup]="dateForm" [rangePicker]="startEndRange">
                         <input matStartDate (dateInput)="figureDays()" (dateChange)="figureDays()" formControlName="startDate">
                         <input matEndDate (dateInput)="figureDays()" (dateChange)="figureDays()" formControlName="endDate">
                     </mat-date-range-input>

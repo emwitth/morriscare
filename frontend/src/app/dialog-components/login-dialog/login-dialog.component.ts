@@ -108,9 +108,9 @@ export class LoginDialogComponent implements OnInit {
         console.log(this.info);
 
         // setup security questions
-        this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 1]?.question;
-        this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 1]?.question;
-        this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 1]?.question;
+        this.questions.question1 = this.allQuestions[result.body?.securityQuestionOneID - 8]?.question;
+        this.questions.question2 = this.allQuestions[result.body?.securityQuestionTwoID - 8]?.question;
+        this.questions.question3 = this.allQuestions[result.body?.securityQuestionThreeID - 8]?.question;
 
         // setup answers
         this.answers.answer1 = result.body?.securityQuestionOneAnswer;

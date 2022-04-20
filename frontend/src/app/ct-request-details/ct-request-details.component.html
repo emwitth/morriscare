@@ -1,4 +1,4 @@
-<div class="container p-2 my-5 border">
+<div class="container p-2 mt-5 border">
     <button mat-icon-button color="primary" style="font-size:large" routerLink="/{{userType}}/manage-ct-request">
         <mat-icon>navigate_before</mat-icon>
     </button>
@@ -6,49 +6,55 @@
     <h1 class="blockquote">Manage Request {{id}}</h1>
     <div class="d-flex">
         <!-- left half of page -->
-        <div class="flex-fill border-end" style="max-width:50%">
-            <!-- information about the patient -->
-            <div class="container border centered-half-width-rows-container rounded details-box">
-                <h2>Patient Information</h2>
-                <p>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</p>
-                <p>Sex: {{request.sex | uppercase}}</p>
-                <p>DOB: {{request.dateOfBirth | date}}</p>
-                <p>Phone: {{format.formatPhone(request.patientPhoneNumber)}}</p>
-                <p>Email: {{request.patientEmail}}</p>
-                <p>Address: {{request.locationOfService}}</p>
-            </div> <br>
-            <!-- information about the caretaker -->
-            <div class="container border centered-half-width-rows-container rounded details-box">
-                <h2>Caretaker Information</h2>
-                <p>{{caretaker.firstName | titlecase}} {{caretaker.lastName | titlecase}}</p>
-                <p>Phone: {{format.formatPhone(caretaker.phoneNumber)}}</p>
-                <p>Email: {{caretaker.email}}</p>
-                <p>Address: {{caretaker.postalAddress}}</p>
+        <div class="w-50 border-end">
+            <div class="d-flex me-2 mb-2">
+                <!-- information about the patient -->
+                <mat-card class="w-50 me-2">
+                    <h2>Patient Information</h2>
+                    <p>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</p>
+                    <p>Sex: {{request.sex | uppercase}}</p>
+                    <p>DOB: {{request.dateOfBirth | date}}</p>
+                    <p>Phone: {{format.formatPhone(request.patientPhoneNumber)}}</p>
+                    <p>Email: {{request.patientEmail}}</p>
+                    <p>Address: {{request.locationOfService}}</p>
+                </mat-card>
+                <!-- information about the caretaker -->
+                <mat-card class="w-50">
+                    <h2>Caretaker Information</h2>
+                    <p>{{caretaker.firstName | titlecase}} {{caretaker.lastName | titlecase}}</p>
+                    <p>Phone: {{format.formatPhone(caretaker.phoneNumber)}}</p>
+                    <p>Email: {{caretaker.email}}</p>
+                    <p>Address: {{caretaker.postalAddress}}</p>
+                </mat-card>
+            </div>
+            <div class="d-flex me-2">
+                <!-- information about the request itself - some fields might not be included -->
+                <mat-card class="w-50 me-2">
+                    <h2>Request Details</h2>
+                    <p>Type: {{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</p>
+                    <p>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</p>
+                    <p>{{request.requirements.numDaysRequested}} days: {{format.getDaysString(request.requirements.daysRequested)}}</p>
+                    <p>Unassigned: {{format.getDaysString(request.distribution.unassigned)}}</p>
+                    <p *ngIf="!isFlexibleHours">Start Time: {{request.requirements.startTime}}, End Time {{request.requirements.endTime}}</p>
+                    <p *ngIf="isFlexibleHours">Flexible Hours: wants {{request.requirements.hoursPerDay}} hours</p>
+                </mat-card>
+                <mat-card class="w-50">
+                    <h2>Extra Stipulations</h2>
+                    <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender | titlecase}}</p>
+                    <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.age_min}}, maximum {{request.requirements.age_max}}</p>
+                    <p *ngIf="!wantsGender && !wantsAge">None</p>
+                </mat-card>
             </div>
         </div>
         <!-- right half of page -->
-        <div class="flex-fill border-start" style="max-width:50%">
-            <!-- information about the request itself - some fields might not be included -->
-            <div class="container border centered-half-width-rows-container rounded details-box">
-                <h2>Request Details</h2>
-                <p>Type: {{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</p>
-                <p>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</p>
-                <p>{{request.requirements.numDaysRequested}} days: {{format.getDaysString(request.requirements.daysRequested)}}</p>
-                <p>Unassigned: {{format.getDaysString(request.distribution.unassigned)}}</p>
-                <p *ngIf="!isFlexibleHours">Start Time: {{request.requirements.startTime}}, End Time {{request.requirements.endTime}}</p>
-                <p *ngIf="isFlexibleHours">Flexible Hours: wants {{request.requirements.hoursPerDay}} hours</p>
-                <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender | titlecase}}</p>
-                <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.age_min}}, maximum {{request.requirements.age_max}}</p>
-            </div>
-            <br>
+        <div class="w-50 ms-2 scroll">
             <!-- all of the pickers -->
-            <div class="d-flex flex-column align-items-center">
-                <div class="width-80">
-                    <app-ct-request-hcp *ngFor="let pickerInfo of hcpPickers" [info]="pickerInfo" (assignmentEvent)="mergeNewAssigned($event)"></app-ct-request-hcp>
-                </div>
-                <button mat-icon-button color="primary" (click)="add()">
+            <div class="d-flex flex-column">
+                <app-ct-request-hcp class="mb-2 me-2" *ngFor="let pickerInfo of hcpPickers" [info]="pickerInfo" (assignmentEvent)="mergeNewAssigned($event)"></app-ct-request-hcp>
+                <button mat-icon-button class="align-self-center" color="primary" (click)="add()">
                     <mat-icon>add_circle</mat-icon>
                 </button>
             </div>
+        </div>
     </div>
 </div>

@@ -1,0 +1,89 @@
+<div class="container p-2 mt-5 border d-flex">
+    <div class="container border w-75 me-2">
+        <h2>Patient Name: {{info.patientName | titlecase}}</h2>
+        <table class="table table-sm table-hover table-borderless">
+            <thead>
+                <tr>
+                    <th>Healthcare-Worker's Name</th>
+                    <th>Date of Service</th>
+                    <th>Start Time of Service</th>
+                    <th>End Time of Service</th>
+                    <th style="text-align: right">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of records">
+                    <td>{{record.hcpName}}</td>
+                    <td>{{record.workDate | date}}</td>
+                    <td>{{record.startTime}}</td>
+                    <td>{{record.endTime}}</td>
+                    <td style="text-align: right">{{record.amount | currency}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: right">Total:</th>
+                    <td style="text-align: right">{{info.total | currency}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: right">Paid:</th>
+                    <td style="text-align: right">{{info.paidTotal | currency}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: right">Unpaid:</th>
+                    <td style="text-align: right">{{info.unPaidTotal | currency}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container border w-25">
+        <h2 class="text-center">Make Payment</h2>
+        <table class="table table-sm table-hover table-borderless w-75 mx-auto">
+            <tbody>
+                <tr>
+                    <th>Total:</th>
+                    <td style="text-align: right">{{info.total | currency}}</td>
+                </tr>
+                <tr>
+                    <th>Paid:</th>
+                    <td style="text-align: right">{{info.paidTotal | currency}}</td>
+                </tr>
+                <tr>
+                    <th>Unpaid:</th>
+                    <td style="text-align: right">{{info.unPaidTotal | currency}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form [formGroup]="form">
+
+            <div class="d-flex justify-content-center">
+                <mat-form-field appearance="fill" class="wem-5">
+                    <input matInput prefix="$" mask="99990" style="text-align: right" formControlName="dollars">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="wem-3">
+                    <input matInput prefix="." mask="00" formControlName="cents">
+                </mat-form-field>
+                <button mat-raised-button color="primary" class="align-self-start ms-2 mt-2"
+                [disabled]="form.pristine || form.invalid" (click)="pay()">
+                    Pay
+                </button>
+            </div>
+            <mat-error *ngIf="this.form.get('dollars')?.touched && this.form.get('dollars')?.hasError('required')">
+                You must enter some dollar amount
+            </mat-error>
+            <mat-error *ngIf="this.form.get('cents')?.touched && this.form.get('cents')?.hasError('required')">
+                You must enter some amount after the decimal
+            </mat-error>
+            <mat-error *ngIf="this.form.get('cents')?.touched && this.form.get('cents')?.hasError('pattern')">
+                You must enter cents to two decimal places
+            </mat-error>
+        </form>
+    </div>
+</div>

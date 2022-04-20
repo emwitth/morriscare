@@ -34,7 +34,7 @@ export class HcpApplicationComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern("[0-9]{10}")]],
       email: ['', [Validators.required, Validators.email]],
       sex: ['', Validators.required],
-      address: ['', [Validators.required, Validators.pattern("[A-Za-z0-9 ]*")]],
+      address: ['', [Validators.required, Validators.pattern("[A-Za-z0-9., -]*")]],
       dob: [new Date(), Validators.required],
       ssn: ['', [Validators.required, Validators.pattern("[0-9]{9}")]],
       experience: ['', [Validators.required, Validators.pattern("[0-9]*")]],
@@ -64,7 +64,7 @@ export class HcpApplicationComponent implements OnInit {
       ssn: this.form.get("ssn")?.value,
       typeHS: this.type == HCP_LABELS.nurse.label ? HCP_TYPE.nurse : (this.type == HCP_LABELS.physiotherapist.label ? 
                                     HCP_TYPE.physiotherapist : HCP_TYPE.psychiatrist),
-      qualification: this.form.get("education")?.value +  " Degree, I am "
+      qualification: this.form.get("education")?.value +  " Degree, "
       + this.form.get("qualifications")?.value,
       qualificationDate: this.format.parseMomentDateToString(this.form.get("dob")?.value),
       yearOExp: this.form.get("experience")?.value,

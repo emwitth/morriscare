@@ -3,12 +3,11 @@ import { FormattingModule } from '../modules/formatting/formatting.module';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
-import { CTRequest, AssignmentObject } from '../interfaces/CTRequest';
+import { hcpSchedule,scheduleInfo } from '../interfaces/HCP-Schedule';
 
 export interface punch {
   hasBeenSent: boolean,
   requestID: number,
-  scheduleID: number,
   in: string,
   inHour: number,
   inMin: number,
@@ -22,7 +21,7 @@ export interface punch {
 export interface info {
   start: string,
   end: string,
-  request: CTRequest
+  request: hcpSchedule
 }
 
 @Component({
@@ -37,7 +36,7 @@ export class HcpScheduleComponent implements OnInit {
   // for the day selected on the schedule
   selectedDate!: Date | null;
   // today (duh)
-  today: Date = new Date("4-21-22");
+  today: Date = new Date("5/5/24");
   // variable to make sure the calendar doesn't load until we get data from the backend
   dataIn: boolean = false;
   // holds all of the information about the hcp's schedule
@@ -52,7 +51,6 @@ export class HcpScheduleComponent implements OnInit {
   hasMultipleAssignments: Set<string> = new Set<string>(); // a day in here has multiple assignments for this hcp
 
   requestID: number = -1;
-  scheduleID: number = -1;
   numberLeft: number = 0;
 
   constructor(private format: FormattingModule, private http: HttpClient,
@@ -67,14 +65,14 @@ export class HcpScheduleComponent implements OnInit {
       if (result.status != 200) {
         this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + this.pID + ": " + result);
       } else if(result.status == 200) {
-        result.body.forEach((request: CTRequest) => {
-          request.distribution.assigned.forEach((element: AssignmentObject) => {
+        result.body.forEach((request: hcpSchedule) => {
+          request.schedule.forEach((element: scheduleInfo) => {
             this.addAllDateElements(
-              element.schedule.startDate,
-              element.schedule.numDaysRequested,
-              element.schedule.daysRequested,
-              element.schedule.startTime, 
-              element.schedule.endTime,
+              element.startDate,
+              element.numDaysRequested,
+              element.daysRequested,
+              element.startTime, 
+              element.endTime,
               request
             );
           });
@@ -96,7 +94,7 @@ export class HcpScheduleComponent implements OnInit {
    * @param end the end time of the request
    * @param request the whole request because I am lazy and am putting it here for easy access later
    */
-  addAllDateElements(startDate: string, numDays: number, daysOfWeek: Array<number>, start: string, end: string, request: CTRequest) {
+  addAllDateElements(startDate: string, numDays: number, daysOfWeek: Array<number>, start: string, end: string, request: hcpSchedule) {
     // cariables to keep track of things
     var count: number = 0;
     var stepDate: Date = this.format.parseDate(startDate);
@@ -106,7 +104,7 @@ export class HcpScheduleComponent implements OnInit {
       request: request
     }
     // loop through all days from the start until we find all of the days enumerated
-    while(count < numDays) {
+    while(count < numDays-1) {
       // only do anything if the day we are at is one of the days of the week specified
       if(daysOfWeek.includes(stepDate.getDay())) {
         // get the array which holds any request data that was already on this day
@@ -133,12 +131,13 @@ export class HcpScheduleComponent implements OnInit {
 
   dateChange() {
     this.requestID = -1;
-    this.scheduleID = -1;
+    console.log(this.requestID);
   }
 
-  selectRequest(request : CTRequest) {
+  selectRequest(request : hcpSchedule) {
+    console.log(request.requestID);
     this.requestID = request.requestID;
-    this.scheduleID = request.schedule[0].scheduleID;
+    console.log(this.requestID);
   }
   
   /**
@@ -175,7 +174,6 @@ export class HcpScheduleComponent implements OnInit {
       array.push({
         hasBeenSent: false,
         requestID: this.requestID,
-        scheduleID: this.scheduleID,
         in: this.time,
         inHour: ch,
         inMin: cm,
@@ -196,7 +194,6 @@ export class HcpScheduleComponent implements OnInit {
       {
         hasBeenSent: false,
         requestID: this.requestID,
-        scheduleID: this.scheduleID,
         in: "",
         inHour: -1,
         inMin: -1,
@@ -228,7 +225,6 @@ export class HcpScheduleComponent implements OnInit {
         last = {
           hasBeenSent: false,
           requestID: this.requestID,
-          scheduleID: this.scheduleID,
           in: this.time,
           inHour: ch,
           inMin: cm,
@@ -318,7 +314,6 @@ export class HcpScheduleComponent implements OnInit {
         var body = {
           requestID: punch.requestID,
           pID: this.pID,
-          scheduleID: punch.scheduleID,
           startTime: punch.in,
           endTime: punch.out,
           workDate: this.format.parseMomentDateToString(this.selectedDate)
@@ -326,11 +321,14 @@ export class HcpScheduleComponent implements OnInit {
         console.log(body);
         this.http.post<any>("api/work/", body, { observe: "response" }).subscribe(result => {
           if (result.status != 200) {
+            console.log("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " + result);
             this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " + result);
           } else if(result.status == 200) {
             punch.hasBeenSent = true;
           }
         }, err => {
+          console.log("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " 
+          + (err.error.error? err.error.error : err.message));
           this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " 
                                                           + (err.error.error? err.error.error : err.message));
         });
