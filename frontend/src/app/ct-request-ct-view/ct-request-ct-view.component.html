@@ -126,7 +126,11 @@
             </mat-card>
             <mat-card class="ms-2">
                 <h4 class="color-main">Actions</h4>
-                <button mat-raised-button color="primary" [disabled]="selected.distribution.assigned.length > 0">Withdraw Request</button>
+                <button mat-raised-button color="primary"
+                [disabled]="selected.billingAccount.unPaidTotal != 0 || selected.end == true"
+                (click)="withdraw()">
+                    Withdraw Request
+                </button>
                 <br><br>
                 <button mat-raised-button color="primary" [disabled]="selected.distribution.assigned.length == 0" 
                 routerLink="{{selected.requestID}}/billing-info">

@@ -46,6 +46,7 @@ export class CtRequestCtViewComponent implements OnInit {
       paidTotal: -1,
       records: []
     },
+    end: false,
     userID: -1
   };
   names: Array<string> = [];
@@ -74,11 +75,11 @@ export class CtRequestCtViewComponent implements OnInit {
         console.log(startDate, endDate);
         console.log(startDate.getTime() <= this.today.getTime());
         console.log(endDate.getTime() >= this.today.getTime());
-        if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
-          this.requests.push(element);
-        }
-        else if(element.terminate == true) {
+        if(element.end == true) {
           this.terminatedRequests.push(element);
+        }
+        else if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
+          this.requests.push(element);
         }
         else {
           this.pendingRequests.push(element);
@@ -125,4 +126,35 @@ export class CtRequestCtViewComponent implements OnInit {
     });
   }
 
+  withdraw() {
+    var body = {
+      requestID: this.selected.requestID,
+      takerID: sessionStorage.ctID
+    }
+    this.http.post<any>("api/service/", body, { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        console.log("!200", result.body);
+        this.snackbar.openSnackbarErrorCust("Error withdrawing request: " + result);
+      } else if(result.status == 200) {
+        this.snackbar.openSnackbarSuccessCust("Successfully withdrawn!");
+      }
+    }, err => {
+      console.log("err", err);
+      this.snackbar.openSnackbarErrorCust("Error withdrawing request: " + (err.error.error? err.error.error : err.message));
+    });
+  }
+
 }
+
+
+// this.http.put<any>("api/service/", body2, { observe: "response" }).subscribe(result2 => {
+//   if (result.status != 200) {
+//     console.log("!200", result2.body);
+//     this.snackbar.openSnackbarErrorCust("Error withdrawaling service: " + result2);
+//   } else if(result2.status == 200) {
+//     this.snackbar.openSnackbarSuccessCust("Successfully withdrew service!");
+//   }
+// }, err => {
+//   console.log("err", err);
+//   this.snackbar.openSnackbarErrorCust("Error withdrawaling service: " + (err.error.error? err.error.error : err.message));
+// });

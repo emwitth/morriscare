@@ -46,6 +46,7 @@ export class CtRequestManageComponent implements OnInit {
       paidTotal: -1,
       records: []
     },
+    end: false,
     userID: -1
   };
   names: Array<string> = [];
@@ -71,11 +72,11 @@ export class CtRequestManageComponent implements OnInit {
         result.body.forEach((element: CTRequest) => {
           var startDate: Date = this.format.parseDate(element.requirements.startDate);
           var endDate: Date = this.format.parseDate(element.requirements.endDate);
-          if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
-            this.current.push(element);
-          }
-          else if(element.terminate == true) {
+          if(element.end == true) {
             this.terminated.push(element);
+          }
+          else if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
+            this.current.push(element);
           }
           else {
             this.pending.push(element);

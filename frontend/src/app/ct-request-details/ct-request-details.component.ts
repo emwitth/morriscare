@@ -43,6 +43,7 @@ export class CtRequestDetailsComponent implements OnInit {
       paidTotal: -1,
       records: []
     },
+    end: false,
     userID: -1
   };
   caretaker: Caretaker = {
