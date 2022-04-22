@@ -4,9 +4,9 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddSmDialogComponent } from '../dialog-components/add-sm-dialog/add-sm-dialog.component';
 import { RemoveSmDialogComponent } from '../dialog-components/remove-sm-dialog/remove-sm-dialog.component';
-import { ApiModule } from '../modules/api/api.module';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { HttpClient } from '@angular/common/http';
+import { FormattingModule } from '../modules/formatting/formatting.module';
 
 @Component({
   selector: 'app-staff-manage',
@@ -19,7 +19,7 @@ export class StaffManageComponent implements OnInit {
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
-  constructor(public dialog: MatDialog, private api: ApiModule,
+  constructor(public dialog: MatDialog, public format: FormattingModule,
     private snackbar: SnackbarModule, private http: HttpClient) { }
 
   openAddDialog() {
