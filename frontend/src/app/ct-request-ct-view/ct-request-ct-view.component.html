@@ -103,8 +103,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <mat-error *ngIf="terminatedRequests.length == 0">You have no terminated requests at this time</mat-error>
-                    <tr *ngFor="let request of terminatedRequests;" (click)="selectTab(request)">
+                    <mat-error *ngIf="completedRequests.length == 0">You have no completed requests at this time</mat-error>
+                    <tr *ngFor="let request of completedRequests;" (click)="selectTab(request)">
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
@@ -185,7 +185,7 @@
             <mat-card class="ms-2">
                 <h4 class="color-main">Actions</h4>
                 <button mat-raised-button color="primary"
-                [disabled]="selected.billingAccount.unPaidTotal != 0 || selected.end == true || withdrawnRequestIDs.has(selected.requestID)"
+                [disabled]="selected.billingAccount.unPaidTotal != 0 || selected.end == true || withdrawnRequestIDs.has(selected.requestID) ||  completedRequestIDs.has(selected.requestID)"
                 (click)="withdraw()">
                     Withdraw Request
                 </button>

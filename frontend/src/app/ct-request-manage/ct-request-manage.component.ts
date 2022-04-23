@@ -58,6 +58,7 @@ export class CtRequestManageComponent implements OnInit {
   wantsAge: boolean = false;
   today: Date = new Date();
   withdrawnRequestIDs: Set<number> = new Set();
+  completedRequestIDs: Set<number> = new Set();
 
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
@@ -103,6 +104,7 @@ export class CtRequestManageComponent implements OnInit {
           }
           else if(endDate.getTime() < this.today.getTime()) {
             this.completed.push(element);
+            this.completedRequestIDs.add(element.requestID);
           }
           else {
             this.pending.push(element);
@@ -148,4 +150,18 @@ export class CtRequestManageComponent implements OnInit {
       });
     });
   }
+
+  // terminate() {
+  //   this.http.get<any>("api/applicant/" + element.hcp + "/", { observe: "response" }).subscribe(result => {
+  //     if (result.status != 200) {
+  //       console.log("!200", result.body);
+  //       this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + element.hcp + ": " + result);
+  //     } else if(result.status == 200) {
+  //       this.names.push(result.body.firstName + " " + result.body.lastName);
+  //     }
+  //   }, err => {
+  //     console.log("err", err);
+  //     this.snackbar.openSnackbarErrorCust("Error retrieving hcp: " + (err.error.error? err.error.error : err.message));
+  //   });
+  // }
 }

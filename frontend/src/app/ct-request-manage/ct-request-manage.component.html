@@ -96,7 +96,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <mat-error *ngIf="completed.length == 0">There are no terminated requests at this time</mat-error>
+                    <mat-error *ngIf="completed.length == 0">There are no completed requests at this time</mat-error>
                     <tr *ngFor="let request of completed;" (click)="selectTab(request)">
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>

@@ -58,6 +58,7 @@ export class CtRequestCtViewComponent implements OnInit {
   wantsAge: boolean = false;
   today: Date = new Date();
   withdrawnRequestIDs: Set<number> = new Set();
+  completedRequestIDs: Set<number> = new Set();
 
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
@@ -106,6 +107,7 @@ export class CtRequestCtViewComponent implements OnInit {
         }
         else if(endDate.getTime() < this.today.getTime()) {
           this.completedRequests.push(element);
+          this.completedRequestIDs.add(element.requestID);
         }
         else {
           this.pendingRequests.push(element);
