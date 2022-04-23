@@ -88,8 +88,9 @@ export class CtRequestManageComponent implements OnInit {
         this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
       } else if(result.status == 200) {
         result.body.forEach((element: CTRequest) => {
-          var startDate: Date = this.format.parseDate(element.requirements.startDate);
-          var endDate: Date = this.format.parseDate(element.requirements.endDate);
+          console.log(element);
+          var startDate: Date = element.requirements.startDate ? this.format.parseDate(element.requirements.startDate) : new Date();
+          var endDate: Date = element.requirements.endDate ? this.format.parseDate(element.requirements.endDate) : new Date();
           if(element.end == true) {
             this.terminated.push(element);
           }
