@@ -79,44 +79,43 @@ export class CtRequestCtViewComponent implements OnInit {
             this.withdrawnRequestIDs.add(element.request);
           }
         });
+        console.log(this.withdrawnRequestIDs);
+        // retrieve all the requests
+        this.http.get<any>("api/requests/?userID=" + sessionStorage.getItem("id"), { observe: "response" }).subscribe(result => {
+          if (result.status != 200) {
+            this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
+          } else if(result.status == 200) {
+            result.body.forEach((element: CTRequest) => {
+              var startDate: Date = this.format.parseDate(element.requirements.startDate);
+              var endDate: Date = this.format.parseDate(element.requirements.endDate);
+              console.log(startDate, endDate);
+              console.log(startDate.getTime() <= this.today.getTime());
+              console.log(endDate.getTime() >= this.today.getTime());
+              if(element.end == true) {
+                this.terminatedRequests.push(element);
+              }
+              else if(this.withdrawnRequestIDs.has(element.requestID)) {
+                this.withdrawnRequests.push(element);
+              }
+              else if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
+                this.requests.push(element);
+              }
+              else if(endDate.getTime() < this.today.getTime()) {
+                this.completedRequests.push(element);
+                this.completedRequestIDs.add(element.requestID);
+              }
+              else {
+                this.pendingRequests.push(element);
+              }
+            });
+        }
+        }, err => {
+          this.snackbar.openSnackbarErrorCust("Failed to fetch requests: " + err.error.error);
+        });
       }
       }, err => {
         this.snackbar.openSnackbarErrorCust("Failed to fetch withdrawn requests: " + err.error.error);
       });
-      console.log(this.withdrawnRequestIDs);
-
-    // retrieve all the requests
-    this.http.get<any>("api/requests/?userID=" + sessionStorage.getItem("id"), { observe: "response" }).subscribe(result => {
-    if (result.status != 200) {
-      this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
-    } else if(result.status == 200) {
-      result.body.forEach((element: CTRequest) => {
-        var startDate: Date = this.format.parseDate(element.requirements.startDate);
-        var endDate: Date = this.format.parseDate(element.requirements.endDate);
-        console.log(startDate, endDate);
-        console.log(startDate.getTime() <= this.today.getTime());
-        console.log(endDate.getTime() >= this.today.getTime());
-        if(element.end == true) {
-          this.terminatedRequests.push(element);
-        }
-        else if(this.withdrawnRequestIDs.has(element.requestID)) {
-          this.withdrawnRequests.push(element);
-        }
-        else if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
-          this.requests.push(element);
-        }
-        else if(endDate.getTime() < this.today.getTime()) {
-          this.completedRequests.push(element);
-          this.completedRequestIDs.add(element.requestID);
-        }
-        else {
-          this.pendingRequests.push(element);
-        }
-      });
-    }
-    }, err => {
-      this.snackbar.openSnackbarErrorCust("Failed to fetch requests: " + err.error.error);
-    });
   }
 
   selectTab(request: CTRequest) {
@@ -173,16 +172,3 @@ export class CtRequestCtViewComponent implements OnInit {
   }
 
 }
-
-
-// this.http.put<any>("api/service/", body2, { observe: "response" }).subscribe(result2 => {
-//   if (result.status != 200) {
-//     console.log("!200", result2.body);
-//     this.snackbar.openSnackbarErrorCust("Error withdrawaling service: " + result2);
-//   } else if(result2.status == 200) {
-//     this.snackbar.openSnackbarSuccessCust("Successfully withdrew service!");
-//   }
-// }, err => {
-//   console.log("err", err);
-//   this.snackbar.openSnackbarErrorCust("Error withdrawaling service: " + (err.error.error? err.error.error : err.message));
-// });

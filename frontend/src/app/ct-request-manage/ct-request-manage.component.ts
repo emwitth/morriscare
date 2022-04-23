@@ -58,6 +58,7 @@ export class CtRequestManageComponent implements OnInit {
   wantsAge: boolean = false;
   today: Date = new Date();
   withdrawnRequestIDs: Set<number> = new Set();
+  withdrawnRequestServiceIDs: Map<number, number> = new Map();
   completedRequestIDs: Set<number> = new Set();
 
   get nurse() {return HCP_TYPE.nurse};
@@ -75,17 +76,13 @@ export class CtRequestManageComponent implements OnInit {
         this.snackbar.openSnackbarErrorCust("Failed to fetch withdrawn requests: status " + result.status);
       } else if(result.status == 200) {
         result.body.forEach((element: Withdrawal) => {
-          if(element.status == "pending") {
+          if(element.status === "pending") {
             this.withdrawnRequestIDs.add(element.request);
+            this.withdrawnRequestServiceIDs.set(element.request, element.serviceID);
           }
         });
-      }
-      }, err => {
-        this.snackbar.openSnackbarErrorCust("Failed to fetch withdrawn requests: " + err.error.error);
-      });
-      console.log(this.withdrawnRequestIDs);
-
-    // retrieve all the requests
+        console.log(this.withdrawnRequestIDs);
+        // retrieve all the requests
     this.http.get<any>("api/requests/", { observe: "response" }).subscribe(result => {
       if (result.status != 200) {
         this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
@@ -114,6 +111,10 @@ export class CtRequestManageComponent implements OnInit {
     }, err => {
       this.snackbar.openSnackbarErrorCust("Failed to fetch requests: " + err.error.error);
     });
+      }
+      }, err => {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch withdrawn requests: " + err.error.error);
+      })
   }
 
   selectTab(request: CTRequest) {
@@ -164,5 +165,23 @@ export class CtRequestManageComponent implements OnInit {
       console.log("err", err);
       this.snackbar.openSnackbarErrorCust("Error retrieving request: " + (err.error.error? err.error.error : err.message));
     });
+  }
+
+  terminateWithdrawn() {
+    var body = {
+      serviceID: this.withdrawnRequestServiceIDs.get(this.selected.requestID),
+      status: "success"
+    }
+    console.log(body);
+    this.http.put<any>("api/service/", body, { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to terminate withdrawn request: status " + result.status);
+      } else if(result.status == 200) {
+        window.location.reload();
+      }
+    }, err => {
+      this.snackbar.openSnackbarErrorCust("Failed to terminate withdrawn request: " + err.error.error);
+    });
+      console.log(this.withdrawnRequestIDs);
   }
 }
