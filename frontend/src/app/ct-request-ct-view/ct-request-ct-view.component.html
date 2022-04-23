@@ -59,6 +59,64 @@
                 </tbody>
             </table>
         </mat-tab>
+        <mat-tab label="Withdrawn">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Type</th>
+                        <th>Request Dates</th>
+                        <th>DOB</th>
+                        <th>Sex</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <mat-error *ngIf="withdrawnRequests.length == 0">You have no withdrawn requests at this time</mat-error>
+                    <tr *ngFor="let request of withdrawnRequests;" (click)="selectTab(request)">
+                        <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
+                        <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
+                        <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
+                        <td>{{request.dateOfBirth | date:"MM/dd/yyyy"}}</td>
+                        <td>{{request.sex | titlecase}}</td>
+                        <td>{{request.patientEmail}}</td>
+                        <td>{{request.locationOfService}}</td>
+                        <td>{{format.formatPhone(request.patientPhoneNumber)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-tab>
+        <mat-tab label="Completed">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Type</th>
+                        <th>Request Dates</th>
+                        <th>DOB</th>
+                        <th>Sex</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <mat-error *ngIf="completedRequests.length == 0">You have no completed requests at this time</mat-error>
+                    <tr *ngFor="let request of completedRequests;" (click)="selectTab(request)">
+                        <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
+                        <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
+                        <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
+                        <td>{{request.dateOfBirth | date:"MM/dd/yyyy"}}</td>
+                        <td>{{request.sex | titlecase}}</td>
+                        <td>{{request.patientEmail}}</td>
+                        <td>{{request.locationOfService}}</td>
+                        <td>{{format.formatPhone(request.patientPhoneNumber)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-tab>
         <mat-tab label="Terminated">
             <table class="table table-striped table-hover">
                 <thead>
@@ -126,7 +184,11 @@
             </mat-card>
             <mat-card class="ms-2">
                 <h4 class="color-main">Actions</h4>
-                <button mat-raised-button color="primary" [disabled]="selected.distribution.assigned.length > 0">Withdraw Request</button>
+                <button mat-raised-button color="primary"
+                [disabled]="selected.billingAccount.unPaidTotal != 0 || selected.end == true || withdrawnRequestIDs.has(selected.requestID) ||  completedRequestIDs.has(selected.requestID)"
+                (click)="withdraw()">
+                    Withdraw Request
+                </button>
                 <br><br>
                 <button mat-raised-button color="primary" [disabled]="selected.distribution.assigned.length == 0" 
                 routerLink="{{selected.requestID}}/billing-info">

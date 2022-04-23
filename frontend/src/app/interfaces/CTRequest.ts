@@ -47,6 +47,7 @@ export interface CTRequest {
     paidTotal: number,
     records: Array<Record>
   }
+  end: boolean,
   userID: number,
 }
 

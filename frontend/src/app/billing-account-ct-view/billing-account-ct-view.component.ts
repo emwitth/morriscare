@@ -47,6 +47,9 @@ export class BillingAccountCtViewComponent implements OnInit {
         this.snackbar.openSnackbarErrorCust("Failed to fetch billing information: status " + result.status);
       } else if(result.status == 200) {
         this.info = result.body;
+        if(this.info.unPaidTotal == 0) {
+          this.form.disable();
+        }
         this.info.detail.forEach((element : Detail) => {
           var i = 0;
           element.records.forEach((record: Record) => {

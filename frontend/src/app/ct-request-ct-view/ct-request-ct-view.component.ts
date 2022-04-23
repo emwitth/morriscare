@@ -4,6 +4,7 @@ import { SnackbarModule } from './../modules/snackbar/snackbar.module';
 import { CTRequest, AssignmentObject } from '../interfaces/CTRequest';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { HCP_LABELS, HCP_TYPE } from '../global-variables';
+import { Withdrawal } from '../interfaces/Withdrawal-Termination';
 
 @Component({
   selector: 'app-ct-request-ct-view',
@@ -15,6 +16,8 @@ export class CtRequestCtViewComponent implements OnInit {
   requests: Array<CTRequest> = [];
   pendingRequests: Array<CTRequest> = [];
   terminatedRequests: Array<CTRequest> = [];
+  withdrawnRequests: Array<CTRequest> = [];
+  completedRequests: Array<CTRequest> = [];
 
   isShown: boolean = false;
   selected: CTRequest = {
@@ -46,6 +49,7 @@ export class CtRequestCtViewComponent implements OnInit {
       paidTotal: -1,
       records: []
     },
+    end: false,
     userID: -1
   };
   names: Array<string> = [];
@@ -53,6 +57,8 @@ export class CtRequestCtViewComponent implements OnInit {
   wantsGender: boolean = false;
   wantsAge: boolean = false;
   today: Date = new Date();
+  withdrawnRequestIDs: Set<number> = new Set();
+  completedRequestIDs: Set<number> = new Set();
 
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
@@ -63,31 +69,53 @@ export class CtRequestCtViewComponent implements OnInit {
     public format: FormattingModule) { }
 
   ngOnInit(): void {
-    // retrieve all the requests
-    this.http.get<any>("api/requests/?userID=" + sessionStorage.getItem("id"), { observe: "response" }).subscribe(result => {
-    if (result.status != 200) {
-      this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
-    } else if(result.status == 200) {
-      result.body.forEach((element: CTRequest) => {
-        var startDate: Date = this.format.parseDate(element.requirements.startDate);
-        var endDate: Date = this.format.parseDate(element.requirements.endDate);
-        console.log(startDate, endDate);
-        console.log(startDate.getTime() <= this.today.getTime());
-        console.log(endDate.getTime() >= this.today.getTime());
-        if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
-          this.requests.push(element);
+    //retrieve all requests that are withdrawn
+    this.http.get<any>("api/service/?takerID=" + sessionStorage.ctID, { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch withdrawn requests: status " + result.status);
+      } else if(result.status == 200) {
+        result.body.forEach((element: Withdrawal) => {
+          if(element.status == "pending") {
+            this.withdrawnRequestIDs.add(element.request);
+          }
+        });
+        console.log(this.withdrawnRequestIDs);
+        // retrieve all the requests
+        this.http.get<any>("api/requests/?userID=" + sessionStorage.getItem("id"), { observe: "response" }).subscribe(result => {
+          if (result.status != 200) {
+            this.snackbar.openSnackbarErrorCust("Failed to fetch requests: status " + result.status);
+          } else if(result.status == 200) {
+            result.body.forEach((element: CTRequest) => {
+              var startDate: Date = this.format.parseDate(element.requirements.startDate);
+              var endDate: Date = this.format.parseDate(element.requirements.endDate);
+              console.log(startDate, endDate);
+              console.log(startDate.getTime() <= this.today.getTime());
+              console.log(endDate.getTime() >= this.today.getTime());
+              if(element.end == true) {
+                this.terminatedRequests.push(element);
+              }
+              else if(this.withdrawnRequestIDs.has(element.requestID)) {
+                this.withdrawnRequests.push(element);
+              }
+              else if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
+                this.requests.push(element);
+              }
+              else if(endDate.getTime() < this.today.getTime()) {
+                this.completedRequests.push(element);
+                this.completedRequestIDs.add(element.requestID);
+              }
+              else {
+                this.pendingRequests.push(element);
+              }
+            });
         }
-        else if(element.terminate == true) {
-          this.terminatedRequests.push(element);
-        }
-        else {
-          this.pendingRequests.push(element);
-        }
+        }, err => {
+          this.snackbar.openSnackbarErrorCust("Failed to fetch requests: " + err.error.error);
+        });
+      }
+      }, err => {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch withdrawn requests: " + err.error.error);
       });
-    }
-    }, err => {
-      this.snackbar.openSnackbarErrorCust("Failed to fetch requests: " + err.error.error);
-    });
   }
 
   selectTab(request: CTRequest) {
@@ -122,6 +150,24 @@ export class CtRequestCtViewComponent implements OnInit {
         console.log("err", err);
         this.snackbar.openSnackbarErrorCust(err.error.error? err.error.error : err.message);
       });
+    });
+  }
+
+  withdraw() {
+    var body = {
+      requestID: this.selected.requestID,
+      takerID: sessionStorage.ctID
+    }
+    this.http.post<any>("api/service/", body, { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        console.log("!200", result.body);
+        this.snackbar.openSnackbarErrorCust("Error withdrawing request: " + result);
+      } else if(result.status == 200) {
+        this.snackbar.openSnackbarSuccessCust("Successfully withdrawn!");
+      }
+    }, err => {
+      console.log("err", err);
+      this.snackbar.openSnackbarErrorCust("Error withdrawing request: " + (err.error.error? err.error.error : err.message));
     });
   }
 
