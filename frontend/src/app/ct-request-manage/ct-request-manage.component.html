@@ -174,10 +174,12 @@
             </mat-card>
             <mat-card class="ms-2">
                 <h4 class="color-main">Actions</h4>
-                <button mat-raised-button color="primary" routerLink="request/{{selected.requestID}}">
-                    Assign {{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}s
-                </button>
-                <br><br>
+                <div *ngIf="!this.withdrawnRequestIDs.has(selected.requestID) && !(selected.end == true)">
+                    <button mat-raised-button color="primary" routerLink="request/{{selected.requestID}}">
+                        Assign {{(selected.requirements.serviceType == nurse ? hcpLabels.nurse.label : (selected.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}s
+                    </button>
+                    <br><br>
+                </div>
                 <button mat-raised-button color="primary" routerLink="{{selected.requestID}}/billing-info">View Billing Info</button>
                 <br><br>
                 <button mat-raised-button color="primary" *ngIf="withdrawnRequestIDs.has(selected.requestID) || selected.terminate == true">
