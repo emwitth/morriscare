@@ -9,8 +9,9 @@
 <div *ngFor="let job of postings" class="container centered-partial-width-rows-container">
     <mat-card>
         <mat-card-title>Job Post {{job.adID}}</mat-card-title>
-        <p>Qualifications: {{job.qualification}}</p>
-        <p>Education Required: {{job.education}}</p>
+        <p>{{job.qualification}}</p>
+        <p><b>Education Required:</b> {{job.education}}</p>
+        <p><b>Experience Wanted:</b> {{job.yearOExp}} years</p>
         <mat-card-actions>
             <button mat-raised-button color="primary"
                         routerLink="{{job.adID}}">Apply</button>

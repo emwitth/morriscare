@@ -15,19 +15,16 @@
             <!-- Experience -->
             <mat-form-field appearance="fill">
                 <mat-label>Experience</mat-label>
-                <input matInput matInput mask="0*" placeholder="Enter Wanted Experience" formControlName="Experience">
+                <input matInput mask="0*" placeholder="Enter Wanted Experience" formControlName="Experience">
                 <mat-error *ngIf="this.form.get('Experience')?.hasError('required')">You must enter a value</mat-error>
                 <mat-error *ngIf="this.form.get('Experience')?.hasError('pattern')">You must use only numbers</mat-error>
             </mat-form-field>
             <!-- Qualifications -->
             <mat-form-field appearance="fill">
-                <mat-label>Qualifications</mat-label>
-                <mat-select placeholder="Choose Education" formControlName="Qualifications">
-                    <mat-option *ngFor="let choice of hiringRequirements" value="{{choice}}">
-                        {{choice}}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="this.form.get('qualifications')?.hasError('required')">You must select a value</mat-error>
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Enter Description" formControlName="Qualifications"></textarea>
+                <mat-error *ngIf="this.form.get('Qualifications')?.hasError('required')">You must select a value</mat-error>
+                <mat-error *ngIf="this.form.get('Qualifications')?.hasError('pattern')">You must only use alphanumeric characters</mat-error>
             </mat-form-field>
             <!-- Education -->
             <mat-form-field appearance="fill">

@@ -11,7 +11,7 @@
         [state]="{data: {qual: application.qualification, ed: application.education, exp: application.yearOExp, type: application.typeHS}}" 
         routerLink="{{application.adID}}/applicants"> <!-- on a click, each application routes to its details page -->
             <mat-card-title>Application {{application.adID}}: {{(application.typeHS == hcpLabels.physiotherapist.type ? hcpLabels.physiotherapist.label : (application.typeHS == hcpLabels.psychiatrist.type ? hcpLabels.psychiatrist.label : hcpLabels.nurse.label)) | titlecase}}</mat-card-title>
-            <p>Qualifications: {{application.qualification | lowercase}}</p>
+            <p>{{application.qualification}}</p>
             <p>Education Required: {{application.education}} degree</p>
             <p>Experience Wanted: {{application.yearOExp}} years</p>
         </mat-card>

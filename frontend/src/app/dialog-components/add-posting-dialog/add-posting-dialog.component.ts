@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from 'src/app/modules/snackbar/snackbar.module';
-import { HIRING_REQUIREMENTS, HIRING_EDUCATION, HCP_LABELS } from 'src/app/global-variables';
+import { HIRING_EDUCATION, HCP_LABELS } from 'src/app/global-variables';
 
 @Component({
   selector: 'app-add-posting-dialog',
@@ -15,7 +15,6 @@ export class AddPostingDialogComponent implements OnInit {
   fromDialog!: string;
 
   // getters for global lists for dropdowns
-  get hiringRequirements() { return HIRING_REQUIREMENTS; }
   get hiringEducation() { return HIRING_EDUCATION; }
   get hcpLabels() {return HCP_LABELS};
   
@@ -31,7 +30,7 @@ export class AddPostingDialogComponent implements OnInit {
       this.form = this.fb.group({
         Type: ['', Validators.required],
         Experience: ['', [Validators.required, Validators.pattern("[0-9]*")]],
-        Qualifications: ['', [Validators.required]],
+        Qualifications: ['', [Validators.required, Validators.pattern("[0-9a-zA-Z .]*")]],
         Education: ['', [Validators.required]]
       }, {});
     }
