@@ -17,6 +17,7 @@ export class CtRequestCtViewComponent implements OnInit {
   pendingRequests: Array<CTRequest> = [];
   terminatedRequests: Array<CTRequest> = [];
   withdrawnRequests: Array<CTRequest> = [];
+  completedRequests: Array<CTRequest> = [];
 
   isShown: boolean = false;
   selected: CTRequest = {
@@ -102,6 +103,9 @@ export class CtRequestCtViewComponent implements OnInit {
         }
         else if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
           this.requests.push(element);
+        }
+        else if(endDate.getTime() < this.today.getTime()) {
+          this.completedRequests.push(element);
         }
         else {
           this.pendingRequests.push(element);
