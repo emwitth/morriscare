@@ -15,7 +15,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr></tr>
+                    <mat-error *ngIf="current.length == 0">There are no requests in service at this time</mat-error>
                     <tr *ngFor="let request of current;" (click)="selectTab(request)">
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
@@ -42,8 +42,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr></tr>
+                    <mat-error *ngIf="pending.length == 0">There are no requests pending at this time</mat-error>
                     <tr *ngFor="let request of pending;" (click)="selectTab(request)">
+                        <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
+                        <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
+                        <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
+                        <td>{{request.sex | titlecase}}</td>
+                        <td>todo</td>
+                        <td>{{(request.distribution.unassigned.length) == 0 ? "Full" : ((request.distribution.assigned.length != 0) ? "Partial" : "None")}}</td>
+                        <td>Next Commit</td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-tab>
+        <mat-tab label="Withdrawn">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Patient</th>
+                        <th>Request Dates</th>
+                        <th>Sex</th>
+                        <th>Care Taker</th>
+                        <th>Assigned</th>
+                        <th>Payed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <mat-error *ngIf="withdrawn.length == 0">There are no withdrawn requests at this time</mat-error>
+                    <tr *ngFor="let request of withdrawn;" (click)="selectTab(request)">
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
@@ -69,7 +96,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr></tr>
+                    <mat-error *ngIf="terminated.length == 0">There are no terminated requests at this time</mat-error>
                     <tr *ngFor="let request of terminated;" (click)="selectTab(request)">
                         <td>{{(request.requirements.serviceType == nurse ? hcpLabels.nurse.label : (request.requirements.serviceType == physiotherapist ? hcpLabels.physiotherapist.label : hcpLabels.psychiatrist.label)) | titlecase}}</td>
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>

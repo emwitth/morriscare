@@ -4,6 +4,7 @@ import { SnackbarModule } from './../modules/snackbar/snackbar.module';
 import { CTRequest, AssignmentObject } from '../interfaces/CTRequest';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { HCP_LABELS, HCP_TYPE } from '../global-variables';
+import { Withdrawal } from '../interfaces/Withdrawal-Termination';
 
 @Component({
   selector: 'app-ct-request-ct-view',
@@ -15,6 +16,7 @@ export class CtRequestCtViewComponent implements OnInit {
   requests: Array<CTRequest> = [];
   pendingRequests: Array<CTRequest> = [];
   terminatedRequests: Array<CTRequest> = [];
+  withdrawnRequests: Array<CTRequest> = [];
 
   isShown: boolean = false;
   selected: CTRequest = {
@@ -54,6 +56,7 @@ export class CtRequestCtViewComponent implements OnInit {
   wantsGender: boolean = false;
   wantsAge: boolean = false;
   today: Date = new Date();
+  withdrawnRequestIDs: Set<number> = new Set();
 
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
@@ -64,6 +67,22 @@ export class CtRequestCtViewComponent implements OnInit {
     public format: FormattingModule) { }
 
   ngOnInit(): void {
+    //retrieve all requests that are withdrawn
+    this.http.get<any>("api/service/?takerID=" + sessionStorage.ctID, { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch withdrawn requests: status " + result.status);
+      } else if(result.status == 200) {
+        result.body.forEach((element: Withdrawal) => {
+          if(element.status == "pending") {
+            this.withdrawnRequestIDs.add(element.request);
+          }
+        });
+      }
+      }, err => {
+        this.snackbar.openSnackbarErrorCust("Failed to fetch withdrawn requests: " + err.error.error);
+      });
+      console.log(this.withdrawnRequestIDs);
+
     // retrieve all the requests
     this.http.get<any>("api/requests/?userID=" + sessionStorage.getItem("id"), { observe: "response" }).subscribe(result => {
     if (result.status != 200) {
@@ -77,6 +96,9 @@ export class CtRequestCtViewComponent implements OnInit {
         console.log(endDate.getTime() >= this.today.getTime());
         if(element.end == true) {
           this.terminatedRequests.push(element);
+        }
+        else if(this.withdrawnRequestIDs.has(element.requestID)) {
+          this.withdrawnRequests.push(element);
         }
         else if(startDate.getTime() <= this.today.getTime() && endDate.getTime() >= this.today.getTime()) {
           this.requests.push(element);
