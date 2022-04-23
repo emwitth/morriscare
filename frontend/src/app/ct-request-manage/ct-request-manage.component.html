@@ -182,7 +182,9 @@
                 </div>
                 <button mat-raised-button color="primary" routerLink="{{selected.requestID}}/billing-info">View Billing Info</button>
                 <br><br>
-                <button mat-raised-button color="primary" *ngIf="withdrawnRequestIDs.has(selected.requestID) || selected.terminate == true">
+                <button mat-raised-button color="primary" *ngIf="withdrawnRequestIDs.has(selected.requestID) || selected.terminate == true"
+                (click)="terminate()"
+                >
                     Terminate
                 </button>
             </mat-card>

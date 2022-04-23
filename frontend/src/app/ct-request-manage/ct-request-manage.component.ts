@@ -151,17 +151,18 @@ export class CtRequestManageComponent implements OnInit {
     });
   }
 
-  // terminate() {
-  //   this.http.get<any>("api/applicant/" + element.hcp + "/", { observe: "response" }).subscribe(result => {
-  //     if (result.status != 200) {
-  //       console.log("!200", result.body);
-  //       this.snackbar.openSnackbarErrorCust("Error retrieving hcp " + element.hcp + ": " + result);
-  //     } else if(result.status == 200) {
-  //       this.names.push(result.body.firstName + " " + result.body.lastName);
-  //     }
-  //   }, err => {
-  //     console.log("err", err);
-  //     this.snackbar.openSnackbarErrorCust("Error retrieving hcp: " + (err.error.error? err.error.error : err.message));
-  //   });
-  // }
+  terminate() {
+    this.http.get<any>("api/end_request/" + this.selected.requestID + "/", { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        console.log("!200", result.body);
+        this.snackbar.openSnackbarErrorCust("Error terminating request: result " + result);
+      } else if(result.status == 200) {
+        window.location.reload();
+        // this.snackbar.openSnackbarSuccessCust("Successfully terminated request!");
+      }
+    }, err => {
+      console.log("err", err);
+      this.snackbar.openSnackbarErrorCust("Error retrieving request: " + (err.error.error? err.error.error : err.message));
+    });
+  }
 }
