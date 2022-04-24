@@ -34,12 +34,12 @@ export class HcpApplicationComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern("[0-9]{10}")]],
       email: ['', [Validators.required, Validators.email]],
       sex: ['', Validators.required],
-      address: ['', [Validators.required, Validators.pattern("[A-Za-z0-9., -]*")]],
+      address: ['', [Validators.required, Validators.pattern("[A-Za-z0-9\'., -]*")]],
       dob: [new Date(), Validators.required],
       ssn: ['', [Validators.required, Validators.pattern("[0-9]{9}")]],
       experience: ['', [Validators.required, Validators.pattern("[0-9]*")]],
       education: ['', Validators.required],
-      qualifications: ['', [Validators.required, Validators.pattern("[a-zA-Z0-9., -]*")]]
+      qualifications: ['', [Validators.required, Validators.pattern("[a-zA-Z0-9\'., -]*")]]
     }, {});
   }
 

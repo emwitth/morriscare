@@ -49,7 +49,7 @@ export class CtRequestComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.pattern("[a-zA-Z]*")]],
       sex: ['', Validators.required],
       dob: [new Date(), Validators.required],
-      location: ['', [Validators.required, Validators.pattern("[a-zA-Z0-9., -]*")]],
+      location: ['', [Validators.required, Validators.pattern("[a-zA-Z0-9\'., -]*")]],
       phone: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]]
     });

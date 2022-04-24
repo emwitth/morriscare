@@ -32,7 +32,7 @@ export class AddSmDialogComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z]*')]],
       lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z]*')]],
       email: ['', [Validators.required, Validators.email]],
-      address: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9., -]*')]],
+      address: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9\'., -]*')]],
       phone: ['', [Validators.required, Validators.pattern('[0-9]{10}')]]
     }, {});
    }
