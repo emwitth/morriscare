@@ -64,7 +64,10 @@ export class UserHomeComponent implements OnInit {
   }
 
   getName() {
-    return sessionStorage.getItem('name')?.toLocaleUpperCase();
+    var name: string = sessionStorage.getItem('name') + " " + sessionStorage.getItem('last');
+    var type: string = sessionStorage.getItem('role') + " ";
+
+    return name + ", type: " + type
   }
 
   checkLoggedIn() {

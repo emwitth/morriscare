@@ -7,7 +7,7 @@
     <!-- User Menu -->
     <div *ngIf="checkLoggedIn()">
       <button mat-flat-button color="primary" class="hover-class" [matMenuTriggerFor]="usermenu">
-        WELCOME, {{getName()}}!
+        {{getName() | titlecase}}
       </button>
       <mat-menu #usermenu="matMenu">
         <button mat-menu-item [routerLink]="'settings'">Settings</button>
