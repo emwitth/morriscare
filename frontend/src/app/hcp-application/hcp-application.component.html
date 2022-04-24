@@ -95,6 +95,14 @@
                     <mat-error *ngIf="this.form.get('qualifications')?.hasError('required')">You must select a value</mat-error>
                     <mat-error *ngIf="this.form.get('qualifications')?.hasError('pattern')">You must only use alphanumeric values</mat-error>
                 </mat-form-field>
+                <!-- Date of Qualification -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your Date of Graduation</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="qualDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="this.form.get('qualDate')?.hasError('required')">You must select a value</mat-error>
+                </mat-form-field>
             </div>
             <!-- Actions -->
             <button mat-raised-button color="primary" 

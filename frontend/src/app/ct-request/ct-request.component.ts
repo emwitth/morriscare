@@ -80,9 +80,9 @@ export class CtRequestComponent implements OnInit {
       hours: ['', [Validators.required, Validators.min(1), Validators.max(10)]]
     });
     this.ageForm = this.fb.group({
-      min: ['', [Validators.required, Validators.min(18)]],
-      max: ['', [Validators.required, Validators.min(18)]]
-    }, {validators: minLTmax});
+      min: ['', [Validators.min(18)]],
+      max: ['', [Validators.min(18)]]
+    }, {});
   }
 
   ngOnInit(): void {
@@ -227,20 +227,23 @@ export class CtRequestComponent implements OnInit {
 
     // disable if specific hours form is not filled out and flexible hours is not specified
      if(!this.isFlexibleHours && (this.specificHoursForm.pristine || this.specificHoursForm.invalid)) {
-      // console.log("specific failed");
-      return true
+      return true;
     }
 
     // disable if wants age and age form is not filled out
     if(this.wantsAge && (this.ageForm.pristine || this.ageForm.invalid)) {
+      return true;
+    }
+    
+    if(this.wantsAge && (this.ageForm.get("min")?.value == null && this.ageForm.get("max")?.value == null)) {
       // console.log("age failed");
-      return true
+      return true;
     }
 
     // disable if wants gender and age form is not filled out
     if(this.wantsGender && (this.genderForm.pristine || this.genderForm.invalid)) {
       // console.log("gender failed");
-      return true
+      return true;
     }
 
     // disable if time is bad for the hcp type
@@ -359,20 +362,4 @@ export class CtRequestComponent implements OnInit {
   else {
     return null;
   }
-}
-
-/**
- * Validator to ensure a min age is less than max age
- * 
- * @param g the form group
- * @returns a group-scoped validator function
- */
- function minLTmax(g: AbstractControl) {
-  const minFC = g.get('min');
-  const maxFC = g.get('max');
-
-  const min = parseInt(minFC?.value);
-  const max = parseInt(maxFC?.value);
-
-  return min < max ? null : {'minGTMax': true};
 }

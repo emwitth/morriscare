@@ -196,15 +196,13 @@
                 <div class="d-flex flex-row justify-content-around centered-full-width-rows-container">
                     <mat-form-field *ngIf="wantsAge" appearance="fill">
                         <mat-label>Wanted Minimum Age</mat-label>
-                        <input matInput type="number" min="18" formControlName="min">
-                        <mat-error *ngIf="this.ageForm.get('min')?.hasError('required')">You must select a value</mat-error>
+                        <input matInput type="number" min="18" max="100" formControlName="min">
                         <mat-error *ngIf="this.ageForm.get('min')?.hasError('min')">Age too low</mat-error>
                     </mat-form-field>
                     <!-- Max Age -->
                     <mat-form-field *ngIf="wantsAge" appearance="fill">
                         <mat-label>Wanted Maximum Age</mat-label>
-                        <input matInput type="number" min="18" formControlName="max">
-                        <mat-error *ngIf="this.ageForm.get('max')?.hasError('required')">You must select a value</mat-error>
+                        <input matInput type="number" min="18" max="100" formControlName="max">
                         <mat-error *ngIf="this.ageForm.get('max')?.hasError('min')">Age too low</mat-error>
                     </mat-form-field>
                 </div>

@@ -30,7 +30,7 @@ export class AddPostingDialogComponent implements OnInit {
       this.form = this.fb.group({
         Type: ['', Validators.required],
         Experience: ['', [Validators.required, Validators.pattern("[0-9]*")]],
-        Qualifications: ['', [Validators.required, Validators.pattern("[0-9a-zA-Z .]*")]],
+        Qualifications: ['', [Validators.required, Validators.pattern("[0-9a-zA-Z\',. -]*")]],
         Education: ['', [Validators.required]]
       }, {});
     }

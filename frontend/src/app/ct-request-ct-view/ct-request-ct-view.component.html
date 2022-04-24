@@ -165,8 +165,8 @@
                 <p>Start: {{selected.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{selected.requirements.endDate | date:"MM/dd/yyyy"}}</p>
                 <div class="d-flex flex-row">
                     <p *ngIf="wantsGender">Sex: {{selected.requirements.gender | titlecase}}</p>
-                    <p *ngIf="wantsAge && wantsGender" class="ms-4">min age: {{selected.requirements.age_min}}, max age: {{selected.requirements.age_max}}</p>
-                    <p *ngIf="wantsAge && !wantsGender">min age: {{selected.requirements.age_min}}, max age: {{selected.requirements.age_max}}</p>
+                    <p *ngIf="wantsAge && wantsGender" class="ms-4">min age: {{selected.requirements.age_min ? selected.requirements.age_min : "none"}}, max age: {{selected.requirements.age_max ? selected.requirements.age_max : "none" }}</p>
+                    <p *ngIf="wantsAge && !wantsGender">min age: {{selected.requirements.age_min ? selected.requirements.age_min : "none"}}, max age: {{selected.requirements.age_max ? selected.requirements.age_max : "none" }}</p>
                     <p *ngIf="wantsAge || wantsGender" class="ms-4">{{selected.requirements.numDaysRequested}} days:</p>
                     <p *ngIf="!(wantsAge || wantsGender)">{{selected.requirements.numDaysRequested}} days:</p>
                 </div>

@@ -41,7 +41,7 @@
                 <mat-card class="w-50">
                     <h2>Extra Stipulations</h2>
                     <p *ngIf="wantsGender">Sex Requested: {{request.requirements.gender | titlecase}}</p>
-                    <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.age_min}}, maximum {{request.requirements.age_max}}</p>
+                    <p *ngIf="wantsAge">Age Requested: minimum {{request.requirements.age_min ? request.requirements.age_min : 'none'}}, maximum {{request.requirements.age_max ? request.requirements.age_max : 'none'}}</p>
                     <p *ngIf="!wantsGender && !wantsAge">None</p>
                 </mat-card>
             </div>
