@@ -145,9 +145,14 @@ export class CtRequestComponent implements OnInit {
 
     // if age values specified, include them
     if(this.wantsAge) {
-      requirements.age_min = this.ageForm.get("min")?.value;
-      requirements.age_max = this.ageForm.get("max")?.value;
+      if(this.ageForm.get("min")?.value) {
+        requirements.age_min = this.ageForm.get("min")?.value ? this.ageForm.get("min")?.value : 0;
+      }
+      if(this.ageForm.get("max")?.value) {
+        requirements.age_max = this.ageForm.get("max")?.value ? this.ageForm.get("max")?.value : 200;
+      }
     }
+    console.log(requirements.age_min, requirements.age_max)
 
     // if gender specified, include it
     if(this.wantsGender) {
@@ -251,7 +256,7 @@ export class CtRequestComponent implements OnInit {
       return true;
     }
 
-    // console.log("all passed");
+    // // console.log("all passed");
 
     return false;
   }

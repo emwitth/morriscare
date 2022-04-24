@@ -98,9 +98,9 @@
                 <!-- Date of Qualification -->
                 <mat-form-field appearance="fill">
                     <mat-label>Enter your Date of Graduation</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="qualDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <input matInput [matDatepicker]="picker2" formControlName="qualDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
                     <mat-error *ngIf="this.form.get('qualDate')?.hasError('required')">You must select a value</mat-error>
                 </mat-form-field>
             </div>
