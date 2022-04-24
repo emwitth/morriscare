@@ -11,7 +11,6 @@
                         <th>Sex</th>
                         <th>Care Taker</th>
                         <th>Assigned</th>
-                        <th>Payed</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,9 +20,8 @@
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
                         <td>{{request.sex | titlecase}}</td>
-                        <td>todo</td>
+                        <td>{{careTakers.get(request.userID)}}</td>
                         <td>{{(request.distribution.unassigned.length) == 0 ? "Full" : ((request.distribution.assigned.length != 0) ? "Partial" : "None")}}</td>
-                        <td>Next Commit</td>
                     </tr>
                 </tbody>
             </table>
@@ -38,7 +36,6 @@
                         <th>Sex</th>
                         <th>Care Taker</th>
                         <th>Assigned</th>
-                        <th>Payed</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,9 +45,8 @@
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
                         <td>{{request.sex | titlecase}}</td>
-                        <td>todo</td>
+                        <td>{{careTakers.get(request.userID)}}</td>
                         <td>{{(request.distribution.unassigned.length) == 0 ? "Full" : ((request.distribution.assigned.length != 0) ? "Partial" : "None")}}</td>
-                        <td>Next Commit</td>
                     </tr>
                 </tbody>
             </table>
@@ -65,7 +61,6 @@
                         <th>Sex</th>
                         <th>Care Taker</th>
                         <th>Assigned</th>
-                        <th>Payed</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,9 +70,8 @@
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
                         <td>{{request.sex | titlecase}}</td>
-                        <td>todo</td>
+                        <td>{{careTakers.get(request.userID)}}</td>
                         <td>{{(request.distribution.unassigned.length) == 0 ? "Full" : ((request.distribution.assigned.length != 0) ? "Partial" : "None")}}</td>
-                        <td>Next Commit</td>
                     </tr>
                 </tbody>
             </table>
@@ -92,7 +86,6 @@
                         <th>Sex</th>
                         <th>Care Taker</th>
                         <th>Assigned</th>
-                        <th>Payed</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,9 +95,8 @@
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
                         <td>{{request.sex | titlecase}}</td>
-                        <td>todo</td>
+                        <td>{{careTakers.get(request.userID)}}</td>
                         <td>{{(request.distribution.unassigned.length) == 0 ? "Full" : ((request.distribution.assigned.length != 0) ? "Partial" : "None")}}</td>
-                        <td>Next Commit</td>
                     </tr>
                 </tbody>
             </table>
@@ -119,7 +111,6 @@
                         <th>Sex</th>
                         <th>Care Taker</th>
                         <th>Assigned</th>
-                        <th>Payed</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -129,9 +120,8 @@
                         <td>{{request.patientFirstName | titlecase}} {{request.patientLastName | titlecase}}</td>
                         <td>Start: {{request.requirements.startDate | date:"MM/dd/yyyy"}}, End: {{request.requirements.endDate | date:"MM/dd/yyyy"}}</td>
                         <td>{{request.sex | titlecase}}</td>
-                        <td>todo</td>
+                        <td>{{careTakers.get(request.userID)}}</td>
                         <td>{{(request.distribution.unassigned.length) == 0 ? "Full" : ((request.distribution.assigned.length != 0) ? "Partial" : "None")}}</td>
-                        <td>Next Commit</td>
                     </tr>
                 </tbody>
             </table>

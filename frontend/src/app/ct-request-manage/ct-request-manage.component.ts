@@ -5,6 +5,7 @@ import { CTRequest, AssignmentObject } from '../interfaces/CTRequest';
 import { HCP_TYPE, HCP_LABELS } from '../global-variables';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { Withdrawal } from '../interfaces/Withdrawal-Termination';
+import { CareTaker } from '../interfaces/CareTaker';
 
 @Component({
   selector: 'app-ct-request-manage',
@@ -60,6 +61,7 @@ export class CtRequestManageComponent implements OnInit {
   withdrawnRequestIDs: Set<number> = new Set();
   withdrawnRequestServiceIDs: Map<number, number> = new Map();
   completedRequestIDs: Set<number> = new Set();
+  careTakers: Map<number, string> = new Map();
 
   get nurse() {return HCP_TYPE.nurse};
   get physiotherapist() {return HCP_TYPE.physiotherapist};
@@ -70,6 +72,20 @@ export class CtRequestManageComponent implements OnInit {
     public format: FormattingModule) { }
 
   ngOnInit(): void {
+    //retrieve all caretakers
+    this.http.get<any>("api/users/", { observe: "response" }).subscribe(result => {
+      if (result.status != 200) {
+        console.log("!200", result.body);
+        this.snackbar.openSnackbarErrorCust("Error retrieving care takers: status " + result.status);
+      } else if(result.status == 200) {
+        result.body.forEach((element: CareTaker) => {
+          this.careTakers.set(element.userID, element.firstName + " " + element.lastName);
+        });
+      }
+    }, err => {
+      console.log("err", err);
+      this.snackbar.openSnackbarErrorCust("Error retrieving care takers: " + (err.error.error? err.error.error : err.message));
+    });
     //retrieve all requests that are withdrawn
     this.http.get<any>("api/service/?takerID=" + sessionStorage.ctID, { observe: "response" }).subscribe(result => {
       if (result.status != 200) {

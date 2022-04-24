@@ -13,7 +13,7 @@ export interface UnappCareTaker {
 }
 
 export interface CareTaker {
-  userID: string,
+  userID: number,
   username: string,
   firstName: string,
   lastName: string,

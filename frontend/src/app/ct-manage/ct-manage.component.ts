@@ -51,7 +51,7 @@ export class CtManageComponent implements OnInit {
     });
   }
 
-  openRemoveDialog(first: string, last: string, id: string) {
+  openRemoveDialog(first: string, last: string, id: number) {
     const myCompDialog = this.dialog.open(RemoveSmDialogComponent, { data: {firstName: first, lastName:last, id: id} });
     myCompDialog.afterClosed().subscribe((res) => {
       // Trigger After Dialog Closed 
