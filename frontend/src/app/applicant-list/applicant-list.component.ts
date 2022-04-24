@@ -156,7 +156,7 @@ export class ApplicantListComponent implements OnInit {
     const myCompDialog = this.dialog.open(ConfirmationDialogComponent, { data: {
       title: "Approve " + first + " " + last, 
       details:[
-        "Are you sure you would like to reject " + first + " " + last + "?",
+        "Are you sure you would like to approve " + first + " " + last + "?",
         "This will result in account being created."
       ]
     } });

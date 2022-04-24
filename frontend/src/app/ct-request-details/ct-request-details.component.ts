@@ -221,6 +221,7 @@ export class CtRequestDetailsComponent implements OnInit {
         this.enabled[i] = false;
       }
     }
+    window.location.reload();
   }
 
 }
