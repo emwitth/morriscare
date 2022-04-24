@@ -4,21 +4,21 @@
         <mat-icon>navigate_before</mat-icon>
     </button>
     <!-- title of page -->
-    <h1 class="blockquote">Manage Applicants</h1>
+    <h1>Manage Applicants</h1>
     <!-- box displaying application information on left half of screen -->
     <div class="d-flex">
-        <div class="flex-fill" style="max-width:50%">
-            <div class="container border centered-full-width-rows-container rounded details-box">
-                <h2>Application Details</h2>
+        <div class="w-50 border-end">
+            <mat-card class="me-2">
+                <h2 class="color-main">Application Details</h2>
                 <p>Type: {{type | titlecase}}</p>
-                <p>Qualifications: {{qualifications}}</p>
+                <p>{{qualifications}}</p>
                 <p>Education: {{education}}</p>
                 <p>Experience: {{experience}} years</p>
-            </div> <br>
+            </mat-card> <br>
             <button mat-raised-button color="primary" (click)="remove()">Remove</button>
         </div>
         <!-- the right half of screen displaying the list of applicants -->
-        <div class="flex-fill" style="max-width: 50%">
+        <div class="w-50">
             <app-applicant-list></app-applicant-list>
         </div>
     </div>

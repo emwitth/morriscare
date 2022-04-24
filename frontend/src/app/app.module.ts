@@ -39,6 +39,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 // Components
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -141,7 +142,8 @@ import { HcpWageViewComponent } from './hcp-wage-view/hcp-wage-view.component';
     SnackbarModule,
     MatSlideToggleModule,
     MatCheckboxModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

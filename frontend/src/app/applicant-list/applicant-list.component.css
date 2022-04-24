@@ -10,6 +10,6 @@
     background: transparent;
     border: none !important;
     color:var(--mainColor);
-    transform: rotate(0deg);
+    transform: rotate(-90deg);
     transition: transform 0.5s ease-in;
 }

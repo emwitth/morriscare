@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Applicant } from '../interfaces/Applicant';
 import { Roles } from '../global-variables';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
 import { FormattingModule } from '../modules/formatting/formatting.module';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,53 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-applicant-list',
   templateUrl: './applicant-list.component.html',
   styleUrls: ['./applicant-list.component.css'],
-  // these are the animations for selecting and showing more details of an applicant
-  animations: [
-    // this handles the hiding of all but one applicant
-    trigger(
-      'openClose', 
-      [
-        transition(
-          ':enter',
-          [
-            style({ height:0, opacity: 0 }),
-            animate('1s ease-out', 
-                    style({ height: 140, opacity: 1 }))
-          ]
-        ),
-        transition(
-          ':leave', 
-          [
-            style({ opacity: 1 }),
-            animate('1s ease-in', 
-                    style({ height: 0, opacity: 0 }))
-          ]
-        )
-      ]
-    ),
-    // this handles the expansion of the extra section 
-    trigger(
-      'bottom-animation', 
-      [
-        transition(
-          ':enter', 
-          [
-            style({ height: 0, opacity: 0 }),
-            animate('1s ease-out', 
-                    style({ height: 260, opacity: 1 }))
-          ]
-        ),
-        transition(
-          ':leave', 
-          [
-            style({ opacity: 1 }),
-            animate('1s ease-in', 
-                    style({ height: 0, opacity: 0 }))
-          ]
-        )
-      ]
-    )
-  ]
 })
 export class ApplicantListComponent implements OnInit {
 
