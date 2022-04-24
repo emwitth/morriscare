@@ -81,7 +81,8 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Education</mat-label>
                     <mat-select placeholder="Choose Education" formControlName="education">
-                        <mat-option *ngFor="let choice of hiringEducation" value="{{choice}}">
+                        <mat-option *ngFor="let choice of hiringEducation; let i = index" value="{{choice}}"
+                        [disabled]="type == 'psychiatrist' && i == 0">
                             {{choice}}
                         </mat-option>
                     </mat-select>
