@@ -39,7 +39,7 @@ export class HcpApplicationComponent implements OnInit {
       ssn: ['', [Validators.required, Validators.pattern("[0-9]{9}")]],
       experience: ['', [Validators.required, Validators.pattern("[0-9]*")]],
       education: ['', Validators.required],
-      qualifications: ['', Validators.required]
+      qualifications: ['', [Validators.required, Validators.pattern("[a-zA-Z0-9., -]*")]]
     }, {});
   }
 
