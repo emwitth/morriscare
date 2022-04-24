@@ -69,7 +69,7 @@
                     <!-- Type -->
                     <mat-form-field appearance="fill">
                         <mat-label>Service Type</mat-label>
-                        <mat-select placeholder="Choose one" formControlName="type">
+                        <mat-select placeholder="Choose one" formControlName="type" (selectionChange)="setPhych()">
                             <mat-option value="{{nurse}}"> {{hcpLabels.nurse.label | titlecase}} </mat-option>
                             <mat-option value="{{physiotherapist}}"> {{hcpLabels.physiotherapist.label | titlecase}} </mat-option>
                             <mat-option value="{{psychiatrist}}"> {{hcpLabels.psychiatrist.label | titlecase}} </mat-option>
@@ -100,7 +100,7 @@
                     <!-- Start Time -->
                     <mat-form-field *ngIf="!isFlexibleHours" appearance="fill">
                         <mat-label>Start Time</mat-label>
-                        <input matInput type="time" step="1800" formControlName="startTime">
+                        <input matInput type="time" step="1800" formControlName="startTime" (change)="setPhych()">
                         <mat-error *ngIf="this.specificHoursForm.get('startTime')?.hasError('required')">You must select a value</mat-error>
                         <mat-error *ngIf="this.specificHoursForm.get('startTime')?.hasError('pattern')">
                             Time must be in half hour increments
@@ -109,7 +109,7 @@
                     <!-- End Time -->
                     <mat-form-field *ngIf="!isFlexibleHours" appearance="fill">
                         <mat-label>End Time</mat-label>
-                        <input matInput type="time" step="1800" formControlName="endTime">
+                        <input matInput type="time" step="1800" formControlName="endTime" (change)="setPhych()">
                         <mat-error *ngIf="this.specificHoursForm.get('endTime')?.hasError('required')">You must select a value</mat-error>
                         <mat-error *ngIf="this.specificHoursForm.get('endTime')?.hasError('pattern')">
                             Time must be in half hour increments
@@ -118,6 +118,12 @@
                 </div>
                 <mat-error *ngIf="this.specificHoursForm.errors?.startAfterEnd && this.specificHoursForm.get('endTime')?.dirty && !isFlexibleHours">
                     Start time must be before end time
+                </mat-error>
+                <mat-error *ngIf="psychBadTime">
+                    Psychiatrists only work from 6:00 AM to 8:00 PM
+                </mat-error>
+                <mat-error *ngIf="nursePhysioBadTime">
+                    Nurses and Physiotherapists only work from 6:00 AM to 6:00 PM
                 </mat-error>
             </form>
             <!-- Flexible Hours -->

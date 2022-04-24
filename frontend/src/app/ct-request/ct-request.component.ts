@@ -13,15 +13,18 @@ import { Requirements } from '../interfaces/CTRequest';
 })
 export class CtRequestComponent implements OnInit {
 
+  psychBadTime: boolean = false;
+  nursePhysioBadTime: boolean = false;
+
   // forms that compose the whole page's form
   patientForm: FormGroup;
-  typeForm: FormGroup;
   dateForm: FormGroup;
   specificHoursForm: FormGroup;
   flexibleHoursForm: FormGroup;
   daysForm: FormGroup;
   genderForm: FormGroup;
   ageForm: FormGroup;
+  typeForm: FormGroup;
 
   today: Date = new Date();
 
@@ -51,7 +54,7 @@ export class CtRequestComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]]
     });
     this.typeForm = this.fb.group({
-      type: ['', Validators.required]
+      type: [0, Validators.required]
     });
     this.dateForm = this.fb.group({
       startDate: [new Date(), Validators.required],
@@ -240,6 +243,11 @@ export class CtRequestComponent implements OnInit {
       return true
     }
 
+    // disable if time is bad for the hcp type
+    if(this.psychBadTime || this.nursePhysioBadTime) {
+      return true;
+    }
+
     // console.log("all passed");
 
     return false;
@@ -294,6 +302,34 @@ export class CtRequestComponent implements OnInit {
     }
     else {
       return 0;
+    }
+  }
+
+  setPhych() {
+    const st = this.specificHoursForm.get('startTime');
+    const et = this.specificHoursForm.get('endTime');
+
+    const sh = parseInt(st?.value.substring(0,2));
+    const sm = parseInt(st?.value.substring(3,5));
+    const eh = parseInt(et?.value.substring(0,2));
+    const em = parseInt(et?.value.substring(3,5));
+
+    if(parseInt(this.typeForm.get("type")?.value) === this.psychiatrist) {
+      this.nursePhysioBadTime = false;
+      if ((sh < 6)  || (sh < 6 && sm == 0) || (eh > 20) || (eh >= 20 && em != 0)) {
+        this.psychBadTime = true;
+      }
+      else {
+        this.psychBadTime = false;
+      }
+    } else {
+      this.psychBadTime = false;
+      if ((sh < 6)  || (sh < 6 && sm == 0) || (eh > 18) || (eh >= 18 && em != 0)) {
+        this.nursePhysioBadTime = true;
+      }
+      else {
+        this.nursePhysioBadTime = false;
+      }
     }
   }
 
