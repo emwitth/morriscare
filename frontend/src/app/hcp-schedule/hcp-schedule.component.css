@@ -3,6 +3,11 @@ button.example-custom-date-class {
     border-radius: 100%;
 }
 
+button.another-custom-date-class {
+  background: rgb(181, 163, 63);
+  border-radius: 100%;
+}
+
 .table-responsive {
   max-height:110px;
 }

@@ -3,7 +3,7 @@ import { FormattingModule } from '../modules/formatting/formatting.module';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarModule } from '../modules/snackbar/snackbar.module';
-import { hcpSchedule,scheduleInfo } from '../interfaces/HCP-Schedule';
+import { hcpSchedule, scheduleInfo } from '../interfaces/HCP-Schedule';
 
 export interface punch {
   hasBeenSent: boolean,
@@ -49,6 +49,7 @@ export class HcpScheduleComponent implements OnInit {
   totals : Map<string, string> = new Map<string, string>(); // the totals for each day
   lastTimes: Map<string, string> = new Map<string, string>(); // the last times logged for each day
   hasMultipleAssignments: Set<string> = new Set<string>(); // a day in here has multiple assignments for this hcp
+  isAssignedTo: Set<string> = new Set();
 
   requestID: number = -1;
   numberLeft: number = 0;
@@ -75,6 +76,9 @@ export class HcpScheduleComponent implements OnInit {
               element.endTime,
               request
             );
+          });
+          request.workDates.forEach((element: string) => {
+            this.isAssignedTo.add(this.format.parseDate(element).toString());
           });
         });
         this.dataIn = true;
@@ -348,7 +352,13 @@ export class HcpScheduleComponent implements OnInit {
   assignedDays: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     // Only highligh dates inside the month view.
     if (view === 'month') {
-      return this.dates.has(cellDate.toString()) ? 'example-custom-date-class' : '';
+      if(this.isAssignedTo.has(cellDate.toString())) {
+        return 'another-custom-date-class';
+      }
+      if(this.dates.has(cellDate.toString())) {
+        return 'example-custom-date-class';
+      }
+      return '';
     }
 
     return '';
