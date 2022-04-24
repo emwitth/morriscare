@@ -325,6 +325,7 @@ export class HcpScheduleComponent implements OnInit {
             this.snackbar.openSnackbarErrorCust("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " + result);
           } else if(result.status == 200) {
             punch.hasBeenSent = true;
+            this.snackbar.openSnackbarSuccess();
           }
         }, err => {
           console.log("Error posting hcp punch from " + punch.in + " to " + punch.out + ": " 
